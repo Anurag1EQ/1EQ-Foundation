@@ -387,57 +387,71 @@ const FoundationPrograms = () => {
                   <div className="flex flex-col gap-4 mt-3">
                     <div className="flex flex-col gap-3">
                       <p className="text-[17px] font-[500]">
-                        Why We Started It
+                        What It Is
                       </p>
                       <ul className="list-disc pl-10">
                         <li>
-                          Leadership training rarely includes or centers Deaf
-                          voices
-                        </li>
-                        <li>
-                          Many talented Deaf learners have the ability to guide
-                          other - but lack structured spaces to practice
-                          leadership
-                        </li>
-                        <li>
-                          This program creates a pathway for Deaf-led education,
-                          peer support, and public visibility{" "}
-                        </li>
+                        A project focused on helping Deaf learners write clearly, text independently, and navigate systems that require grammatical English — without relying on interpreters.
+                       </li>
+
                       </ul>
                     </div>
                     <div className="flex flex-col gap-3">
                       <p className="text-[17px] font-[500]">
-                        What Participants Do
+                        Why It's Needed
                       </p>
                       <ul className="list-disc pl-10">
                         <li>
-                          Lead internal vocabulary sessions and guide new
-                          interns
-                        </li>
-                        <li>Support content accuracy and video flow in ISL</li>
-                        <li>
-                          Host group discussion and Q&A sessions for learners
+                        Deaf students in India are taught through Indian Sign Language (ISL), not written English
                         </li>
                         <li>
-                          Learn the basic of advocacy, mentorship, and
-                          responsible facilitation
+                        ISL has no tense, articles, or sentence structure like English — so learners naturally write what they sign
+                        </li>
+                        <li>
+                        As a result, many can’t: <br />
+                          <p>1. Fill out a form</p>
+                          <p>2. Send a professional email</p>
+                          <p>3. Communicate with hearing people via text</p>
+                          <p>4. Take computer-based exams confidently</p>
                         </li>
                       </ul>
                     </div>
+
                     <div className="flex flex-col gap-3">
-                      <p className="text-[17px] font-[500]">What It Builds</p>
+                      <p className="text-[17px] font-[500]">
+                        What We're Building
+                      </p>
                       <ul className="list-disc pl-10">
                         <li>
-                          A Grwoing network of Deaf leaders trained in
-                          inclusive, bilingual education
+                          A grammar-smart keyboard designed for Deaf users
                         </li>
                         <li>
-                          Peer role models for younger learners entering the ISL
-                          learning space
+                          Tools to : <br />
+                          <p>1. Suggest corrections</p>
+                          <p>2. Rephrase sentences</p>
+                          <p>3. Translate from ISL-based phrasing to English</p>
                         </li>
                         <li>
-                          Increased comfort with public speaking, feedback, and
-                          coordination{" "}
+                          Sentence builders and text templates for: <br />
+                          <p>1. Emails</p>
+                          <p>2. Legal forms</p>
+                          <p>3. Exam answers</p>
+                          <p>4. Basic documentation</p>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                      <p className="text-[17px] font-[500]">Who It's For</p>
+                      <ul className="list-disc pl-10">
+                        <li>
+                          Deaf users who can sign but haven’t been taught
+                          structured writing
+                        </li>
+                        <li>Students preparing for online exams</li>
+                        <li>
+                          Learners who want to communicate independently without
+                          interpreters{" "}
                         </li>
                       </ul>
                     </div>
@@ -491,11 +505,13 @@ const FoundationPrograms = () => {
                   </p>
 
                   <p className="text-white text-[16px] leading-[18px] font-[300] mt-3">
-                    Lorem ipsum dolor sit amet consectetur. Mauris viverra
-                    semper vel lacinia hac nulla turpis. Blandit vivamus sem
-                    aenean praesent. Nunc fusce habitant gravida ac risus mauris
-                    imperdiet ultricies. Feugiat quis sit et pharetra bibendum
-                    ultricies at.quis sit et pharetra bibendum ultricies
+                    A project focused on helping Deaf learners write clearly,
+                    text independently, and navigate systems that require
+                    grammatical English, without relying on interpreters. ⁠Deaf
+                    students in India are taught through Indian Sign Language
+                    (ISL), not written English and ⁠ISL has no tense, articles,
+                    or sentence structure like English, so learners naturally
+                    write what they sign. As a result, many can’t
                   </p>
 
                   <button
