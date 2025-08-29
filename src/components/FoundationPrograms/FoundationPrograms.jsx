@@ -43,7 +43,7 @@ const FoundationPrograms = () => {
                   <IoIosArrowBack className="text-[26px] text-black translate-x-[-50%]" />
                 </div>
 
-                <div className="h-full w-[30%]">
+                <div className="h-full w-[30%] shrink-0">
                   <img
                     src="program1.jpg"
                     className="h-full w-full object-cover"
@@ -207,16 +207,16 @@ const FoundationPrograms = () => {
                 >
                   <IoIosArrowBack className="text-[26px] text-black translate-x-[-50%]" />
                 </div>
-                <div className="h-full w-[30%]">
+                <div className="h-full w-[30%] shrink-0">
                   <img
-                    src="program1.jpg"
+                    src="program2.jpg"
                     className="h-full w-full object-cover"
                     alt=""
                   />
                 </div>
                 <div className="grow-1 h-full overflow-scroll py-4 px-8">
                   <p className="text-center font-[500] text-[23px]">
-                    <span className="text-[#d22532]">1</span>EQ ISL Internship
+                    <span className="text-[#d22532]">1</span>EQ ISL Leadership
                     Programme
                   </p>
                   <div className="flex flex-col gap-4 mt-3">
@@ -372,43 +372,43 @@ const FoundationPrograms = () => {
                 >
                   <IoIosArrowBack className="text-[26px] text-black translate-x-[-50%]" />
                 </div>
-                <div className="h-full w-[30%]">
+                <div className="h-full w-[30%] shrink-0">
                   <img
-                    src="program1.jpg"
+                    src="program3.jpg"
                     className="h-full w-full object-cover"
                     alt=""
                   />
                 </div>
                 <div className="grow-1 h-full overflow-scroll py-4 px-8">
                   <p className="text-center font-[500] text-[23px]">
-                    <span className="text-[#d22532]">1</span>EQ ISL Internship
-                    Programme
+                    <span className="text-[#d22532]">Text-Based</span>{" "}
+                    Empowerment Project
                   </p>
                   <div className="flex flex-col gap-4 mt-3">
                     <div className="flex flex-col gap-3">
-                      <p className="text-[17px] font-[500]">
-                        What It Is
-                      </p>
+                      <p className="text-[17px] font-[500]">What It Is</p>
                       <ul className="list-disc pl-10">
                         <li>
-                        A project focused on helping Deaf learners write clearly, text independently, and navigate systems that require grammatical English — without relying on interpreters.
-                       </li>
-
+                          A project focused on helping Deaf learners write
+                          clearly, text independently, and navigate systems that
+                          require grammatical English — without relying on
+                          interpreters.
+                        </li>
                       </ul>
                     </div>
                     <div className="flex flex-col gap-3">
-                      <p className="text-[17px] font-[500]">
-                        Why It's Needed
-                      </p>
+                      <p className="text-[17px] font-[500]">Why It's Needed</p>
                       <ul className="list-disc pl-10">
                         <li>
-                        Deaf students in India are taught through Indian Sign Language (ISL), not written English
+                          Deaf students in India are taught through Indian Sign
+                          Language (ISL), not written English
                         </li>
                         <li>
-                        ISL has no tense, articles, or sentence structure like English — so learners naturally write what they sign
+                          ISL has no tense, articles, or sentence structure like
+                          English — so learners naturally write what they sign
                         </li>
                         <li>
-                        As a result, many can’t: <br />
+                          As a result, many can’t: <br />
                           <p>1. Fill out a form</p>
                           <p>2. Send a professional email</p>
                           <p>3. Communicate with hearing people via text</p>
