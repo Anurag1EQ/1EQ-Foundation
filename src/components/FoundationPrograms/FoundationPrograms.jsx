@@ -45,7 +45,7 @@ const FoundationPrograms = () => {
 
                 <div className="h-full w-[30%] shrink-0">
                   <img
-                    src="program1.jpg"
+                    src="isl-internship.png"
                     className="h-full w-full object-cover"
                     alt=""
                   />
@@ -152,7 +152,11 @@ const FoundationPrograms = () => {
             ) : (
               <div className="h-full w-full flex items-end overflow-hidden">
                 <div className="absolute w-full h-full left-0 top-0 brightness-[80%]">
-                  <img src="isl-internship.png" className="h-full w-full object-cover" alt="" />
+                  <img
+                    src="isl-internship.png"
+                    className="h-full w-full object-cover"
+                    alt=""
+                  />
                 </div>
 
                 <div className=" w-full z-1 bottom-shadow relative px-2 py-4 pb-7">
@@ -209,7 +213,7 @@ const FoundationPrograms = () => {
                 </div>
                 <div className="h-full w-[30%] shrink-0">
                   <img
-                    src="program2.jpg"
+                    src="isl-leadership.png"
                     className="h-full w-full object-cover"
                     alt=""
                   />
@@ -316,7 +320,11 @@ const FoundationPrograms = () => {
             ) : (
               <div className="h-full w-full flex items-end overflow-hidden">
                 <div className="absolute w-full h-full left-0 top-0 brightness-[80%]">
-                  <img src="isl-leadership.png" className="h-full w-full object-cover" alt="" />
+                  <img
+                    src="isl-leadership.png"
+                    className="h-full w-full object-cover"
+                    alt=""
+                  />
                 </div>
 
                 <div className=" w-full z-1 bottom-shadow relative px-2 py-4 pb-7">
@@ -374,7 +382,7 @@ const FoundationPrograms = () => {
                 </div>
                 <div className="h-full w-[30%] shrink-0">
                   <img
-                    src="program3.jpg"
+                    src="isl-empowerment.png"
                     className="h-full w-full object-cover"
                     alt=""
                   />
@@ -458,7 +466,7 @@ const FoundationPrograms = () => {
                   </div>
                 </div>
               </div>
-            ) : isCardActive ? (  
+            ) : isCardActive ? (
               <div
                 onClick={(e) => {
                   e.stopPropagation();
@@ -495,7 +503,11 @@ const FoundationPrograms = () => {
             ) : (
               <div className="h-full w-full flex items-end overflow-hidden">
                 <div className="absolute w-full h-full left-0 top-0 brightness-[80%]">
-                  <img src="isl-empowerment.png" className="h-full w-full object-cover" alt="" />
+                  <img
+                    src="isl-empowerment.png"
+                    className="h-full w-full object-cover"
+                    alt=""
+                  />
                 </div>
 
                 <div className=" w-full z-1 bottom-shadow relative px-2 py-4 pb-7">
