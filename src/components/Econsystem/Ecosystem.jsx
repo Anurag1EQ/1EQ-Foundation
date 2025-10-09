@@ -2,7 +2,7 @@ import React from "react";
 
 const Ecosystem = () => {
   return (
-    <section className="bg-[#f9f7f3]  h-[70vh] max-h-[700px] flex items-center justify-center">
+    <section className="bg-[#f9f7f3] min-h-[650px] h-[70vh] max-h-[700px] flex items-center justify-center">
       <div className="w-[90%] global-width flex gap-3 justify-evenly items-center">
         <div>
           <svg

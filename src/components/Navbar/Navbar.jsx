@@ -68,12 +68,12 @@ const Navbar = () => {
           >
             Services
           </NavLink>
-          <NavLink
+          {/* <NavLink
             className="hover:text-[#ff9aa4] duration-300-color"
             to="/events"
           >
             Events
-          </NavLink>
+          </NavLink> */}
           <NavLink
             className="hover:text-[#ff9aa4] duration-300-color"
             to="/scholarships"

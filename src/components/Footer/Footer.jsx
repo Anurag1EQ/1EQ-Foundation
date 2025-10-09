@@ -77,23 +77,18 @@ const Footer = () => {
 
         <div className="flex justify-between flex-col items-end gap-5">
           <div className="text-white text-[20px] w-max flex items-center gap-4">
-            <Link>
-              <FaXTwitter />{" "}
-            </Link>
-            <Link>
+            <Link target="_blank" to="https://www.youtube.com/@1Vocab">
               <FaYoutube />{" "}
             </Link>
-            <Link>
-              <FaFacebookF />{" "}
-            </Link>
-            <Link>
+
+            <Link
+              target="_blank"
+              to="https://www.instagram.com/1eq.foundation/?igsh=MTdtajdyeGlrZGd5Nw%3D%3D"
+            >
               <FaInstagram />{" "}
             </Link>
-            <Link>
+            <Link target="_blank" to="https://t.me/oneq_isl">
               <FaTelegram />{" "}
-            </Link>
-            <Link>
-              <CiMail />{" "}
             </Link>
           </div>
 

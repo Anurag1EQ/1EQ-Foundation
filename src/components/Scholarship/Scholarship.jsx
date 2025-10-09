@@ -15,10 +15,13 @@ const Scholarship = () => {
           especially those from Deaf, SC/ST, OBC, and EWS backgrounds
         </p>
 
-        <div className="w-full mt-8 relative overflow-hidden rounded-md">
-          <img src="scholarship.png" className="h-full w-full" alt="" />
+        <div className="w-full mt-8 mb-10 relative overflow-hidden rounded-md">
+          <img src="schollarship-banner.png" className="h-full w-full" alt="" />
 
-          <Link to='/scholarships' className="absolute bg-[#00244ebf] shadow-xl duration-300 hover:bg-[#00254e] rounded-[30px] py-2 px-3 text-white cursor-pointer bottom-5 left-[50%] transform translate-x-[-50%] text-[20px] flex items-center justify-center gap-3">
+          <Link
+            to="/scholarships"
+            className="absolute bg-[#00244ebf] shadow-xl duration-300 hover:bg-[#00254e] rounded-[30px] py-2 px-3 text-white cursor-pointer bottom-5 left-[50%] transform translate-x-[-50%] text-[20px] flex items-center justify-center gap-3"
+          >
             Read More About Scholarship <FaArrowRight />
           </Link>
         </div>

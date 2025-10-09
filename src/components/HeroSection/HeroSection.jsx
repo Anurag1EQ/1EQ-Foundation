@@ -2,7 +2,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 const HeroSection = () => {
   return (
-    <section className=" h-[calc(100vh-120px)] max-h-[700px] pb-2 bg-[#f6f6f6]  gap-2 flex items-center justify-center ">
+    <section className=" h-[calc(100vh-120px)] min-h-[650px] max-h-[700px] pb-2 bg-[#f6f6f6]  gap-2 flex items-center justify-center ">
       {/* Main Section */}
       <div className="flex flex-col h-full w-[90%] global-width">
         <div className=" overflow-hidden w-full h-full relative  flex items-center justify-evenly">

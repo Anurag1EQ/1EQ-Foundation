@@ -3,7 +3,7 @@ import { FaArrowRight } from "react-icons/fa6";
 const Vocab = () => {
   return (
     <section className="bg-[#00254e] py-16">
-      <div className="w-[90%] global-width h-[70vh] max-h-[700px] px-3 mx-auto flex py-10   flex-col justify-end bg-white rounded-md relative">
+      <div className="w-[90%] global-width h-[70vh] min-h-[650px] max-h-[700px] px-3 mx-auto flex py-10   flex-col justify-end bg-white rounded-md relative">
         <div className="flex flex-col gap-11 w-[85%] mx-auto">
           <div className="flex  justify-between w-full">
             <div className="w-[26%] overflow-hidden">
