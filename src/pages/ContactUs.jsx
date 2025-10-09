@@ -11,7 +11,7 @@ const ContactUs = () => {
               class=" object-contain w-full h-full"
             />
           </div>
-          <div className=" bg-[#00254f]  w-[40%] p-16 rounded-[5px] my-10">
+          <div className=" bg-[#00254f] min-w-[600px] max-w-[650px] w-[40%] p-16 rounded-[5px] my-10">
             <div className="flex flex-col gap-1 mb-3">
               <p className="text-white font-medium text-[24px]  leading-[36px]">
                 Write to us
