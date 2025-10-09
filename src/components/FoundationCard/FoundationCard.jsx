@@ -1,7 +1,4 @@
 const FoundationCard = (props) => {
-
-
-
   return (
     <div className="relative rounded-2xl hover:scale-[102%] duration-500 font-public-sans flex items-end bg-black  overflow-hidden w-[340px] h-[600px] ">
       <div className="absolute w-full h-full left-0 top-0 brightness-[80%]">

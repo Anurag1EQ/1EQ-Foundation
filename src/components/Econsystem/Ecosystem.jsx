@@ -2,8 +2,8 @@ import React from "react";
 
 const Ecosystem = () => {
   return (
-    <section className="bg-[#f9f7f3]  h-[70vh] flex items-center justify-center">
-      <div className="w-[75%] flex gap-3 justify-between items-center">
+    <section className="bg-[#f9f7f3]  h-[70vh] max-h-[700px] flex items-center justify-center">
+      <div className="w-[90%] global-width flex gap-3 justify-evenly items-center">
         <div>
           <svg
             width="473"
@@ -19,7 +19,6 @@ const Ecosystem = () => {
               stroke-width="3.32911"
             />
             <path
-             
               d="M304.131 4.72465L242.922 43.3646C240.237 45.0595 238.622 48.0245 238.655 51.1994L239.391 123.428C239.426 126.802 241.313 129.884 244.303 131.448L310.755 166.197C313.621 167.697 317.066 167.571 319.817 165.868L380.871 128.062C383.705 126.307 385.362 123.15 385.195 119.821L381.518 46.3741C381.359 43.1838 379.548 40.3074 376.74 38.7844L313.383 4.41873C310.471 2.8391 306.932 2.9561 304.131 4.72465Z"
               stroke="black"
               stroke-width="3.32911"
@@ -111,7 +110,7 @@ const Ecosystem = () => {
           </svg>
         </div>
 
-        <p className="text-[23px] text-[#00254E] w-[50%]">
+        <p className="text-[23px] text-[#00254E] w-[34%]">
           A combined system of{" "}
           <i className="text-[#ED1B2F]">
             {" "}

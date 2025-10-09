@@ -21,12 +21,12 @@ const FoundationPrograms = () => {
         <p className="text-[42px] text-center text-[#00254e]">
           <span className="text-[#d22532]">1</span>EQ FOUNDATION PROGRAMS
         </p>
-        <div className="flex gap-5 justify-center w-[75%]">
+        <div className="flex gap-5 justify-center w-[90%] global-width">
           <div
             className={`relative rounded-2xl shrink-0 hover:scale-[101%] duration-500 font-public-sans flex items-end bg-black  overflow-hidden  ${
               cardExpand.card1 && isCardActive
                 ? "w-[calc(100%-60px)]"
-                : "w-[340px]"
+                : "w-[360px]"
             } h-[600px] ${
               isCardActive && !cardExpand.card1 ? "!w-[40px]" : ""
             }`}
@@ -193,7 +193,7 @@ const FoundationPrograms = () => {
             } ${
               cardExpand.card2 && isCardActive
                 ? "w-[calc(100%-60px)]"
-                : "w-[340px]"
+                : "w-[360px]"
             }`}
           >
             {cardExpand.card2 ? (
@@ -358,7 +358,7 @@ const FoundationPrograms = () => {
             } ${
               cardExpand.card3 && isCardActive
                 ? "w-[calc(100%-60px)]"
-                : "w-[340px]"
+                : "w-[360px]"
             }`}
           >
             {cardExpand.card3 ? (

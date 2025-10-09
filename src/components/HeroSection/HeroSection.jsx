@@ -1,13 +1,12 @@
 import { FaArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 const HeroSection = () => {
-
   return (
-    <section className=" h-[calc(100vh-120px)] bg-[#f6f6f6] justify-between gap-12 flex flex-col ">
+    <section className=" h-[calc(100vh-120px)] max-h-[700px] pb-2 bg-[#f6f6f6]  gap-2 flex items-center justify-center ">
       {/* Main Section */}
-      <div className="flex flex-col grow-1 ">
-        <div className="w-[80%] overflow-hidden my-3 h-full relative mx-auto flex items-center justify-between">
-          <div className="flex flex-col grow-1 max-w-[53%] justify-between gap-13">
+      <div className="flex flex-col h-full w-[90%] global-width">
+        <div className=" overflow-hidden w-full h-full relative  flex items-center justify-evenly">
+          <div className="flex flex-col grow-1 max-w-[43%] justify-between gap-13">
             <div>
               <p className="text-[#00254E] text-[40px] font-[500] leading-[45px]">
                 1ISL <i className="text-[#ED1B2F] ">Vocabulary</i> Project{" "}
@@ -17,16 +16,23 @@ const HeroSection = () => {
               </p>
             </div>
 
-            <p className="text-[23px] font-[400] text-[#00254E]">
-              The <span className="text-[#ed1c2f]">1ISL Vocabulary Project</span> is a large-scale effort to create a
-              rich, usable vocabulary database in <span className="text-[#ed1c2f]">Indian Sign Language (ISL)</span>  -
-              starting with words relevant to <span className="text-[#ed1c2f]">SSC exam preparation, legal
-              awareness,</span> and <span className="text-[#ed1c2f]">everyday literacy.</span>
+            <p className="text-[24px] font-[400] text-[#00254E]">
+              The{" "}
+              <span className="text-[#ed1c2f]">1ISL Vocabulary Project</span> is
+              a large-scale effort to create a rich, usable vocabulary database
+              in{" "}
+              <span className="text-[#ed1c2f]">Indian Sign Language (ISL)</span>{" "}
+              - starting with words relevant to{" "}
+              <span className="text-[#ed1c2f]">
+                SSC exam preparation, legal awareness,
+              </span>{" "}
+              and <span className="text-[#ed1c2f]">everyday literacy.</span>
             </p>
 
-
-
-            <Link to={'/services'} className="cursor-pointer outline-none border rounded-[30px] bg-gradient-to-r  from-[#07305ccf] to-[#0054b4c5] font-public-sans font-[400] py-2 px-6 text-[22px] w-max flex items-center gap-5 text-white">
+            <Link
+              to={"/services"}
+              className="cursor-pointer outline-none border rounded-[30px] bg-gradient-to-r  from-[#07305ccf] to-[#0054b4c5] font-public-sans font-[400] py-2 px-6 text-[22px] w-max flex items-center gap-5 text-white"
+            >
               Read About IVOCAB <FaArrowRight />
             </Link>
           </div>
@@ -34,22 +40,24 @@ const HeroSection = () => {
           {/* <div className="shrink-0 max-w-[440px] w-[44%] absolute right-0 top-[50%] image-shadow-inset transform  translate-y-[-50%]">
             <img src="gunga.png" className="h-full w-full " alt="" />
           </div> */}
-          <div className="shrink-0  w-[76%] absolute -right-70 top-[50%] image-shadow-inset transform  translate-y-[-50%]">
-            <video
-              src="Split_clip.webm"
-              autoPlay
-              muted
-              loop
-              className="h-full w-full "
-              alt=""
-            />
+          <div className="w-[30%] relative max-w-[450px] aspect-[1/1.2] overflow-hidden">
+            <div className="shrink-0 scale-[2.8]  w-[100%] absolute right-0 top-[50%] image-shadow-inset transform  translate-y-[-50%]">
+              <video
+                src="Split_clip.webm"
+                autoPlay
+                muted
+                loop
+                className="h-full w-full object-cover"
+                alt=""
+              />
+            </div>
           </div>
         </div>
 
-        <div className="ms-12 ">
+        <div className="w-[120px]">
           <svg
-            width="116"
-            height="49"
+            width="100%"
+            height="100%"
             viewBox="0 0 116 49"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -107,42 +115,6 @@ const HeroSection = () => {
               fill="#4A4A4A"
             />
           </svg>
-        </div>
-      </div>
-
-      {/* User Stats Section   */}
-      <div className="bg-[#f3f3f3] w-full py-7 flex justify-center gap-3">
-        <div className="w-[80%] flex  flex-col gap-3">
-          <p className="text-center text-[32px] text-[#ED1B2F]">
-            1EQ FOUNDATION{" "}
-            <span className="text-[#00254E]">Charitable Impact</span>
-          </p>
-          <div className="flex w-full items-center justify-between">
-            <div className="flex flex-col items-center">
-              <p className="font-[600] text-[32px] text-[#00254e] text-center">
-                400 Million
-              </p>
-              <p className="text-center font-[600] text-[#00254e] text-[18px]">
-                Lorem Ipsum
-              </p>
-            </div>
-            <div className="flex flex-col items-center">
-              <p className="font-[600] text-[32px] text-[#00254e] text-center">
-                72,000
-              </p>
-              <p className="text-center font-[600] text-[#00254e] text-[18px]">
-                Lorem Ipsum
-              </p>
-            </div>
-            <div className="flex flex-col items-center">
-              <p className="font-[600] text-[32px] text-[#00254e] text-center">
-                75 Million
-              </p>
-              <p className="text-center font-[600] text-[#00254e] text-[18px]">
-                Lorem Ipsum
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
