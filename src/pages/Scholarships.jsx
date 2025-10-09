@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination, Autoplay } from "swiper/modules";
 const Scholarships = () => {
   return (
     <>
@@ -27,445 +30,464 @@ const Scholarships = () => {
           especially those from Deaf, SC/ST, OBC, and EWS backgrounds
         </p>
 
-        <div className="h-160 w-full bg-[#f1f1f2] py-15 overflow-auto">
-          <div className="w-full h-full flex items-center justify-center relative ">
-            <div className="absolute h-full w-full flex">
-              <div className="h-full w-1/2 bg-white"></div>
-              <div className="h-full w-1/2 bg-[#e8c67f]"></div>
-            </div>
+        <div className="h-160 w-full bg-[#f1f1f2] py-15 ">
+          <Swiper
+            loop={true}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            pagination={true}
+            modules={[Pagination, Autoplay]}
+            className="mySwiper"
+          >
+            <SwiperSlide>
+              <div className="w-full h-full flex items-center justify-center relative ">
+                <div className="absolute h-full w-full flex">
+                  <div className="h-full w-1/2 bg-white"></div>
+                  <div className="h-full w-1/2 bg-[#e8c67f]"></div>
+                </div>
 
-            <div className="w-[90%] relative global-width flex flex-col gap-2  h-[66%]">
-              <p className="text-[#00264e] font-[400] text-[30px] absolute -top-[50px] left-0">
-                <span className="text-[#c91e2c]">Why</span> We Do It
-              </p>
-              <div className="h-full w-full bg-[#e8c67f] border-3 border-white flex items-center justify-center">
-                <div className="w-[75%] flex flex-col gap-9">
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      Many learners face real-life barriers beyond income - lack
-                      of family support, social pressure, limited exposure to
-                      exam systems
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      Competitive exam prep is often inaccessible and
-                      unaffordable
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      Exam content is usually in English or Hindi, even when the
-                      learner’s education has been in another language
-                    </p>
+                <div className="w-[90%] relative global-width flex flex-col gap-2  h-[66%]">
+                  <p className="text-[#00264e] font-[400] text-[30px] absolute -top-[50px] left-0">
+                    <span className="text-[#c91e2c]">Why</span> We Do It
+                  </p>
+                  <div className="h-full w-full bg-[#e8c67f] border-3 border-white flex items-center justify-center">
+                    <div className="w-[75%] flex flex-col gap-9">
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          Many learners face real-life barriers beyond income -
+                          lack of family support, social pressure, limited
+                          exposure to exam systems
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          Competitive exam prep is often inaccessible and
+                          unaffordable
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          Exam content is usually in English or Hindi, even when
+                          the learner’s education has been in another language
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </SwiperSlide>
 
-          <div className="w-full h-full flex items-center justify-center relative ">
-            <div className="absolute h-full w-full flex">
-              <div className="h-full w-1/2 bg-white"></div>
-              <div className="h-full w-1/2 bg-[#dddddd]"></div>
-            </div>
+            <SwiperSlide>
+              <div className="w-full h-full flex items-center justify-center relative ">
+                <div className="absolute h-full w-full flex">
+                  <div className="h-full w-1/2 bg-white"></div>
+                  <div className="h-full w-1/2 bg-[#dddddd]"></div>
+                </div>
 
-            <div className="w-[90%] relative global-width flex flex-col gap-2  h-[66%]">
-              <p className="text-[#00264e] font-[400] text-[30px] absolute -top-[50px] left-0">
-                <span className="text-[#c91e2c]">What</span> We Provide
-              </p>
-              <div className="h-full w-full bg-[#dddddd] border-3 border-white flex items-center justify-center">
-                <div className="w-[75%] flex flex-col gap-9">
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      Books and study material aligned to SSC syllabus
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      Full access to our digital tools (apps, PDFs, videos)
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      ISL and multilingual content for Deaf and regional
-                      learners
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      No merit criteria - scholarships are based on actual need
-                      and context
-                    </p>
+                <div className="w-[90%] relative global-width flex flex-col gap-2  h-[66%]">
+                  <p className="text-[#00264e] font-[400] text-[30px] absolute -top-[50px] left-0">
+                    <span className="text-[#c91e2c]">What</span> We Provide
+                  </p>
+                  <div className="h-full w-full bg-[#dddddd] border-3 border-white flex items-center justify-center">
+                    <div className="w-[75%] flex flex-col gap-9">
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          Books and study material aligned to SSC syllabus
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          Full access to our digital tools (apps, PDFs, videos)
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          ISL and multilingual content for Deaf and regional
+                          learners
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          No merit criteria - scholarships are based on actual
+                          need and context
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </SwiperSlide>
 
-          <div className="w-full h-full flex items-center justify-center relative ">
-            <div className="absolute h-full w-full flex">
-              <div className="h-full w-1/2 bg-white"></div>
-              <div className="h-full w-1/2 bg-[#e8c67f]"></div>
-            </div>
+            <SwiperSlide>
+              <div className="w-full h-full flex items-center justify-center relative ">
+                <div className="absolute h-full w-full flex">
+                  <div className="h-full w-1/2 bg-white"></div>
+                  <div className="h-full w-1/2 bg-[#e8c67f]"></div>
+                </div>
 
-            <div className="w-[90%] relative global-width flex flex-col gap-2  h-[66%]">
-              <p className="text-[#00264e] font-[400] text-[30px] absolute -top-[50px] left-0">
-                <span className="text-[#c91e2c]">Who</span> It's For
-              </p>
-              <div className="h-full w-full bg-[#e8c67f] border-3 border-white flex items-center justify-center">
-                <div className="w-[75%] flex flex-col gap-9">
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      Learners from low-income or underserved backgrounds
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      Students with limited family or social support
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      Aspirants who show motivation and sincerity, even if their
-                      academic records are uneven
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      Deaf students who need content in Indian Sign Language
-                    </p>
+                <div className="w-[90%] relative global-width flex flex-col gap-2  h-[66%]">
+                  <p className="text-[#00264e] font-[400] text-[30px] absolute -top-[50px] left-0">
+                    <span className="text-[#c91e2c]">Who</span> It's For
+                  </p>
+                  <div className="h-full w-full bg-[#e8c67f] border-3 border-white flex items-center justify-center">
+                    <div className="w-[75%] flex flex-col gap-9">
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          Learners from low-income or underserved backgrounds
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          Students with limited family or social support
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          Aspirants who show motivation and sincerity, even if
+                          their academic records are uneven
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          Deaf students who need content in Indian Sign Language
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </SwiperSlide>
 
-          <div className="w-full h-full flex items-center justify-center relative ">
-            <div className="absolute h-full w-full flex">
-              <div className="h-full w-1/2 bg-white"></div>
-              <div className="h-full w-1/2 bg-[#dddddd]"></div>
-            </div>
+            <SwiperSlide>
+              <div className="w-full h-full flex items-center justify-center relative ">
+                <div className="absolute h-full w-full flex">
+                  <div className="h-full w-1/2 bg-white"></div>
+                  <div className="h-full w-1/2 bg-[#dddddd]"></div>
+                </div>
 
-            <div className="w-[90%] relative global-width flex flex-col gap-2  h-[66%]">
-              <p className="text-[#00264e] font-[400] text-[30px] absolute -top-[50px] left-0">
-                <span className="text-[#c91e2c]">Impact </span> So Far
-              </p>
-              <div className="h-full w-full bg-[#dddddd] border-3 border-white flex items-center justify-center">
-                <div className="w-[75%] flex flex-col gap-9">
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      1,000+ scholarships awarded
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      Publicly shared list of recipients for transparency
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="w-[24px] shrink-0">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 20 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_4031_810)">
-                          <path
-                            d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
-                            fill="#C91E2D"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_4031_810">
-                            <rect width="20" height="26" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </span>
-                    <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
-                      Accepting applications for 2025
-                    </p>
+                <div className="w-[90%] relative global-width flex flex-col gap-2  h-[66%]">
+                  <p className="text-[#00264e] font-[400] text-[30px] absolute -top-[50px] left-0">
+                    <span className="text-[#c91e2c]">Impact </span> So Far
+                  </p>
+                  <div className="h-full w-full bg-[#dddddd] border-3 border-white flex items-center justify-center">
+                    <div className="w-[75%] flex flex-col gap-9">
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          1,000+ scholarships awarded
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          Publicly shared list of recipients for transparency
+                        </p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="w-[24px] shrink-0">
+                          <svg
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 20 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g clip-path="url(#clip0_4031_810)">
+                              <path
+                                d="M19.8529 12.9068L1.288 2.56105L3.99823 11.9014L17.2012 12.9068L3.99823 13.9122L1.29131 23.2482L19.8529 12.9068Z"
+                                fill="#C91E2D"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_4031_810">
+                                <rect width="20" height="26" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </span>
+                        <p className="grow-1 text-[#00254e] text-[26px] leading-[28px]">
+                          Accepting applications for 2025
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </SwiperSlide>
+          </Swiper>
         </div>
 
         <div className="flex items-center justify-center py-30 w-full">
@@ -610,7 +632,7 @@ const Scholarships = () => {
             </Link>
 
             <Link
-               onClick={()=>alert("Application Closed")}
+              onClick={() => alert("Application Closed")}
               to="#"
               className="border-t border-[#00448f] flex items-center justify-between py-3"
             >
@@ -751,7 +773,7 @@ const Scholarships = () => {
             </Link>
 
             <Link
-               onClick={()=>alert("Application Closed")}
+              onClick={() => alert("Application Closed")}
               to="#"
               className="border-t border-[#00448f] flex items-center justify-between py-3"
             >
@@ -892,7 +914,7 @@ const Scholarships = () => {
             </Link>
 
             <Link
-               onClick={()=>alert("Application Closed")}
+              onClick={() => alert("Application Closed")}
               to="#"
               className="border-t border-[#00448f] flex items-center justify-between py-3"
             >
@@ -1033,7 +1055,7 @@ const Scholarships = () => {
             </Link>
 
             <Link
-              onClick={()=>alert("Application Closed")}
+              onClick={() => alert("Application Closed")}
               to="#"
               className="border-t border-[#00448f] flex items-center justify-between py-3"
             >
