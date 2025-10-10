@@ -9,6 +9,16 @@
   display: none;
 }
 
+input {
+  accent-color: #00264e;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .navbar .active {
   color: #ed1a2f;
   border-bottom: 1px solid #ed1a2f;
@@ -80,4 +90,18 @@
 .swiper-slide {
   height: 100%;
   width: 100%;
+}
+.form-field:has(:required) > label {
+  position: relative;
+  width: max-content;
+  max-width: 100%;
+}
+
+.form-field:has(:required) > label::after {
+  content: "*";
+  color: red;
+  font-size: 14px;
+  position: absolute;
+  right: -10px;
+  top: -3px;
 }
