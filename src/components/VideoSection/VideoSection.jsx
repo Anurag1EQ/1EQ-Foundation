@@ -2,7 +2,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import Timestamps from "../Timestamps/Timestamps";
 const VideoSection = () => {
   return (
-    <section className=" h-[calc(100vh-420px)]  bg-white  justify-between gap-12 flex flex-col shadow-blue-light">
+    <section className=" h-[calc(100vh-420px)] min-h-[500px]  bg-white  justify-between gap-12 flex flex-col shadow-blue-light">
       {/* Main Section */}
       <div className="flex flex-col grow-1 ">
         <div className="w-[80%]  overflow-hidden h-full relative mx-auto flex pt-15 justify-between">
