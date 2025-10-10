@@ -41,9 +41,9 @@ const HeroSection = () => {
             <img src="gunga.png" className="h-full w-full " alt="" />
           </div> */}
           <div className="w-[30%] relative max-w-[450px] aspect-[1/1.2] overflow-hidden">
-            <div className="shrink-0 scale-[2.8]  w-[100%] absolute right-0 top-[50%] image-shadow-inset transform  translate-y-[-50%]">
+            <div className="shrink-0 scale-[1.1]  w-[100%] absolute right-0 top-[50%] image-shadow-inset transform  translate-y-[-50%]">
               <video
-                src="Split_clip.webm"
+                src="service_video.webm"
                 autoPlay
                 muted
                 loop
