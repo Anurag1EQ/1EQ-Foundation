@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import LandingPage from "./pages/LandingPage";
+import Services from "./pages/Services";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Scholarships from "./pages/Scholarships";
@@ -26,7 +26,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/services" element={<LandingPage />} />
+        <Route path="/services" element={<Services />} />
         <Route path="/scholarships" element={<Scholarships />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<AboutUs />} />

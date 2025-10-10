@@ -2,13 +2,13 @@ const Header = () => {
   return (
     <header className="relative">
       <div className="h-[470px] overflow-hidden flex items-center justify-center shadow-blue ">
-        <video
-          className="w-[100%] object-fill -z-1"
-          src="header-video.mp4"
-          autoPlay
-          muted
-          loop
-        ></video>
+            {/* <video
+              className="w-[100%] object-fill -z-1"
+              src="header-video.mp4"
+              autoPlay
+              muted
+              loop
+            ></video> */}
       </div>
 
       <div className="absolute h-full w-[90%] flex flex-col items-center justify-center global-width left-[50%] top-0 translate-x-[-50%] ">
