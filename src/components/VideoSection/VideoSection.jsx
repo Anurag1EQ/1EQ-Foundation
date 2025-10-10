@@ -34,9 +34,9 @@ const VideoSection = () => {
           {/* <div className="shrink-0 max-w-[440px] w-[44%] absolute right-0 top-[50%] image-shadow-inset transform  translate-y-[-50%]">
             <img src="gunga.png" className="h-full w-full " alt="" />
           </div> */}
-          <div className="shrink-0  overflow-hidden h-full aspect-square flex items-center justify-center absolute bottom-[-14%] right-[-8%]  ">
+          <div className="shrink-0  overflow-hidden h-full aspect-square flex items-center justify-center absolute bottom-[-1%] right-[-8%]  ">
             <video
-              src="Split_clip.webm"
+              src="service_video4.webm"
               autoPlay
               muted
               loop

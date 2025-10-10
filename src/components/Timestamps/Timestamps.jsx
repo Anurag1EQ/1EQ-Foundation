@@ -25,7 +25,7 @@ const Timestamps = () => {
   
     useEffect(() => {
       let indexNo = 0;
-      console.log(textArray);
+      // console.log(textArray);
       const timer = setInterval(() => {
         if (indexNo > textArray.length) {
           indexNo = 0;
