@@ -1,17 +1,23 @@
 const Header = () => {
   return (
     <header className="relative">
-      <div className="h-[470px] overflow-hidden flex items-center justify-center shadow-blue ">
-            {/* <video
+      <div className="max-h-[490px] h-[30vh] min-h-[450px]  overflow-hidden flex items-center justify-center shadow-blue ">
+        {/* <video
               className="w-[100%] object-fill -z-1"
               src="header-video.mp4"
               autoPlay
               muted
               loop
             ></video> */}
+
+        <img
+          src="homepage_banner.jpeg"
+          className="h-full object-cover -z-1 w-[90%] mx-auto global-width"
+          alt=""
+        />
       </div>
 
-      <div className="absolute h-full w-[90%] flex flex-col items-center justify-center global-width left-[50%] top-0 translate-x-[-50%] ">
+      <div className="absolute h-full z-[2]  w-[90%] flex flex-col items-center justify-center global-width left-[50%] top-0 translate-x-[-50%] ">
         <div className="w-[100%] max-w-[1300px]">
           <svg
             width="100%"
@@ -19,6 +25,7 @@ const Header = () => {
             viewBox="0 0 1315 329"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            className="white-drop-shadow"
           >
             <path
               d="M362.6 48.8C377 62.1333 384.2 80.2 384.2 103C384.2 115 381.6 126 376.4 136L388.6 144V181.2H388.4L357 161C343.267 171.8 325.667 177.2 304.2 177.2C279.533 177.2 260.067 170.533 245.8 157.2C231.4 143.733 224.2 125.667 224.2 103C224.2 80.2 231.4 62.1333 245.8 48.8C260.067 35.4667 279.533 28.8 304.2 28.8C328.867 28.8 348.333 35.4667 362.6 48.8ZM276.4 75C269.467 81.9333 266 91.6 266 104C266 116.267 269.467 125.867 276.4 132.8C283.467 140 293.067 143.6 305.2 143.6C312.667 143.6 319.4 142.267 325.4 139.6L294 120.6L310.2 96L343.2 116.4C344.133 113.067 344.6 108.933 344.6 104C344.6 91.6 341.133 81.9333 334.2 75C327.133 67.9333 317.467 64.4 305.2 64.4C292.8 64.4 283.2 67.9333 276.4 75Z"

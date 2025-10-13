@@ -9,8 +9,6 @@ const FoundationPrograms = () => {
     card3: false,
   });
 
-  console.log(cardExpand, isCardActive);
-
   return (
     <section className=" relative">
       <div className="absolute h-full -z-1 w-full opacity-[20%] overflow-hidden top-0 left-0 ">

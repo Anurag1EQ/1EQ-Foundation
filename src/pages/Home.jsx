@@ -20,7 +20,7 @@ const Home = () => {
       <Vocab />
       <Ecosystem />
       <FoundationPrograms />
-      <Faq/>
+      {/* <Faq/> */}
     </>
   );
 };

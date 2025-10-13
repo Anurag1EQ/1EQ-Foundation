@@ -23,13 +23,14 @@ const ScholarshipForm = () => {
     disabilityCertificateFileName: "",
     familyIncome: "",
     isCurrentlyWorking: "",
-    workingDetails: "",
     scholarshipSourceInfo: "",
     tenthStudyMedium: "",
     twelfthStudyMedium: "",
     educationLevel: "",
     currentlyStudying: "",
     currentEducationMedium: "",
+
+    // part 2
     eligibleForCGL2025: "",
     preparingForCGL2025: "",
     cgl2025Attempt: "",
@@ -58,6 +59,68 @@ const ScholarshipForm = () => {
     signatureData: "",
   };
 
+  const indianRegions = [
+    "Andaman and Nicobar Islands",
+    "Andhra Pradesh",
+    "Arunachal Pradesh",
+    "Assam",
+    "Bihar",
+    "Chandigarh",
+    "Chhattisgarh",
+    "Dadra and Nagar Haveli and Daman and Diu",
+    "Delhi",
+    "Goa",
+    "Gujarat",
+    "Haryana",
+    "Himachal Pradesh",
+    "Jammu and Kashmir",
+    "Jharkhand",
+    "Karnataka",
+    "Kerala",
+    "Ladakh",
+    "Lakshadweep",
+    "Madhya Pradesh",
+    "Maharashtra",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Odisha",
+    "Puducherry",
+    "Punjab",
+    "Rajasthan",
+    "Sikkim",
+    "Tamil Nadu",
+    "Telangana",
+    "Tripura",
+    "Uttar Pradesh",
+    "Uttarakhand",
+    "West Bengal",
+  ];
+
+  const disabilityType = [
+    "VH : Blindness and Low vision",
+    "HH : Deaf and Hard of Hearing",
+    "OH : Locomotor Disability",
+    "Others : Autism etc",
+  ];
+
+  const studyMedium = [
+    "English",
+    "Hindi",
+    "Bengali",
+    "Telugu",
+    "Tamil",
+    "Kannada",
+    "Malayalam",
+    "Marathi",
+    "Assamese",
+    "Gujarati",
+    "Konkani",
+    "Odia",
+  ];
+
+  const casteCategory = ["UR", "EWS", "OBC", "SC", "ST"];
   const total_states = [
     "Personal-Information",
     "SSC-Exam-Information",
@@ -84,6 +147,7 @@ const ScholarshipForm = () => {
 
   function handleNextPage(e) {
     e.preventDefault();
+    sendData();
     if (currentIndex < total_states.length - 1) {
       setTabActiveState(total_states[currentIndex + 1]);
       setCurrentIndex(currentIndex + 1);
@@ -103,44 +167,43 @@ const ScholarshipForm = () => {
     stateUT: formData.stateUT,
     pincode: formData.pincode,
     isBenchmarkDisability: formData.isBenchmarkDisability,
-    disabilityType: formData.disabilityType,
-    category: formData.category,
-    disabilityCertificateFileName: formData.disabilityCertificateFileName,
-    familyIncome: formData.familyIncome,
-    isCurrentlyWorking: formData.isCurrentlyWorking,
-    workingDetails: formData.workingDetails,
-    scholarshipSourceInfo: formData.scholarshipSourceInfo,
-    tenthStudyMedium: formData.tenthStudyMedium,
-    twelfthStudyMedium: formData.twelfthStudyMedium,
-    educationLevel: formData.educationLevel,
-    currentlyStudying: formData.currentlyStudying,
-    currentEducationMedium: formData.currentEducationMedium,
-    eligibleForCGL2025: formData.eligibleForCGL2025,
-    preparingForCGL2025: formData.preparingForCGL2025,
-    cgl2025Attempt: formData.cgl2025Attempt,
-    clearedOtherGovtExams: formData.clearedOtherGovtExams,
-    preparationMethod: formData.preparationMethod,
-    practiceMethod: formData.practiceMethod,
-    isPartOfStudyGroup: formData.isPartOfStudyGroup,
-    studyGroupName: formData.studyGroupName,
-    hasMobilePhone: formData.hasMobilePhone,
-    hasSmartPhone: formData.hasSmartPhone,
-    hasKeypadMobile: formData.hasKeypadMobile,
-    hasTabletAndroid: formData.hasTabletAndroid,
-    hasTabletiPad: formData.hasTabletiPad,
-    hasLaptop: formData.hasLaptop,
-    hasDesktop: formData.hasDesktop,
-    receivedPreviousScholarship: formData.receivedPreviousScholarship,
-    previousScholarshipDetails: formData.previousScholarshipDetails,
-    scholarshipNeeded: formData.scholarshipNeeded,
-    scholarshipEssay: formData.scholarshipEssay,
-    volunteerRole: formData.volunteerRole,
-    messageTo1EQ: formData.messageTo1EQ,
-    declarationInfoTrue: formData.declarationInfoTrue,
-    declarationInfoAccurate: formData.declarationInfoAccurate,
-    consentToContact: formData.consentToContact,
-    participateInSurvey: formData.participateInSurvey,
-    signatureData: formData.signatureData,
+    disabilityType: formData.isBenchmarkDisability === 'yes' ? formData.disabilityType : formData.disabilityType = "",
+    category: formData.isBenchmarkDisability === 'yes' ? formData.category : formData.category = "",
+    disabilityCertificateFileName: formData.isBenchmarkDisability === 'yes' ? formData.disabilityCertificateFileName : formData.disabilityCertificateFileName = "",
+    familyIncome: formData.isBenchmarkDisability === 'yes' ? formData.familyIncome : formData.familyIncome = "",
+    isCurrentlyWorking: formData.isBenchmarkDisability === 'yes' ? formData.isCurrentlyWorking : formData.isCurrentlyWorking = "",
+    scholarshipSourceInfo: formData.isBenchmarkDisability === 'yes' ? formData.scholarshipSourceInfo : formData.scholarshipSourceInfo = "",
+    tenthStudyMedium:formData.isBenchmarkDisability === 'yes' ? formData.tenthStudyMedium : formData.tenthStudyMedium = "",
+    twelfthStudyMedium: formData.isBenchmarkDisability === 'yes' ? formData.twelfthStudyMedium : formData.twelfthStudyMedium = "",
+    educationLevel:formData.isBenchmarkDisability === 'yes' ? formData.educationLevel : formData.educationLevel = '',
+    currentlyStudying: formData.isBenchmarkDisability === 'yes' ? formData.currentlyStudying : formData.currentlyStudying = "",
+    currentEducationMedium: formData.isBenchmarkDisability === 'yes' ? formData.currentEducationMedium : formData.currentEducationMedium = "",
+    // eligibleForCGL2025: formData.eligibleForCGL2025,
+    // preparingForCGL2025: formData.preparingForCGL2025,
+    // cgl2025Attempt: formData.cgl2025Attempt,
+    // clearedOtherGovtExams: formData.clearedOtherGovtExams,
+    // preparationMethod: formData.preparationMethod,
+    // practiceMethod: formData.practiceMethod,
+    // isPartOfStudyGroup: formData.isPartOfStudyGroup,
+    // studyGroupName: formData.studyGroupName,
+    // hasMobilePhone: formData.hasMobilePhone,
+    // hasSmartPhone: formData.hasSmartPhone,
+    // hasKeypadMobile: formData.hasKeypadMobile,
+    // hasTabletAndroid: formData.hasTabletAndroid,
+    // hasTabletiPad: formData.hasTabletiPad,
+    // hasLaptop: formData.hasLaptop,
+    // hasDesktop: formData.hasDesktop,
+    // receivedPreviousScholarship: formData.receivedPreviousScholarship,
+    // previousScholarshipDetails: formData.previousScholarshipDetails,
+    // scholarshipNeeded: formData.scholarshipNeeded,
+    // scholarshipEssay: formData.scholarshipEssay,
+    // volunteerRole: formData.volunteerRole,
+    // messageTo1EQ: formData.messageTo1EQ,
+    // declarationInfoTrue: formData.declarationInfoTrue,
+    // declarationInfoAccurate: formData.declarationInfoAccurate,
+    // consentToContact: formData.consentToContact,
+    // participateInSurvey: formData.participateInSurvey,
+    // signatureData: formData.signatureData,
   };
 
   async function sendData() {
@@ -148,7 +211,6 @@ const ScholarshipForm = () => {
     try {
       console.log(dataObject);
       const response = await axios.post(url, dataObject);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -179,9 +241,9 @@ const ScholarshipForm = () => {
               student aspiring to study DIGITAL Skills can apply for this
               scholarship. This scholarship is specifically NOT a merit based
               one. Kindly DO NOT apply, if you are working or from a family of
-              means or you are selected in any kind of Government Job. Please
-              check spelling and Recheck Information. Only the completed
-              applications will be considered for the scholarship.
+              means or you are in any kind of Government Job. Please check
+              spelling and Recheck Information. Only the completed applications
+              will be considered for the scholarship.
             </p>
 
             <p className="text-[#364053] text-[17px]">
@@ -683,18 +745,16 @@ const ScholarshipForm = () => {
                     }
                     className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
                   >
-                    <option value="" selected disabled>
+                    <option value="" disabled>
                       -- Select --
                     </option>
-                    <option value="delhi">Delhi</option>
-                    <option value="uttarpradesh">Uttarpradesh</option>
-                    <option value="madhyapradesh">Madhyapradesh</option>
-                    <option value="punjab">Punjab</option>
-                    <option value="mumbai">Mumbai</option>
-                    <option value="bengal">Bengal</option>
-                    <option value="bihar">Bihar</option>
-                    <option value="haryana">Haryana</option>
-                    <option value="gujrat">Gujrat</option>
+                    {indianRegions.map((elem, index) => {
+                      return (
+                        <option key={index} value={elem.toLowerCase()}>
+                          {elem}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
 
@@ -743,7 +803,10 @@ const ScholarshipForm = () => {
                     <input
                       checked={formData.isBenchmarkDisability === "no"}
                       onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
+                        setFormData({
+                          ...formData,
+                          isBenchmarkDisability: e.target.value,
+                        })
                       }
                       type="radio"
                       name="disability"
@@ -755,348 +818,400 @@ const ScholarshipForm = () => {
                 </div>
               </div>
 
-              {/* disability type */}
-              {formData.isBenchmarkDisability === "yes" && (
-                <div className="w-full flex flex-col form-field gap-1 text-[17px]">
-                  <label className="text-[17px] leading-[19px] text-[#0a0a0a]">
-                    Type of Disability (विकलांगता का प्रकार)
-                  </label>
+              {/* show when disability type is yes */}
 
-                  <select
-                    required
-                    name="disability-type"
-                    value={formData.disabilityType}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        disabilityType: e.target.value,
-                      })
-                    }
-                    className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                  >
-                    <option value="" selected disabled>
-                      -- Select --
-                    </option>
-                    <option value="visual">Visual Impairment</option>
-                    <option value="hearing">Hearing Impairment</option>
-                    <option value="physical">Physical Disability</option>
-                    <option value="intellectual">
-                      Intellectual Disability
-                    </option>
-                    <option value="multiple">Multiple Disabilities</option>
-                    <option value="speech">Speech Disability</option>
-                    <option value="mental">Mental Health Condition</option>
-                    <option value="autism">Autism Spectrum Disorder</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-              )}
+              {formData.isBenchmarkDisability === "yes" ? (
+                <>
+                  {/* disability type */}
+                  <div className="w-full flex flex-col form-field gap-1 text-[17px]">
+                    <label className="text-[17px] leading-[19px] text-[#0a0a0a]">
+                      Type of Disability (विकलांगता का प्रकार)
+                    </label>
 
-              {/* disability certificate  */}
-
-              {formData.isBenchmarkDisability === "yes" && (
-                <div className="w-full flex flex-col form-field gap-1">
-                  <label
-                    className="text-[17px] text-[#0a0a0a]"
-                    htmlFor="select-disability-certificate"
-                  >
-                    Upload Your Disability Certificate (अपना विकलांगता
-                    प्रमाणपत्र अपलोड करें)
-                  </label>
-                  <div className="flex gap-3 min-h-30 items-center justify-center text-[17px] rounded-xl border-[2px] border-[#d1d5dd]">
-                    {formData.disabilityCertificateFileName ? (
-                      <div className="flex gap-2 items-center">
-                        <label
-                          htmlFor="select-disability-certificate"
-                          className="py-2  rounded-xl border px-3 cursor-pointer border-[#c91e2c] text-[17px] text-[#c91e2c] bg-[#fff7ed]"
-                        >
-                          Upload
-                        </label>
-                        <span className="text-[#4a5565]">
-                          or drag files here.
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="h-[90%] select-none w-max max-w-[80px] border relative  rounded-md">
-                        <img
-                          src="gunga.png"
-                          className="h-full w-full object-contain"
-                          alt=""
-                        />
-                        <span
-                          onClick={() =>
-                            (formData.disabilityCertificateFileName = "")
-                          }
-                          className="cursor-pointer text-[15px] p-1 absolute top-0 right-0 translate-x-[50%] translate-y-[-50%] bg-red-100 text-red-500 rounded-full flex items-center justify-center w-[10px] h-[22px] shrink-0 aspect-square "
-                        >
-                          <RxCross2 />
-                        </span>
-                      </div>
-                    )}
-
-                    <input
-                      type="file"
-                      id="select-disability-certificate"
-                      name="disability-certificate"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                          setFormData({
-                            ...formData,
-                            disabilityCertificateFileName:
-                              URL.createObjectURL(file),
-                          });
-                        }
-                      }}
+                    <select
                       required
-                      className="bg-[#f3f3f5] hidden grow-1 px-3 py-2 text-[16px] text-black outline-none border-none rounded-lg"
-                      placeholder="Select disability certificate"
-                    />
+                      name="disability-type"
+                      value={formData.disabilityType}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          disabilityType: e.target.value,
+                        })
+                      }
+                      className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    >
+                      <option value="" disabled>
+                        -- Select --
+                      </option>
+                      {disabilityType.map((elem, index) => (
+                        <option key={index} value={elem}>
+                          {elem}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
-                  <p className="text-[14px] text-[#6b7281] mt-2">
-                    Upload your picture as per SSC Specifications (एसएससी
-                    विनिर्देशों के अनुसार अपनी तस्वीर अपलोड करें)
+                  {/* category */}
+                  <div className="w-full flex flex-col form-field gap-1 text-[17px]">
+                    <label className="text-[17px] leading-[19px] text-[#0a0a0a]">
+                      Your Category (आपकी श्रेणी)
+                    </label>
+
+                    <select
+                      required
+                      name="disability-type"
+                      value={formData.category}
+                      onChange={(e) =>
+                        setFormData({ ...formData, category: e.target.value })
+                      }
+                      className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    >
+                      <option value="" disabled>
+                        Select Your Category (अपनी श्रेणी का चयन करें)
+                      </option>
+                      {casteCategory.map((elem, index) => {
+                        return (
+                          <option key={index} value={elem}>
+                            {elem}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+
+                  {/* disability certificate  */}
+                  <div className="w-full flex flex-col form-field gap-1">
+                    <label
+                      className="text-[17px] text-[#0a0a0a]"
+                      htmlFor="select-disability-certificate"
+                    >
+                      Upload Your Disability Certificate (अपना विकलांगता
+                      प्रमाणपत्र अपलोड करें)
+                    </label>
+                    <div className="flex gap-3 min-h-30 items-center justify-center text-[17px] rounded-xl border-[2px] border-[#d1d5dd]">
+                      {formData.disabilityCertificateFileName ? (
+                        <div className="flex gap-2 items-center">
+                          <label
+                            htmlFor="select-disability-certificate"
+                            className="py-2  rounded-xl border px-3 cursor-pointer border-[#c91e2c] text-[17px] text-[#c91e2c] bg-[#fff7ed]"
+                          >
+                            Upload
+                          </label>
+                          <span className="text-[#4a5565]">
+                            or drag files here.
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="h-[90%] select-none w-max max-w-[80px] border relative  rounded-md">
+                          <img
+                            src="gunga.png"
+                            className="h-full w-full object-contain"
+                            alt=""
+                          />
+                          <span
+                            onClick={() =>
+                              (formData.disabilityCertificateFileName = "")
+                            }
+                            className="cursor-pointer text-[15px] p-1 absolute top-0 right-0 translate-x-[50%] translate-y-[-50%] bg-red-100 text-red-500 rounded-full flex items-center justify-center w-[10px] h-[22px] shrink-0 aspect-square "
+                          >
+                            <RxCross2 />
+                          </span>
+                        </div>
+                      )}
+
+                      <input
+                        type="file"
+                        id="select-disability-certificate"
+                        name="disability-certificate"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            setFormData({
+                              ...formData,
+                              disabilityCertificateFileName:
+                                URL.createObjectURL(file),
+                            });
+                          }
+                        }}
+                        required
+                        className="bg-[#f3f3f5] hidden grow-1 px-3 py-2 text-[16px] text-black outline-none border-none rounded-lg"
+                        placeholder="Select disability certificate"
+                      />
+                    </div>
+
+                    <p className="text-[14px] text-[#6b7281] mt-2">
+                      Upload your picture as per SSC Specifications (एसएससी
+                      विनिर्देशों के अनुसार अपनी तस्वीर अपलोड करें)
+                    </p>
+                  </div>
+
+                  {/* family income */}
+                  <div className="w-full flex flex-col form-field gap-1 text-[17px]">
+                    <label className="text-[17px] text-[#0a0a0a]">
+                      Your Family Income (आपकी पारिवारिक आय)
+                    </label>
+                    <div className="flex gap-3">
+                      <select
+                        required
+                        value={formData.familyIncome}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            familyIncome: e.target.value,
+                          })
+                        }
+                        name="family income"
+                        className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                      >
+                        <option value="" disabled>
+                          Select Income
+                        </option>
+                        <option value="Below 2.4 Lacks">Below 5 Lacks</option>
+                        <option value="Between 2.4 - 5 Lacks">
+                          Between 2.4 - 5 Lacks
+                        </option>
+                        <option value="Above 5 Lacks">Above 5 Lacks</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* working details */}
+                  <div className="w-full flex flex-col form-field gap-1 text-[17px]">
+                    <label className="text-[17px] text-[#0a0a0a]">
+                      Are you Presently Working? (क्या आप वर्तमान में कार्यरत
+                      हैं?)
+                    </label>
+                    <div className="flex gap-3">
+                      <select
+                        required
+                        value={formData.workingDetails}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            workingDetails: e.target.value,
+                          })
+                        }
+                        name="currently working"
+                        className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                      >
+                        <option value="" disabled>
+                          Presently Working
+                        </option>
+                        <option value="In Government Job (Full time)">
+                          In Government Job (Full time)
+                        </option>
+                        <option value="In Private Job (Full time)">
+                          In Private Job (Full time)
+                        </option>
+                        <option value="In Part Time Job / Freelancer">
+                          In Part Time Job / Freelancer
+                        </option>
+                        <option value="Unemployed">Unemployed</option>
+                        <option value="Still-Studying">Still-Studying</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* scholarship program referral */}
+                  <div className="w-full flex flex-col form-field gap-1 text-[17px] pb-8 border-b border-[#e8e8e8]">
+                    <label className="text-[17px] text-[#0a0a0a]">
+                      How did you learn about this Scholarship Program? (आपको इस
+                      छात्रवृत्ति कार्यक्रम के बारे में कैसे पता चला?)
+                    </label>
+                    <div className="flex gap-3">
+                      <select
+                        required
+                        value={formData.scholarshipSourceInfo}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            scholarshipSourceInfo: e.target.value,
+                          })
+                        }
+                        name="scholarship program referral"
+                        className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                      >
+                        <option value="" disabled>
+                          Select where you learn about this Scholarship Program
+                        </option>
+                        <option value="1EQ Telegram">1EQ Telegram</option>
+                        <option value="1PYQ App">1PYQ App</option>
+                        <option value="1EQ Website">1EQ Website</option>
+                        <option value="From Friend">From Friend</option>
+                        <option value="From News Papers">
+                          From News Papers
+                        </option>
+                        <option value="From Social Media">
+                          From Social Media
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <p className="font-[500] text-[19px] text-[#0a0a0a]">
+                    Your Academic Information (आपकी शैक्षणिक जानकारी)
                   </p>
-                </div>
+
+                  {/* 10th & 12th Medium */}
+                  <div className="flex gap-3 justify-between pb-8 border-b border-[#e8e8e8]">
+                    <div className="w-full flex flex-col form-field gap-1 text-[17px]">
+                      <label className="text-[17px] leading-[19px] text-[#0a0a0a]">
+                        10th - Study Medium (10वीं - अध्ययन माध्यम)
+                      </label>
+
+                      <select
+                        required
+                        value={formData.tenthStudyMedium}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            tenthStudyMedium: e.target.value,
+                          })
+                        }
+                        name="10th study medium"
+                        className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                      >
+                        <option value="" disabled>
+                          Select Medium
+                        </option>
+                        {studyMedium.map((elem, index) => {
+                          return (
+                            <option value={elem} key={index}>
+                              {elem}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+
+                    <div className="w-full flex flex-col form-field gap-1 text-[17px]">
+                      <label className="text-[17px] leading-[19px] text-[#0a0a0a]">
+                        12th - Study Medium (12वीं - अध्ययन माध्यम)
+                      </label>
+                      <select
+                        required
+                        value={formData.twelfthStudyMedium}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            twelfthStudyMedium: e.target.value,
+                          })
+                        }
+                        name="12th study medium"
+                        className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                      >
+                        <option value="" disabled>
+                          Select Medium
+                        </option>
+                        {studyMedium.map((elem, index) => {
+                          return (
+                            <option value={elem} key={index}>
+                              {elem}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* education 1ualification level  */}
+                  <div className="w-full flex flex-col form-field gap-1">
+                    <label className="text-[17px] text-[#0a0a0a]">
+                      Level of Education Qualification (शिक्षा योग्यता का स्तर)
+                    </label>
+
+                    <select
+                      required
+                      name="disability-type"
+                      value={formData.educationLevel}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          educationLevel: e.target.value,
+                        })
+                      }
+                      className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    >
+                      <option value="" disabled>
+                        -- Select --
+                      </option>
+                      <option value="10th">10th</option>
+                      <option value="12th">12th</option>
+                      <option value="graduation">Graduation</option>
+                      <option value="post graduation">Post Graduation</option>
+                      <option value="phd">PHD</option>
+                    </select>
+                  </div>
+
+                  {/* currently studiying  */}
+                  <div className="w-full flex flex-col form-field gap-1">
+                    <label className="text-[17px] text-[#0a0a0a]">
+                      Are you currently studying? (क्या आप अभी पढ़ रहे हैं?)
+                    </label>
+
+                    <select
+                      required
+                      name="currently-studiying"
+                      value={formData.currentlyStudying}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          currentlyStudying: e.target.value,
+                        })
+                      }
+                      className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    >
+                      <option value="" disabled>
+                        -- Select --
+                      </option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </div>
+
+                  {/* currently education medium  */}
+                  <div className="w-full flex flex-col form-field gap-1">
+                    <label className="text-[17px] text-[#0a0a0a]">
+                      Current Education Medium (वर्तमान शिक्षा माध्यम)
+                    </label>
+
+                    <select
+                      required
+                      value={formData.currentEducationMedium}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          currentEducationMedium: e.target.value,
+                        })
+                      }
+                      name="current-education-medium"
+                      className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    >
+                      <option value="" disabled>
+                        -- Select --
+                      </option>
+                      {studyMedium.map((elem, index) => {
+                        return (
+                          <option value={elem} key={index}>
+                            {elem}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </>
+              ) : null}
+
+              {formData.isBenchmarkDisability === "no" && (
+                <p className="text-[20px] font-[600] leading-[24px]">
+                  This application form is exclusively for individuals in the
+                  People with Disabilites (PWD) category. Please use the
+                  following link to apply in your respective category. (यह आवेदन
+                  पत्र केवल PWD श्रेणी के लिए है। कृपया अपनी श्रेणी में आवेदन
+                  करने के लिए निम्नलिखित लिंक पर क्लिक करें।)
+                </p>
               )}
-
-              {/* category type */}
-              <div className="w-full flex flex-col form-field gap-1 text-[17px]">
-                <label className="text-[17px] leading-[19px] text-[#0a0a0a]">
-                  Your Category (आपकी श्रेणी)
-                </label>
-
-                <select
-                  required
-                  name="disability-type"
-                  value={formData.category}
-                  onChange={(e) =>
-                    setFormData({ ...formData, category: e.target.value })
-                  }
-                  className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                >
-                  <option value="" selected disabled>
-                    Select Your Category (अपनी श्रेणी का चयन करें)
-                  </option>
-                  <option value="general">General</option>
-                  <option value="ews">EWS (Economically Weaker Section)</option>
-                  <option value="obc">OBC (Other Backward Class)</option>
-                  <option value="sc">SC (Scheduled Caste)</option>
-                  <option value="st">ST (Scheduled Tribe)</option>
-                  <option value="minority">Minority</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              {/* family income */}
-              <div className="w-full flex flex-col form-field gap-1 text-[17px]">
-                <label className="text-[17px] text-[#0a0a0a]">
-                  Your Family Income (आपकी पारिवारिक आय)
-                </label>
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    required
-                    value={formData.familyIncome}
-                    onChange={(e) =>
-                      setFormData({ ...formData, familyIncome: e.target.value })
-                    }
-                    name="family income"
-                    placeholder="Enter Family Income"
-                    className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                  />
-                </div>
-              </div>
-
-              {/* working details */}
-              <div className="w-full flex flex-col form-field gap-1 text-[17px]">
-                <label className="text-[17px] text-[#0a0a0a]">
-                  Are you Presently Working? (क्या आप वर्तमान में कार्यरत हैं?)
-                </label>
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    required
-                    value={formData.workingDetails}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        workingDetails: e.target.value,
-                      })
-                    }
-                    name="currently working"
-                    placeholder="Yes/No and details"
-                    className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                  />
-                </div>
-              </div>
-
-              {/* scholarship program referral */}
-              <div className="w-full flex flex-col form-field gap-1 text-[17px] pb-8 border-b border-[#e8e8e8]">
-                <label className="text-[17px] text-[#0a0a0a]">
-                  How did you learn about this Scholarship Program? (आपको इस
-                  छात्रवृत्ति कार्यक्रम के बारे में कैसे पता चला?)
-                </label>
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    required
-                    value={formData.scholarshipSourceInfo}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        scholarshipSourceInfo: e.target.value,
-                      })
-                    }
-                    name="scholarship program referral"
-                    placeholder="Please specify how you learned about this program"
-                    className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                  />
-                </div>
-              </div>
-
-              <p className="font-[500] text-[19px] text-[#0a0a0a]">
-                Your Academic Information (आपकी शैक्षणिक जानकारी)
-              </p>
-
-              {/* 10th & 12th Medium */}
-              <div className="flex gap-3 justify-between pb-8 border-b border-[#e8e8e8]">
-                <div className="w-full flex flex-col form-field gap-1 text-[17px]">
-                  <label className="text-[17px] leading-[19px] text-[#0a0a0a]">
-                    10th - Study Medium (10वीं - अध्ययन माध्यम)
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.tenthStudyMedium}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        tenthStudyMedium: e.target.value,
-                      })
-                    }
-                    name="10th study medium"
-                    placeholder="Enter study nedium"
-                    className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                  />
-                </div>
-
-                <div className="w-full flex flex-col form-field gap-1 text-[17px]">
-                  <label className="text-[17px] leading-[19px] text-[#0a0a0a]">
-                    12th - Study Medium (12वीं - अध्ययन माध्यम)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.twelfthStudyMedium}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        twelfthStudyMedium: e.target.value,
-                      })
-                    }
-                    required
-                    name="12th study medium"
-                    placeholder="Enter study nedium"
-                    className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                  />
-                </div>
-              </div>
-
-              {/* education 1ualification level  */}
-              <div className="w-full flex flex-col form-field gap-1">
-                <label className="text-[17px] text-[#0a0a0a]">
-                  Level of Education Qualification (शिक्षा योग्यता का स्तर)
-                </label>
-
-                <select
-                  required
-                  name="disability-type"
-                  value={formData.educationLevel}
-                  onChange={(e) =>
-                    setFormData({ ...formData, educationLevel: e.target.value })
-                  }
-                  className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                >
-                  <option value="" selected disabled>
-                    -- Select --
-                  </option>
-                  <option value="10th">10th (Secondary School)</option>
-                  <option value="12th">12th (Higher Secondary)</option>
-                  <option value="undergraduate">
-                    Undergraduate (Bachelor’s Degree)
-                  </option>
-                  <option value="postgraduate">
-                    Postgraduate (Master’s Degree)
-                  </option>
-                  <option value="phd">Ph.D.</option>
-                </select>
-              </div>
-
-              {/* currently studiying  */}
-              <div className="w-full flex flex-col form-field gap-1">
-                <label className="text-[17px] text-[#0a0a0a]">
-                  Are you currently studying? (क्या आप अभी पढ़ रहे हैं?)
-                </label>
-
-                <select
-                  required
-                  name="currently-studiying"
-                  value={formData.currentlyStudying}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      currentlyStudying: e.target.value,
-                    })
-                  }
-                  className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                >
-                  <option value="" selected disabled>
-                    -- Select --
-                  </option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
-              </div>
-
-              {/* currently education medium  */}
-              <div className="w-full flex flex-col form-field gap-1">
-                <label className="text-[17px] text-[#0a0a0a]">
-                  Current Education Medium (वर्तमान शिक्षा माध्यम)
-                </label>
-
-                <select
-                  required
-                  value={formData.currentEducationMedium}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      currentEducationMedium: e.target.value,
-                    })
-                  }
-                  name="current-education-medium"
-                  className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                >
-                  <option value="" selected disabled>
-                    -- Select --
-                  </option>
-                  <option value="english">English</option>
-                  <option value="hindi">Hindi</option>
-                  <option value="marathi">Marathi</option>
-                  <option value="tamil">Tamil</option>
-                  <option value="telugu">Telugu</option>
-                  <option value="kannada">Kannada</option>
-                  <option value="malayalam">Malayalam</option>
-                  <option value="gujarati">Gujarati</option>
-                  <option value="bengali">Bengali</option>
-                  <option value="punjabi">Punjabi</option>
-                  <option value="urdu">Urdu</option>
-                  <option value="odia">Odia</option>
-                  <option value="assamese">Assamese</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
             </div>
           )}
 
@@ -1127,7 +1242,7 @@ const ScholarshipForm = () => {
                   }
                   className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
                 >
-                  <option value="" selected disabled>
+                  <option value="" disabled>
                     -- Select --
                   </option>
                   <option value="yes">Yes</option>
@@ -1154,7 +1269,7 @@ const ScholarshipForm = () => {
                   }
                   className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
                 >
-                  <option value="" selected disabled>
+                  <option value="" disabled>
                     -- Select --
                   </option>
                   <option value="yes">Yes</option>
@@ -1177,7 +1292,7 @@ const ScholarshipForm = () => {
                   name="cgl-attempt-no"
                   className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
                 >
-                  <option value="" selected disabled>
+                  <option value="" disabled>
                     -- Which attempt? --
                   </option>
                   <option value="1">1</option>
@@ -1332,7 +1447,7 @@ const ScholarshipForm = () => {
                   }
                   className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
                 >
-                  <option value="" selected disabled>
+                  <option value="" disabled>
                     -- Select --
                   </option>
                   <option value="online">Online</option>
@@ -1361,7 +1476,7 @@ const ScholarshipForm = () => {
                   }
                   className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
                 >
-                  <option value="" selected disabled>
+                  <option value="" disabled>
                     -- Which attempt? --
                   </option>
                   <option value="Yes">Yes</option>
@@ -1576,7 +1691,7 @@ const ScholarshipForm = () => {
                   name="recieved-scholarship-from-1eq"
                   className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
                 >
-                  <option value="" selected disabled>
+                  <option value="" disabled>
                     -- Select --
                   </option>
                   <option value="Yes">Yes</option>

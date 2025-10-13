@@ -53,8 +53,14 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .shadow-blue {
   /* box-shadow: 0px -3px 32px 2px #00254e; */
-  background: linear-gradient(0deg, #00254e, #00244e54);
+  /* background: linear-gradient(0deg, #00254e, #00244e54); */
+  background: linear-gradient(0deg, #00254ee6, #00244e00);
 }
+
+.white-drop-shadow{
+  filter: drop-shadow(0px 0px 6px rgba(255, 255, 255, 0.8));
+}
+
 .shadow-blue-light {
   background: #405874;
   background: -webkit-linear-gradient(
