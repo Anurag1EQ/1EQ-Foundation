@@ -4,9 +4,19 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
 const Scholarships = () => {
+  let swiperInstance = null;
+
+  const handleClickOutside = (elem) => {
+    if (!elem.target.closest(".mySwiper")) {
+      swiperInstance?.autoplay.start();
+    }
+  };
   return (
     <>
-      <section className=" flex items-center justify-center flex-col">
+      <section
+        className=" flex items-center justify-center flex-col"
+        onClick={handleClickOutside} 
+      >
         <div className=" h-[58vh] min-h-[650px] max-h-[700px] w-full relative mb-8">
           <div className="h-full w-full overflow-hidden flex items-center justify-center">
             <video
@@ -30,15 +40,18 @@ const Scholarships = () => {
           especially those from Deaf, SC/ST, OBC, and EWS backgrounds
         </p>
 
-        <div className="h-160 w-full bg-[#f1f1f2] py-15 ">
+        <div className="h-160 w-full bg-[#f1f1f2] py-15 " onMouseEnter={(elem)=> swiperInstance?.autoplay.stop()} onMouseLeave={(elem)=> swiperInstance?.autoplay.start()}>
           <Swiper
             loop={true}
             autoplay={{
-              delay: 4500,
-              disableOnInteraction: true,
+              delay: 500,
+              disableOnInteraction: false,
             }}
-            pagination={true}
+            pagination={{ clickable: true }}
             modules={[Pagination, Autoplay]}
+            onSwiper={(swiper) => (swiperInstance = swiper)} 
+            onClick={() => swiperInstance?.autoplay.stop()} 
+        
             className="mySwiper"
           >
             <SwiperSlide>
