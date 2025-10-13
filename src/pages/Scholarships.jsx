@@ -34,8 +34,8 @@ const Scholarships = () => {
           <Swiper
             loop={true}
             autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
+              delay: 4500,
+              disableOnInteraction: true,
             }}
             pagination={true}
             modules={[Pagination, Autoplay]}
