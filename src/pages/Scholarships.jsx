@@ -15,10 +15,10 @@ const Scholarships = () => {
     <>
       <section
         className=" flex items-center justify-center flex-col"
-        onClick={handleClickOutside} 
+        onClick={handleClickOutside}
       >
-        <div className=" h-[58vh] min-h-[650px] max-h-[700px] w-full relative mb-8">
-          <div className="h-full w-full overflow-hidden flex items-center justify-center">
+        <div className=" h-[60vh] min-h-[650px] max-h-[750px] w-full relative mb-8">
+          <div className="h-full hidden w-full overflow-hidden flexx items-center justify-center">
             <video
               src="map-animation.mp4"
               autoPlay
@@ -26,6 +26,34 @@ const Scholarships = () => {
               loop
               className="w-[80%] h-auto object-fill"
             ></video>
+          </div>
+
+          <div className=" h-full py-5 pb-15  w-[70%] global-width mx-auto flex gap-6 justify-between">
+            <div className="flex flex-col gap-5 justify-between grow-1">
+              <div className="flex items-center justify-center w-full h-1/2 rounded-xl overflow-hidden">
+                <img
+                  src="scholarship-collage2.jpeg"
+                  className="w-full h-full object-cover "
+                  alt=""
+                />
+              </div>
+
+              <div className="flex items-center justify-center w-full h-1/2 rounded-xl overflow-hidden">
+                <img
+                  src="scholarship-collage3.jpeg"
+                  className="w-full h-full object-cover"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center h-full w-max rounded-xl overflow-hidden">
+              <img
+                src="scholarship-collage1.jpeg"
+                className="w-full h-full object-cover"
+                alt=""
+              />
+            </div>
           </div>
 
           <button className="absolute text-[38px] text-white min-w-[530px] w-[50%] max-w-[830px] py-3 px-4 rounded-[50px] flex items-center gap-[10px] justify-center overflow-hidden bg-[#00254e] font-[500] bottom-0  transform translate-y-[50%] left-[50%] translate-x-[-50%]">
@@ -40,7 +68,11 @@ const Scholarships = () => {
           especially those from Deaf, SC/ST, OBC, and EWS backgrounds
         </p>
 
-        <div className="h-160 w-full bg-[#f1f1f2] py-15 " onMouseEnter={(elem)=> swiperInstance?.autoplay.stop()} onMouseLeave={(elem)=> swiperInstance?.autoplay.start()}>
+        <div
+          className="h-160 w-full bg-[#f1f1f2] py-15 "
+          onMouseEnter={(elem) => swiperInstance?.autoplay.stop()}
+          onMouseLeave={(elem) => swiperInstance?.autoplay.start()}
+        >
           <Swiper
             loop={true}
             autoplay={{
@@ -49,9 +81,8 @@ const Scholarships = () => {
             }}
             pagination={{ clickable: true }}
             modules={[Pagination, Autoplay]}
-            onSwiper={(swiper) => (swiperInstance = swiper)} 
-            onClick={() => swiperInstance?.autoplay.stop()} 
-        
+            onSwiper={(swiper) => (swiperInstance = swiper)}
+            onClick={() => swiperInstance?.autoplay.stop()}
             className="mySwiper"
           >
             <SwiperSlide>
