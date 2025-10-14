@@ -19,10 +19,10 @@ const HeroSection = () => {
             <p className="text-[24px] font-[400] text-[#00254E]">
               The{" "}
               <span className="text-[#ed1c2f]">1ISL Vocabulary Project</span> is
-              a large-scale effort to create a rich, usable vocabulary database
+              a large scale effort to create a rich, usable vocabulary database
               in{" "}
               <span className="text-[#ed1c2f]">Indian Sign Language (ISL)</span>{" "}
-              - starting with words relevant to{" "}
+              starting with words relevant to{" "}
               <span className="text-[#ed1c2f]">
                 SSC exam preparation, legal awareness,
               </span>{" "}

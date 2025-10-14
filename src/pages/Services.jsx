@@ -73,8 +73,7 @@ const Services = () => {
                     </svg>
                   </span>
                   <p className="text-[22px] text-[#00254e] leading-[23px]">
-                    The existing ISLRTC dictionary lists 10,000+ signs, but very
-                    few are explained with context or real-world meaning
+                  Most Deaf students are not taught written English, so building sign based understanding of words is essential
                   </p>
                 </div>
               </div>
@@ -249,7 +248,7 @@ const Services = () => {
                     <ul className="text-[19px] list-disc pl-5 mt-3">
                       <li>SSC prep material</li>
                       <li>Legal documents</li>
-                      <li>Text-based communication needs</li>
+                      <li>Text based communication needs</li>
                     </ul>
                   </div>
                 </div>

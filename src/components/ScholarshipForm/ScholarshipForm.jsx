@@ -44,13 +44,11 @@ const ScholarshipForm = () => {
     practiceMethod: "",
     isPartOfStudyGroup: "",
     studyGroupName: "",
-    hasLaptop: "",
-    hasSmartPhone: "",
-    hasKeypadMobile: "",
-    hasTabletAndroid: "",
-    hasTabletiPad: "",
-    hasLaptop: "",
-    hasDesktop: "",
+    hasComputer: "",
+    hasTablet: "",
+    hasMobile: "",
+
+    // part 4
     receivedPreviousScholarship: "",
     previousScholarshipDetails: "",
     scholarshipNeeded: "",
@@ -222,21 +220,22 @@ const ScholarshipForm = () => {
     
     // part 2
 
-    eligibleForCGL2025: formData.eligibleForCGL2025,
-    preparingForCGL2025: formData.preparingForCGL2025,
-    cgl2025Attempt: formData.cgl2025Attempt,
-    clearedOtherGovtExams: formData.clearedOtherGovtExams,
-    // preparationMethod: formData.preparationMethod,
-    // practiceMethod: formData.practiceMethod,
-    // isPartOfStudyGroup: formData.isPartOfStudyGroup,
-    // studyGroupName: formData.studyGroupName,
-    // hasMobilePhone: formData.hasMobilePhone,
-    // hasSmartPhone: formData.hasSmartPhone,
-    // hasKeypadMobile: formData.hasKeypadMobile,
-    // hasTabletAndroid: formData.hasTabletAndroid,
-    // hasTabletiPad: formData.hasTabletiPad,
-    // hasLaptop: formData.hasLaptop,
-    // hasDesktop: formData.hasDesktop,
+    // eligibleForCGL2025: formData.eligibleForCGL2025,
+    // preparingForCGL2025: formData.preparingForCGL2025,
+    // cgl2025Attempt: formData.cgl2025Attempt,
+    // clearedOtherGovtExams: formData.clearedOtherGovtExams,
+
+    // part 3
+
+    preparationMethod: formData.preparationMethod,
+    practiceMethod: formData.practiceMethod,
+    isPartOfStudyGroup: formData.isPartOfStudyGroup,
+    studyGroupName: formData.studyGroupName,
+    hasComputer: formData.hasComputer,
+    hasTablet: formData.hasTablet,
+    hasMobile: formData.hasMobile,
+
+    // part 4
     // receivedPreviousScholarship: formData.receivedPreviousScholarship,
     // previousScholarshipDetails: formData.previousScholarshipDetails,
     // scholarshipNeeded: formData.scholarshipNeeded,
