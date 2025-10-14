@@ -69,7 +69,7 @@ const Vocab = () => {
                 />
               </div>
               <a
-                href="https://play.google.com/store/apps/details?id=com.oneislchallenge&hl=en_IN"
+                href="https://play.google.com/store/apps/details?id=com.oneislchallenge"
                 target="_blank"
                 className="w-[195px] mb-3 shrink-0 outline-none border-none cursor-pointer overflow-hidden"
               >

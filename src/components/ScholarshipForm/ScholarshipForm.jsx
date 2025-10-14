@@ -41,6 +41,17 @@ const ScholarshipForm = () => {
 
     // part 3
     preparationMethod: "",
+    handlePreparationChange : (e) => {
+        const val = e.target.value;
+        setFormData((prev) => {
+          const current = prev.preparationMethod || [];
+          const exists = current.includes(val);
+          const updated = exists
+            ? current.filter((item) => item !== val) 
+            : [...current, val]; 
+          return { ...prev, preparationMethod: updated };
+        });
+      },
     practiceMethod: "",
     isPartOfStudyGroup: "",
     studyGroupName: "",
@@ -1404,7 +1415,7 @@ const ScholarshipForm = () => {
                     <input
                       type="checkbox"
                       value="Self Study"
-                      checked={formData.preparationMethod === "Self Study"}
+                      checked={formData.preparationMethod.includes("Self Study")}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
@@ -1412,7 +1423,7 @@ const ScholarshipForm = () => {
                         })
                       }
                       required
-                      name="preparation-source"
+                      name="self-study"
                     />
                     <span>Self Study / स्वयं अध्ययन</span>
                   </label>
@@ -1421,7 +1432,7 @@ const ScholarshipForm = () => {
                       type="checkbox"
                       required
                       value="Coaching Center"
-                      checked={formData.preparationMethod === "Coaching Center"}
+                      checked={formData.preparationMethod.includes("Coaching Center")}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
@@ -1437,9 +1448,7 @@ const ScholarshipForm = () => {
                       type="checkbox"
                       required
                       value="Online Paid Course"
-                      checked={
-                        formData.preparationMethod === "Online Paid Course"
-                      }
+                      checked={formData.preparationMethod.includes("Online Paid Course")}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
@@ -1455,10 +1464,7 @@ const ScholarshipForm = () => {
                       type="checkbox"
                       required
                       value="Online (Youtube) / Free Course"
-                      checked={
-                        formData.preparationMethod ===
-                        "Online (Youtube) / Free Course"
-                      }
+                      checked={formData.preparationMethod.includes("Online (Youtube) / Free Course")}
                       onChange={(e) =>
                         setFormData({
                           ...formData,

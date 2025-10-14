@@ -8,6 +8,7 @@ import Scholarships from "./pages/Scholarships";
 import ContactUs from "./pages/ContactUs";
 import AboutUs from "./pages/AboutUs";
 import ScholarshipForm from "./components/ScholarshipForm/ScholarshipForm";
+import DonateBtn from "./components/DonateBtn/DonateBtn";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -32,7 +33,7 @@ const App = () => {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/scholarship-form" element={<ScholarshipForm />} />
       </Routes>
-
+      <DonateBtn/>
       <Footer />
     </>
   );
