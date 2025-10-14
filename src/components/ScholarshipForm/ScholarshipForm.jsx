@@ -7,16 +7,19 @@ import axios from "axios";
 
 const ScholarshipForm = () => {
   const formDataFormat = {
+    // part 1
     passportPhotoFileName: "",
     gender: "",
     dateOfBirth: "",
     mobileNumber: "",
     email: "",
+    confirmEmail: "",
     addressLine1: "",
     addressLine2: "",
     city: "",
     stateUT: "",
     pincode: "",
+    confirmPincode: "",
     isBenchmarkDisability: "",
     disabilityType: "",
     category: "",
@@ -35,6 +38,8 @@ const ScholarshipForm = () => {
     preparingForCGL2025: "",
     cgl2025Attempt: "",
     clearedOtherGovtExams: "",
+
+    // part 3
     preparationMethod: "",
     practiceMethod: "",
     isPartOfStudyGroup: "",
@@ -155,33 +160,72 @@ const ScholarshipForm = () => {
   }
 
   const dataObject = {
-    fullName: firstName + " " + lastName,
-    passportPhotoFileName: formData.passportPhotoFileName,
-    gender: formData.gender,
-    dateOfBirth: formData.dateOfBirth,
-    mobileNumber: formData.mobileNumber,
-    email: formData.email,
-    addressLine1: formData.addressLine1,
-    addressLine2: formData.addressLine2,
-    city: formData.city,
-    stateUT: formData.stateUT,
-    pincode: formData.pincode,
-    isBenchmarkDisability: formData.isBenchmarkDisability,
-    disabilityType: formData.isBenchmarkDisability === 'yes' ? formData.disabilityType : formData.disabilityType = "",
-    category: formData.isBenchmarkDisability === 'yes' ? formData.category : formData.category = "",
-    disabilityCertificateFileName: formData.isBenchmarkDisability === 'yes' ? formData.disabilityCertificateFileName : formData.disabilityCertificateFileName = "",
-    familyIncome: formData.isBenchmarkDisability === 'yes' ? formData.familyIncome : formData.familyIncome = "",
-    isCurrentlyWorking: formData.isBenchmarkDisability === 'yes' ? formData.isCurrentlyWorking : formData.isCurrentlyWorking = "",
-    scholarshipSourceInfo: formData.isBenchmarkDisability === 'yes' ? formData.scholarshipSourceInfo : formData.scholarshipSourceInfo = "",
-    tenthStudyMedium:formData.isBenchmarkDisability === 'yes' ? formData.tenthStudyMedium : formData.tenthStudyMedium = "",
-    twelfthStudyMedium: formData.isBenchmarkDisability === 'yes' ? formData.twelfthStudyMedium : formData.twelfthStudyMedium = "",
-    educationLevel:formData.isBenchmarkDisability === 'yes' ? formData.educationLevel : formData.educationLevel = '',
-    currentlyStudying: formData.isBenchmarkDisability === 'yes' ? formData.currentlyStudying : formData.currentlyStudying = "",
-    currentEducationMedium: formData.isBenchmarkDisability === 'yes' ? formData.currentEducationMedium : formData.currentEducationMedium = "",
-    // eligibleForCGL2025: formData.eligibleForCGL2025,
-    // preparingForCGL2025: formData.preparingForCGL2025,
-    // cgl2025Attempt: formData.cgl2025Attempt,
-    // clearedOtherGovtExams: formData.clearedOtherGovtExams,
+
+    // part 1
+
+    // fullName: firstName + " " + lastName,
+    // passportPhotoFileName: formData.passportPhotoFileName,
+    // gender: formData.gender,
+    // dateOfBirth: formData.dateOfBirth,
+    // mobileNumber: formData.mobileNumber,
+    // email: formData.email,
+    // addressLine1: formData.addressLine1,
+    // addressLine2: formData.addressLine2,
+    // city: formData.city,
+    // stateUT: formData.stateUT,
+    // pincode: formData.pincode,
+    // isBenchmarkDisability: formData.isBenchmarkDisability,
+    // disabilityType:
+    //   formData.isBenchmarkDisability === "yes"
+    //     ? formData.disabilityType
+    //     : (formData.disabilityType = ""),
+    // category:
+    //   formData.isBenchmarkDisability === "yes"
+    //     ? formData.category
+    //     : (formData.category = ""),
+    // disabilityCertificateFileName:
+    //   formData.isBenchmarkDisability === "yes"
+    //     ? formData.disabilityCertificateFileName
+    //     : (formData.disabilityCertificateFileName = ""),
+    // familyIncome:
+    //   formData.isBenchmarkDisability === "yes"
+    //     ? formData.familyIncome
+    //     : (formData.familyIncome = ""),
+    // isCurrentlyWorking:
+    //   formData.isBenchmarkDisability === "yes"
+    //     ? formData.isCurrentlyWorking
+    //     : (formData.isCurrentlyWorking = ""),
+    // scholarshipSourceInfo:
+    //   formData.isBenchmarkDisability === "yes"
+    //     ? formData.scholarshipSourceInfo
+    //     : (formData.scholarshipSourceInfo = ""),
+    // tenthStudyMedium:
+    //   formData.isBenchmarkDisability === "yes"
+    //     ? formData.tenthStudyMedium
+    //     : (formData.tenthStudyMedium = ""),
+    // twelfthStudyMedium:
+    //   formData.isBenchmarkDisability === "yes"
+    //     ? formData.twelfthStudyMedium
+    //     : (formData.twelfthStudyMedium = ""),
+    // educationLevel:
+    //   formData.isBenchmarkDisability === "yes"
+    //     ? formData.educationLevel
+    //     : (formData.educationLevel = ""),
+    // currentlyStudying:
+    //   formData.isBenchmarkDisability === "yes"
+    //     ? formData.currentlyStudying
+    //     : (formData.currentlyStudying = ""),
+    // currentEducationMedium:
+    //   formData.isBenchmarkDisability === "yes"
+    //     ? formData.currentEducationMedium
+    //     : (formData.currentEducationMedium = ""),
+    
+    // part 2
+
+    eligibleForCGL2025: formData.eligibleForCGL2025,
+    preparingForCGL2025: formData.preparingForCGL2025,
+    cgl2025Attempt: formData.cgl2025Attempt,
+    clearedOtherGovtExams: formData.clearedOtherGovtExams,
     // preparationMethod: formData.preparationMethod,
     // practiceMethod: formData.practiceMethod,
     // isPartOfStudyGroup: formData.isPartOfStudyGroup,
@@ -662,6 +706,10 @@ const ScholarshipForm = () => {
                   <input
                     type="email"
                     required
+                    value={formData.confirmEmail}
+                    onChange={(e) =>
+                      setFormData({ ...formData, confirmEmail: e.target.value })
+                    }
                     name="confirm-email"
                     placeholder="Re-enter eamil address"
                     className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
@@ -766,9 +814,12 @@ const ScholarshipForm = () => {
                     type="text"
                     required
                     name="zip-code"
-                    value={formData.pincode}
+                    value={formData.confirmPincode}
                     onChange={(e) =>
-                      setFormData({ ...formData, pincode: e.target.value })
+                      setFormData({
+                        ...formData,
+                        confirmPincode: e.target.value,
+                      })
                     }
                     placeholder="Re-enter Postal / Zip Code"
                     className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
@@ -889,56 +940,59 @@ const ScholarshipForm = () => {
                       प्रमाणपत्र अपलोड करें)
                     </label>
                     <div className="flex gap-3 min-h-30 items-center justify-center text-[17px] rounded-xl border-[2px] border-[#d1d5dd]">
-                      {formData.disabilityCertificateFileName ? (
-                        <div className="flex gap-2 items-center">
-                          <label
-                            htmlFor="select-disability-certificate"
-                            className="py-2  rounded-xl border px-3 cursor-pointer border-[#c91e2c] text-[17px] text-[#c91e2c] bg-[#fff7ed]"
-                          >
-                            Upload
-                          </label>
-                          <span className="text-[#4a5565]">
-                            or drag files here.
-                          </span>
-                        </div>
-                      ) : (
-                        <div className="h-[90%] select-none w-max max-w-[80px] border relative  rounded-md">
-                          <img
-                            src="gunga.png"
-                            className="h-full w-full object-contain"
-                            alt=""
-                          />
-                          <span
-                            onClick={() =>
-                              (formData.disabilityCertificateFileName = "")
-                            }
-                            className="cursor-pointer text-[15px] p-1 absolute top-0 right-0 translate-x-[50%] translate-y-[-50%] bg-red-100 text-red-500 rounded-full flex items-center justify-center w-[10px] h-[22px] shrink-0 aspect-square "
-                          >
-                            <RxCross2 />
-                          </span>
-                        </div>
-                      )}
-
-                      <input
-                        type="file"
-                        id="select-disability-certificate"
-                        name="disability-certificate"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files[0];
-                          if (file) {
-                            setFormData({
-                              ...formData,
-                              disabilityCertificateFileName:
-                                URL.createObjectURL(file),
-                            });
-                          }
-                        }}
-                        required
-                        className="bg-[#f3f3f5] hidden grow-1 px-3 py-2 text-[16px] text-black outline-none border-none rounded-lg"
-                        placeholder="Select disability certificate"
+                     {formData.disabilityCertificateFileName ? (
+                    <div className="h-[90%] select-none w-max max-w-[80px] border relative  rounded-md">
+                      <img
+                        src={formData.disabilityCertificateFileName}
+                        className="h-full w-full object-contain rounded-md"
+                        alt=""
                       />
+                      <span
+                        onClick={() => {
+                          URL.revokeObjectURL(formData.disabilityCertificateFileName);
+                          setFormData({
+                            ...formData,
+                            disabilityCertificateFileName: "",
+                          });
+                        }}
+                        className="cursor-pointer text-[15px] p-1 absolute top-0 right-0 translate-x-[50%] translate-y-[-50%] bg-red-100 text-red-500 rounded-full flex items-center justify-center w-[10px] h-[22px] shrink-0 aspect-square "
+                      >
+                        <RxCross2 />
+                      </span>
                     </div>
+                  ) : (
+                    <div className="flex gap-2 items-center">
+                      <label
+                        htmlFor="disability-certificate-image"
+                        className="py-2  rounded-xl border px-3 cursor-pointer border-[#c91e2c] text-[17px] text-[#c91e2c] bg-[#fff7ed]"
+                      >
+                        Upload
+                      </label>
+                      <span className="text-[#4a5565]">
+                        or drag files here.
+                      </span>
+                    </div>
+                  )}
+
+                  <input
+                    type="file"
+                    id="disability-certificate-image"
+                    name="profile-image"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        setFormData({
+                          ...formData,
+                          disabilityCertificateFileName: URL.createObjectURL(file),
+                        });
+                      }
+                    }}
+                    required
+                    className="bg-[#f3f3f5] hidden grow-1 px-3 py-2 text-[16px] text-black outline-none border-none rounded-lg"
+                    placeholder="Select profile image"
+                  />
+                </div>
 
                     <p className="text-[14px] text-[#6b7281] mt-2">
                       Upload your picture as per SSC Specifications (एसएससी
@@ -976,7 +1030,7 @@ const ScholarshipForm = () => {
                     </div>
                   </div>
 
-                  {/* working details */}
+                  {/* currently working  */}
                   <div className="w-full flex flex-col form-field gap-1 text-[17px]">
                     <label className="text-[17px] text-[#0a0a0a]">
                       Are you Presently Working? (क्या आप वर्तमान में कार्यरत
@@ -985,11 +1039,11 @@ const ScholarshipForm = () => {
                     <div className="flex gap-3">
                       <select
                         required
-                        value={formData.workingDetails}
+                        value={formData.isCurrentlyWorking}
                         onChange={(e) =>
                           setFormData({
                             ...formData,
-                            workingDetails: e.target.value,
+                            isCurrentlyWorking: e.target.value,
                           })
                         }
                         name="currently working"
@@ -1273,7 +1327,7 @@ const ScholarshipForm = () => {
                     -- Select --
                   </option>
                   <option value="yes">Yes</option>
-                  <option value="no">No</option>
+                  <option value="no">No, Preparing for other exam</option>
                 </select>
               </div>
 
@@ -1295,10 +1349,15 @@ const ScholarshipForm = () => {
                   <option value="" disabled>
                     -- Which attempt? --
                   </option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
+                  <option value="1">1st Attempt</option>
+                  <option value="2">2nd Attempt</option>
+                  <option value="3">3rd Attempt</option>
+                  <option value="4">4th Attempt</option>
+                  <option value="5">5th Attempt</option>
+                  <option value="6">6th Attempt</option>
+                  <option value="7">7th Attempt</option>
+                  <option value="8">8th Attempt</option>
+                  <option value="last">Last Attempt</option>
                 </select>
               </div>
 

@@ -15,8 +15,9 @@ const Scholarship = () => {
           especially those from Deaf, SC/ST, OBC, and EWS backgrounds
         </p>
 
-        <div className="w-full mt-8 mb-10 relative overflow-hidden rounded-md">
-          <img src="schollarship-banner.png" className="h-full w-full" alt="" />
+        <div className="w-full mt-8 mb-10 relative overflow-hidden rounded-md h-[915px]">
+          {/* <img src="schollarship-banner.png" className="h-full w-full" alt="" /> */}
+          <video src="http://d3n54sfqz7pgh4.cloudfront.net/pin.mov" autoPlay loop muted className="h-full w-full object-cover"></video>
 
           <Link
             to="/scholarships"
