@@ -114,9 +114,24 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .donateBtn {
   filter: drop-shadow(0px 4px 14px rgba(0, 0, 0, 0.4));
-  animation: growBeat 0.4s ease infinite alternate;
+  animation: entryAnimate 1s ease 1 forwards,
+    growBeat 0.4s ease 2s infinite alternate;
 }
 
+.donateBtn:hover {
+  animation-play-state: paused;
+}
+
+@keyframes entryAnimate {
+  from {
+    opacity: 0;
+    transform: translateX(200%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
 @keyframes growBeat {
   to {
     transform: scale(110%);
