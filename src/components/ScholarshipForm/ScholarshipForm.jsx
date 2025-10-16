@@ -40,18 +40,19 @@ const ScholarshipForm = () => {
     clearedOtherGovtExams: "",
 
     // part 3
-    preparationMethod: "",
-    handlePreparationChange : (e) => {
-        const val = e.target.value;
-        setFormData((prev) => {
-          const current = prev.preparationMethod || [];
-          const exists = current.includes(val);
-          const updated = exists
-            ? current.filter((item) => item !== val) 
-            : [...current, val]; 
-          return { ...prev, preparationMethod: updated };
-        });
-      },
+    preparationMethod: [],
+    preperationMethodOthers: "",
+    handlePreparationChange: (e) => {
+      const val = e.target.value;
+      setFormData((prev) => {
+        const current = prev.preparationMethod || [];
+        const exists = current.includes(val);
+        const updated = exists
+          ? current.filter((item) => item !== val)
+          : [...current, val];
+        return { ...prev, preparationMethod: updated };
+      });
+    },
     practiceMethod: "",
     isPartOfStudyGroup: "",
     studyGroupName: "",
@@ -65,7 +66,10 @@ const ScholarshipForm = () => {
     scholarshipNeeded: "",
     scholarshipEssay: "",
     volunteerRole: "",
+    volunteerApproach: "",
     messageTo1EQ: "",
+
+    // part 5
     declarationInfoTrue: "",
     declarationInfoAccurate: "",
     consentToContact: "",
@@ -152,7 +156,6 @@ const ScholarshipForm = () => {
 
   function handlePreviousClick(e) {
     e.preventDefault();
-
     if (currentIndex > 0) {
       setTabActiveState(total_states[currentIndex - 1]);
       setCurrentIndex(currentIndex - 1);
@@ -161,7 +164,6 @@ const ScholarshipForm = () => {
 
   function handleNextPage(e) {
     e.preventDefault();
-    sendData();
     if (currentIndex < total_states.length - 1) {
       setTabActiveState(total_states[currentIndex + 1]);
       setCurrentIndex(currentIndex + 1);
@@ -169,76 +171,77 @@ const ScholarshipForm = () => {
   }
 
   const dataObject = {
-
     // part 1
 
-    // fullName: firstName + " " + lastName,
-    // passportPhotoFileName: formData.passportPhotoFileName,
-    // gender: formData.gender,
-    // dateOfBirth: formData.dateOfBirth,
-    // mobileNumber: formData.mobileNumber,
-    // email: formData.email,
-    // addressLine1: formData.addressLine1,
-    // addressLine2: formData.addressLine2,
-    // city: formData.city,
-    // stateUT: formData.stateUT,
-    // pincode: formData.pincode,
-    // isBenchmarkDisability: formData.isBenchmarkDisability,
-    // disabilityType:
-    //   formData.isBenchmarkDisability === "yes"
-    //     ? formData.disabilityType
-    //     : (formData.disabilityType = ""),
-    // category:
-    //   formData.isBenchmarkDisability === "yes"
-    //     ? formData.category
-    //     : (formData.category = ""),
-    // disabilityCertificateFileName:
-    //   formData.isBenchmarkDisability === "yes"
-    //     ? formData.disabilityCertificateFileName
-    //     : (formData.disabilityCertificateFileName = ""),
-    // familyIncome:
-    //   formData.isBenchmarkDisability === "yes"
-    //     ? formData.familyIncome
-    //     : (formData.familyIncome = ""),
-    // isCurrentlyWorking:
-    //   formData.isBenchmarkDisability === "yes"
-    //     ? formData.isCurrentlyWorking
-    //     : (formData.isCurrentlyWorking = ""),
-    // scholarshipSourceInfo:
-    //   formData.isBenchmarkDisability === "yes"
-    //     ? formData.scholarshipSourceInfo
-    //     : (formData.scholarshipSourceInfo = ""),
-    // tenthStudyMedium:
-    //   formData.isBenchmarkDisability === "yes"
-    //     ? formData.tenthStudyMedium
-    //     : (formData.tenthStudyMedium = ""),
-    // twelfthStudyMedium:
-    //   formData.isBenchmarkDisability === "yes"
-    //     ? formData.twelfthStudyMedium
-    //     : (formData.twelfthStudyMedium = ""),
-    // educationLevel:
-    //   formData.isBenchmarkDisability === "yes"
-    //     ? formData.educationLevel
-    //     : (formData.educationLevel = ""),
-    // currentlyStudying:
-    //   formData.isBenchmarkDisability === "yes"
-    //     ? formData.currentlyStudying
-    //     : (formData.currentlyStudying = ""),
-    // currentEducationMedium:
-    //   formData.isBenchmarkDisability === "yes"
-    //     ? formData.currentEducationMedium
-    //     : (formData.currentEducationMedium = ""),
-    
+    fullName: firstName + " " + lastName,
+    passportPhotoFileName: formData.passportPhotoFileName,
+    gender: formData.gender,
+    dateOfBirth: formData.dateOfBirth,
+    mobileNumber: formData.mobileNumber,
+    email: formData.email,
+    addressLine1: formData.addressLine1,
+    addressLine2: formData.addressLine2,
+    city: formData.city,
+    stateUT: formData.stateUT,
+    pincode: formData.pincode,
+    isBenchmarkDisability: formData.isBenchmarkDisability,
+    disabilityType:
+      formData.isBenchmarkDisability === "yes"
+        ? formData.disabilityType
+        : (formData.disabilityType = ""),
+    category:
+      formData.isBenchmarkDisability === "yes"
+        ? formData.category
+        : (formData.category = ""),
+    disabilityCertificateFileName:
+      formData.isBenchmarkDisability === "yes"
+        ? formData.disabilityCertificateFileName
+        : (formData.disabilityCertificateFileName = ""),
+    familyIncome:
+      formData.isBenchmarkDisability === "yes"
+        ? formData.familyIncome
+        : (formData.familyIncome = ""),
+    isCurrentlyWorking:
+      formData.isBenchmarkDisability === "yes"
+        ? formData.isCurrentlyWorking
+        : (formData.isCurrentlyWorking = ""),
+    scholarshipSourceInfo:
+      formData.isBenchmarkDisability === "yes"
+        ? formData.scholarshipSourceInfo
+        : (formData.scholarshipSourceInfo = ""),
+    tenthStudyMedium:
+      formData.isBenchmarkDisability === "yes"
+        ? formData.tenthStudyMedium
+        : (formData.tenthStudyMedium = ""),
+    twelfthStudyMedium:
+      formData.isBenchmarkDisability === "yes"
+        ? formData.twelfthStudyMedium
+        : (formData.twelfthStudyMedium = ""),
+    educationLevel:
+      formData.isBenchmarkDisability === "yes"
+        ? formData.educationLevel
+        : (formData.educationLevel = ""),
+    currentlyStudying:
+      formData.isBenchmarkDisability === "yes"
+        ? formData.currentlyStudying
+        : (formData.currentlyStudying = ""),
+    currentEducationMedium:
+      formData.isBenchmarkDisability === "yes"
+        ? formData.currentEducationMedium
+        : (formData.currentEducationMedium = ""),
+
     // part 2
 
-    // eligibleForCGL2025: formData.eligibleForCGL2025,
-    // preparingForCGL2025: formData.preparingForCGL2025,
-    // cgl2025Attempt: formData.cgl2025Attempt,
-    // clearedOtherGovtExams: formData.clearedOtherGovtExams,
+    eligibleForCGL2025: formData.eligibleForCGL2025,
+    preparingForCGL2025: formData.preparingForCGL2025,
+    cgl2025Attempt: formData.cgl2025Attempt,
+    clearedOtherGovtExams: formData.clearedOtherGovtExams,
 
     // part 3
 
-    preparationMethod: formData.preparationMethod,
+    preparationMethod: formData.preperationMethodOthers
+      ? [...formData.preparationMethod, formData.preperationMethodOthers]
+      : [...formData.preparationMethod],
     practiceMethod: formData.practiceMethod,
     isPartOfStudyGroup: formData.isPartOfStudyGroup,
     studyGroupName: formData.studyGroupName,
@@ -247,20 +250,35 @@ const ScholarshipForm = () => {
     hasMobile: formData.hasMobile,
 
     // part 4
-    // receivedPreviousScholarship: formData.receivedPreviousScholarship,
-    // previousScholarshipDetails: formData.previousScholarshipDetails,
-    // scholarshipNeeded: formData.scholarshipNeeded,
-    // scholarshipEssay: formData.scholarshipEssay,
-    // volunteerRole: formData.volunteerRole,
-    // messageTo1EQ: formData.messageTo1EQ,
-    // declarationInfoTrue: formData.declarationInfoTrue,
-    // declarationInfoAccurate: formData.declarationInfoAccurate,
-    // consentToContact: formData.consentToContact,
-    // participateInSurvey: formData.participateInSurvey,
-    // signatureData: formData.signatureData,
+    receivedPreviousScholarship: formData.receivedPreviousScholarship,
+    previousScholarshipDetails:
+      formData.receivedPreviousScholarship === "yes"
+        ? formData.previousScholarshipDetails
+        : (formData.previousScholarshipDetails = ""),
+    scholarshipNeeded: formData.scholarshipNeeded,
+    scholarshipEssay: formData.scholarshipEssay,
+    volunteerRole: formData.volunteerRole,
+    volunteerApproach:
+      formData.volunteerRole === "Telegram Group Admin" ||
+      formData.volunteerRole ===
+        "Recording Lessons in Indian Sign Language (ISL)" ||
+      formData.volunteerRole === "Doubt Solving" ||
+      formData.volunteerRole === "Proof Reading of Books" ||
+      formData.volunteerRole === "I can Write Blogs"
+        ? formData.volunteerApproach
+        : (formData.volunteerApproach = ""),
+    messageTo1EQ: formData.messageTo1EQ,
+
+    // part 5
+    declarationInfoTrue: formData.declarationInfoTrue,
+    declarationInfoAccurate: formData.declarationInfoAccurate,
+    consentToContact: formData.consentToContact,
+    participateInSurvey: formData.participateInSurvey,
+    signatureData: formData.signatureData,
   };
 
-  async function sendData() {
+  async function sendData(e) {
+    e.preventDefault();
     const url = "https://store.1ayq.com/scholarship";
     try {
       console.log(dataObject);
@@ -318,167 +336,259 @@ const ScholarshipForm = () => {
 
           <div className="flex items-center gap-3 min-w-max">
             <div className="flex status-number items-center justify-center aspect-square rounded-full overflow-hidden w-7 select-none">
-              <div className="text-white  font-[500] flex items-center justify-center h-full w-full bg-[#b85a3e]">
-                1
-              </div>
-
-              <div className="h-full w-full hidden">
-                <svg
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+              {currentIndex > 0 ? (
+                <div className="h-full w-full ">
+                  <svg
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"
+                      fill="#00C950"
+                    />
+                    <path
+                      d="M12.344 22.704C12.344 22.5653 12.3173 22.496 12.264 22.496L11.896 22.672C11.896 22.5973 11.8533 22.544 11.768 22.512L11.64 22.496C11.5547 22.496 11.448 22.5333 11.32 22.608C11.2987 22.5547 11.272 22.5013 11.24 22.448C11.208 22.3947 11.1813 22.3467 11.16 22.304C11.0213 22.0373 10.8827 21.744 10.744 21.424C10.616 21.0933 10.4933 20.7787 10.376 20.48C10.2693 20.1813 10.184 19.9467 10.12 19.776C10.0773 19.6373 10.0293 19.4293 9.976 19.152C9.92267 18.8747 9.86933 18.5227 9.816 18.096C9.93333 18.1707 10.024 18.208 10.088 18.208C10.1627 18.208 10.232 18.096 10.296 17.872C10.328 17.9147 10.3867 17.936 10.472 17.936C10.536 17.936 10.584 17.9147 10.616 17.872L10.872 17.488L11.16 17.584H11.176C11.1973 17.584 11.2187 17.5733 11.24 17.552C11.2613 17.5307 11.2933 17.5093 11.336 17.488C11.4213 17.4347 11.4853 17.408 11.528 17.408L11.576 17.424C11.8427 17.552 12.0133 17.7867 12.088 18.128C12.28 18.9387 12.472 19.344 12.664 19.344C12.856 19.344 13.08 19.1413 13.336 18.736C13.464 18.5333 13.592 18.2987 13.72 18.032C13.8587 17.7653 13.9973 17.4667 14.136 17.136C14.1573 17.264 14.1787 17.328 14.2 17.328C14.2533 17.328 14.344 17.1947 14.472 16.928C14.6107 16.6613 14.8293 16.2933 15.128 15.824C15.2987 15.536 15.512 15.2107 15.768 14.848C16.0347 14.4853 16.3173 14.112 16.616 13.728C16.9147 13.344 17.2027 12.9813 17.48 12.64C17.768 12.2987 18.024 12.0053 18.248 11.76C18.472 11.5147 18.6373 11.3547 18.744 11.28C19.1493 11.0027 19.4693 10.736 19.704 10.48C19.6933 10.5547 19.6773 10.624 19.656 10.688C19.6453 10.7413 19.64 10.7787 19.64 10.8C19.64 10.8427 19.6613 10.864 19.704 10.864L20.152 10.64V10.704C20.152 10.7893 20.1733 10.832 20.216 10.832C20.248 10.832 20.312 10.784 20.408 10.688C20.504 10.592 20.5573 10.5227 20.568 10.48L20.536 10.704L21.08 10.384L20.952 10.672C21.1227 10.5547 21.2453 10.496 21.32 10.496C21.3627 10.496 21.3947 10.5227 21.416 10.576C21.4373 10.6187 21.448 10.6613 21.448 10.704C21.448 10.768 21.4213 10.8427 21.368 10.928C21.3147 11.0133 21.2453 11.1147 21.16 11.232C21.096 11.3173 20.9893 11.4453 20.84 11.616C20.7013 11.776 20.488 12.016 20.2 12.336C19.912 12.6453 19.528 13.0773 19.048 13.632C18.92 13.7707 18.7227 14.016 18.456 14.368C18.1893 14.7093 17.8853 15.1093 17.544 15.568C17.2133 16.016 16.8827 16.4693 16.552 16.928C16.2213 17.3867 15.928 17.8027 15.672 18.176C15.416 18.5387 15.2347 18.8107 15.128 18.992L14.136 20.672C13.9227 21.0347 13.7467 21.3333 13.608 21.568C13.4693 21.792 13.3627 21.9467 13.288 22.032C13.128 22.224 12.952 22.3947 12.76 22.544L12.616 22.464L12.488 22.544L12.344 22.704Z"
+                      fill="white"
+                    />
+                  </svg>
+                </div>
+              ) : (
+                <div
+                  className={`text-white  font-[500] flex items-center justify-center h-full w-full ${
+                    tabActiveState === total_states[0]
+                      ? "!bg-[#b85a3e]"
+                      : "bg-[#e6e7eb]"
+                  }  `}
                 >
-                  <path
-                    d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"
-                    fill="#00C950"
-                  />
-                  <path
-                    d="M12.344 22.704C12.344 22.5653 12.3173 22.496 12.264 22.496L11.896 22.672C11.896 22.5973 11.8533 22.544 11.768 22.512L11.64 22.496C11.5547 22.496 11.448 22.5333 11.32 22.608C11.2987 22.5547 11.272 22.5013 11.24 22.448C11.208 22.3947 11.1813 22.3467 11.16 22.304C11.0213 22.0373 10.8827 21.744 10.744 21.424C10.616 21.0933 10.4933 20.7787 10.376 20.48C10.2693 20.1813 10.184 19.9467 10.12 19.776C10.0773 19.6373 10.0293 19.4293 9.976 19.152C9.92267 18.8747 9.86933 18.5227 9.816 18.096C9.93333 18.1707 10.024 18.208 10.088 18.208C10.1627 18.208 10.232 18.096 10.296 17.872C10.328 17.9147 10.3867 17.936 10.472 17.936C10.536 17.936 10.584 17.9147 10.616 17.872L10.872 17.488L11.16 17.584H11.176C11.1973 17.584 11.2187 17.5733 11.24 17.552C11.2613 17.5307 11.2933 17.5093 11.336 17.488C11.4213 17.4347 11.4853 17.408 11.528 17.408L11.576 17.424C11.8427 17.552 12.0133 17.7867 12.088 18.128C12.28 18.9387 12.472 19.344 12.664 19.344C12.856 19.344 13.08 19.1413 13.336 18.736C13.464 18.5333 13.592 18.2987 13.72 18.032C13.8587 17.7653 13.9973 17.4667 14.136 17.136C14.1573 17.264 14.1787 17.328 14.2 17.328C14.2533 17.328 14.344 17.1947 14.472 16.928C14.6107 16.6613 14.8293 16.2933 15.128 15.824C15.2987 15.536 15.512 15.2107 15.768 14.848C16.0347 14.4853 16.3173 14.112 16.616 13.728C16.9147 13.344 17.2027 12.9813 17.48 12.64C17.768 12.2987 18.024 12.0053 18.248 11.76C18.472 11.5147 18.6373 11.3547 18.744 11.28C19.1493 11.0027 19.4693 10.736 19.704 10.48C19.6933 10.5547 19.6773 10.624 19.656 10.688C19.6453 10.7413 19.64 10.7787 19.64 10.8C19.64 10.8427 19.6613 10.864 19.704 10.864L20.152 10.64V10.704C20.152 10.7893 20.1733 10.832 20.216 10.832C20.248 10.832 20.312 10.784 20.408 10.688C20.504 10.592 20.5573 10.5227 20.568 10.48L20.536 10.704L21.08 10.384L20.952 10.672C21.1227 10.5547 21.2453 10.496 21.32 10.496C21.3627 10.496 21.3947 10.5227 21.416 10.576C21.4373 10.6187 21.448 10.6613 21.448 10.704C21.448 10.768 21.4213 10.8427 21.368 10.928C21.3147 11.0133 21.2453 11.1147 21.16 11.232C21.096 11.3173 20.9893 11.4453 20.84 11.616C20.7013 11.776 20.488 12.016 20.2 12.336C19.912 12.6453 19.528 13.0773 19.048 13.632C18.92 13.7707 18.7227 14.016 18.456 14.368C18.1893 14.7093 17.8853 15.1093 17.544 15.568C17.2133 16.016 16.8827 16.4693 16.552 16.928C16.2213 17.3867 15.928 17.8027 15.672 18.176C15.416 18.5387 15.2347 18.8107 15.128 18.992L14.136 20.672C13.9227 21.0347 13.7467 21.3333 13.608 21.568C13.4693 21.792 13.3627 21.9467 13.288 22.032C13.128 22.224 12.952 22.3947 12.76 22.544L12.616 22.464L12.488 22.544L12.344 22.704Z"
-                    fill="white"
-                  />
-                </svg>
-              </div>
+                  1
+                </div>
+              )}
             </div>
 
-            <span className="text-[16px] status-name  font-[500] text-[#0a0a0a] ">
+            <span
+              className={`text-[16px] status-name  font-[500] ${
+                currentIndex >= 0 ? "text-[#0a0a0a]" : "text-[#4a5464]"
+              }  `}
+            >
               Personal Information
             </span>
 
             <div className="w-8 h-[2px] status-bar flex">
-              <div className="w-1/2 h-full bg-[#b85a3e]"></div>
-              <div className="w-1/2 h-full bg-[#e5e7ea]"></div>
+              <div
+                className={`w-1/2 h-full ${
+                  currentIndex > 0 && "!bg-[#04c951]"
+                } ${currentIndex === 0 ? "bg-[#b85a3e]" : "bg-[#e5e7ea]"}`}
+              ></div>
+              <div
+                className={`w-1/2 h-full ${
+                  currentIndex > 0 ? "bg-[#04c951]" : "bg-[#e5e7ea]"
+                } `}
+              ></div>
             </div>
 
             <div className="flex status-number items-center justify-center aspect-square rounded-full overflow-hidden w-7 select-none">
-              <div className="text-white  font-[500] flex items-center justify-center h-full w-full bg-[#e5e7eb]">
-                2
-              </div>
-
-              <div className="h-full w-full hidden">
-                <svg
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+              {currentIndex > 1 ? (
+                <div className="h-full w-full ">
+                  <svg
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"
+                      fill="#00C950"
+                    />
+                    <path
+                      d="M12.344 22.704C12.344 22.5653 12.3173 22.496 12.264 22.496L11.896 22.672C11.896 22.5973 11.8533 22.544 11.768 22.512L11.64 22.496C11.5547 22.496 11.448 22.5333 11.32 22.608C11.2987 22.5547 11.272 22.5013 11.24 22.448C11.208 22.3947 11.1813 22.3467 11.16 22.304C11.0213 22.0373 10.8827 21.744 10.744 21.424C10.616 21.0933 10.4933 20.7787 10.376 20.48C10.2693 20.1813 10.184 19.9467 10.12 19.776C10.0773 19.6373 10.0293 19.4293 9.976 19.152C9.92267 18.8747 9.86933 18.5227 9.816 18.096C9.93333 18.1707 10.024 18.208 10.088 18.208C10.1627 18.208 10.232 18.096 10.296 17.872C10.328 17.9147 10.3867 17.936 10.472 17.936C10.536 17.936 10.584 17.9147 10.616 17.872L10.872 17.488L11.16 17.584H11.176C11.1973 17.584 11.2187 17.5733 11.24 17.552C11.2613 17.5307 11.2933 17.5093 11.336 17.488C11.4213 17.4347 11.4853 17.408 11.528 17.408L11.576 17.424C11.8427 17.552 12.0133 17.7867 12.088 18.128C12.28 18.9387 12.472 19.344 12.664 19.344C12.856 19.344 13.08 19.1413 13.336 18.736C13.464 18.5333 13.592 18.2987 13.72 18.032C13.8587 17.7653 13.9973 17.4667 14.136 17.136C14.1573 17.264 14.1787 17.328 14.2 17.328C14.2533 17.328 14.344 17.1947 14.472 16.928C14.6107 16.6613 14.8293 16.2933 15.128 15.824C15.2987 15.536 15.512 15.2107 15.768 14.848C16.0347 14.4853 16.3173 14.112 16.616 13.728C16.9147 13.344 17.2027 12.9813 17.48 12.64C17.768 12.2987 18.024 12.0053 18.248 11.76C18.472 11.5147 18.6373 11.3547 18.744 11.28C19.1493 11.0027 19.4693 10.736 19.704 10.48C19.6933 10.5547 19.6773 10.624 19.656 10.688C19.6453 10.7413 19.64 10.7787 19.64 10.8C19.64 10.8427 19.6613 10.864 19.704 10.864L20.152 10.64V10.704C20.152 10.7893 20.1733 10.832 20.216 10.832C20.248 10.832 20.312 10.784 20.408 10.688C20.504 10.592 20.5573 10.5227 20.568 10.48L20.536 10.704L21.08 10.384L20.952 10.672C21.1227 10.5547 21.2453 10.496 21.32 10.496C21.3627 10.496 21.3947 10.5227 21.416 10.576C21.4373 10.6187 21.448 10.6613 21.448 10.704C21.448 10.768 21.4213 10.8427 21.368 10.928C21.3147 11.0133 21.2453 11.1147 21.16 11.232C21.096 11.3173 20.9893 11.4453 20.84 11.616C20.7013 11.776 20.488 12.016 20.2 12.336C19.912 12.6453 19.528 13.0773 19.048 13.632C18.92 13.7707 18.7227 14.016 18.456 14.368C18.1893 14.7093 17.8853 15.1093 17.544 15.568C17.2133 16.016 16.8827 16.4693 16.552 16.928C16.2213 17.3867 15.928 17.8027 15.672 18.176C15.416 18.5387 15.2347 18.8107 15.128 18.992L14.136 20.672C13.9227 21.0347 13.7467 21.3333 13.608 21.568C13.4693 21.792 13.3627 21.9467 13.288 22.032C13.128 22.224 12.952 22.3947 12.76 22.544L12.616 22.464L12.488 22.544L12.344 22.704Z"
+                      fill="white"
+                    />
+                  </svg>
+                </div>
+              ) : (
+                <div
+                  className={`text-white  font-[500] flex items-center justify-center h-full w-full ${
+                    tabActiveState === total_states[1]
+                      ? "!bg-[#b85a3e]"
+                      : "bg-[#e6e7eb]"
+                  }  `}
                 >
-                  <path
-                    d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"
-                    fill="#00C950"
-                  />
-                  <path
-                    d="M12.344 22.704C12.344 22.5653 12.3173 22.496 12.264 22.496L11.896 22.672C11.896 22.5973 11.8533 22.544 11.768 22.512L11.64 22.496C11.5547 22.496 11.448 22.5333 11.32 22.608C11.2987 22.5547 11.272 22.5013 11.24 22.448C11.208 22.3947 11.1813 22.3467 11.16 22.304C11.0213 22.0373 10.8827 21.744 10.744 21.424C10.616 21.0933 10.4933 20.7787 10.376 20.48C10.2693 20.1813 10.184 19.9467 10.12 19.776C10.0773 19.6373 10.0293 19.4293 9.976 19.152C9.92267 18.8747 9.86933 18.5227 9.816 18.096C9.93333 18.1707 10.024 18.208 10.088 18.208C10.1627 18.208 10.232 18.096 10.296 17.872C10.328 17.9147 10.3867 17.936 10.472 17.936C10.536 17.936 10.584 17.9147 10.616 17.872L10.872 17.488L11.16 17.584H11.176C11.1973 17.584 11.2187 17.5733 11.24 17.552C11.2613 17.5307 11.2933 17.5093 11.336 17.488C11.4213 17.4347 11.4853 17.408 11.528 17.408L11.576 17.424C11.8427 17.552 12.0133 17.7867 12.088 18.128C12.28 18.9387 12.472 19.344 12.664 19.344C12.856 19.344 13.08 19.1413 13.336 18.736C13.464 18.5333 13.592 18.2987 13.72 18.032C13.8587 17.7653 13.9973 17.4667 14.136 17.136C14.1573 17.264 14.1787 17.328 14.2 17.328C14.2533 17.328 14.344 17.1947 14.472 16.928C14.6107 16.6613 14.8293 16.2933 15.128 15.824C15.2987 15.536 15.512 15.2107 15.768 14.848C16.0347 14.4853 16.3173 14.112 16.616 13.728C16.9147 13.344 17.2027 12.9813 17.48 12.64C17.768 12.2987 18.024 12.0053 18.248 11.76C18.472 11.5147 18.6373 11.3547 18.744 11.28C19.1493 11.0027 19.4693 10.736 19.704 10.48C19.6933 10.5547 19.6773 10.624 19.656 10.688C19.6453 10.7413 19.64 10.7787 19.64 10.8C19.64 10.8427 19.6613 10.864 19.704 10.864L20.152 10.64V10.704C20.152 10.7893 20.1733 10.832 20.216 10.832C20.248 10.832 20.312 10.784 20.408 10.688C20.504 10.592 20.5573 10.5227 20.568 10.48L20.536 10.704L21.08 10.384L20.952 10.672C21.1227 10.5547 21.2453 10.496 21.32 10.496C21.3627 10.496 21.3947 10.5227 21.416 10.576C21.4373 10.6187 21.448 10.6613 21.448 10.704C21.448 10.768 21.4213 10.8427 21.368 10.928C21.3147 11.0133 21.2453 11.1147 21.16 11.232C21.096 11.3173 20.9893 11.4453 20.84 11.616C20.7013 11.776 20.488 12.016 20.2 12.336C19.912 12.6453 19.528 13.0773 19.048 13.632C18.92 13.7707 18.7227 14.016 18.456 14.368C18.1893 14.7093 17.8853 15.1093 17.544 15.568C17.2133 16.016 16.8827 16.4693 16.552 16.928C16.2213 17.3867 15.928 17.8027 15.672 18.176C15.416 18.5387 15.2347 18.8107 15.128 18.992L14.136 20.672C13.9227 21.0347 13.7467 21.3333 13.608 21.568C13.4693 21.792 13.3627 21.9467 13.288 22.032C13.128 22.224 12.952 22.3947 12.76 22.544L12.616 22.464L12.488 22.544L12.344 22.704Z"
-                    fill="white"
-                  />
-                </svg>
-              </div>
+                  2
+                </div>
+              )}
             </div>
 
-            <span className="text-[16px] status-name  text-[#4a5464] ">
+            <span
+              className={`text-[16px] status-name  font-[500] ${
+                currentIndex >= 1 ? "text-[#0a0a0a]" : "text-[#4a5464]"
+              }  `}
+            >
               SSC Exam Information
             </span>
 
             <div className="w-8 h-[2px] status-bar flex">
-              <div className="w-1/2 h-full bg-[#e5e7ea]"></div>
-              <div className="w-1/2 h-full bg-[#e5e7ea]"></div>
+              <div
+                className={`w-1/2 h-full ${
+                  currentIndex > 1 && "!bg-[#04c951]"
+                } ${currentIndex === 1 ? "bg-[#b85a3e]" : "bg-[#e5e7ea]"}`}
+              ></div>
+              <div
+                className={`w-1/2 h-full ${
+                  currentIndex > 1 ? "bg-[#04c951]" : "bg-[#e5e7ea]"
+                } `}
+              ></div>
             </div>
 
             <div className="flex status-number items-center justify-center aspect-square rounded-full overflow-hidden w-7 select-none">
-              <div className="text-white  font-[500] flex items-center justify-center h-full w-full bg-[#e5e7eb]">
-                3
-              </div>
-
-              <div className="h-full w-full hidden">
-                <svg
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+              {currentIndex > 2 ? (
+                <div className="h-full w-full ">
+                  <svg
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"
+                      fill="#00C950"
+                    />
+                    <path
+                      d="M12.344 22.704C12.344 22.5653 12.3173 22.496 12.264 22.496L11.896 22.672C11.896 22.5973 11.8533 22.544 11.768 22.512L11.64 22.496C11.5547 22.496 11.448 22.5333 11.32 22.608C11.2987 22.5547 11.272 22.5013 11.24 22.448C11.208 22.3947 11.1813 22.3467 11.16 22.304C11.0213 22.0373 10.8827 21.744 10.744 21.424C10.616 21.0933 10.4933 20.7787 10.376 20.48C10.2693 20.1813 10.184 19.9467 10.12 19.776C10.0773 19.6373 10.0293 19.4293 9.976 19.152C9.92267 18.8747 9.86933 18.5227 9.816 18.096C9.93333 18.1707 10.024 18.208 10.088 18.208C10.1627 18.208 10.232 18.096 10.296 17.872C10.328 17.9147 10.3867 17.936 10.472 17.936C10.536 17.936 10.584 17.9147 10.616 17.872L10.872 17.488L11.16 17.584H11.176C11.1973 17.584 11.2187 17.5733 11.24 17.552C11.2613 17.5307 11.2933 17.5093 11.336 17.488C11.4213 17.4347 11.4853 17.408 11.528 17.408L11.576 17.424C11.8427 17.552 12.0133 17.7867 12.088 18.128C12.28 18.9387 12.472 19.344 12.664 19.344C12.856 19.344 13.08 19.1413 13.336 18.736C13.464 18.5333 13.592 18.2987 13.72 18.032C13.8587 17.7653 13.9973 17.4667 14.136 17.136C14.1573 17.264 14.1787 17.328 14.2 17.328C14.2533 17.328 14.344 17.1947 14.472 16.928C14.6107 16.6613 14.8293 16.2933 15.128 15.824C15.2987 15.536 15.512 15.2107 15.768 14.848C16.0347 14.4853 16.3173 14.112 16.616 13.728C16.9147 13.344 17.2027 12.9813 17.48 12.64C17.768 12.2987 18.024 12.0053 18.248 11.76C18.472 11.5147 18.6373 11.3547 18.744 11.28C19.1493 11.0027 19.4693 10.736 19.704 10.48C19.6933 10.5547 19.6773 10.624 19.656 10.688C19.6453 10.7413 19.64 10.7787 19.64 10.8C19.64 10.8427 19.6613 10.864 19.704 10.864L20.152 10.64V10.704C20.152 10.7893 20.1733 10.832 20.216 10.832C20.248 10.832 20.312 10.784 20.408 10.688C20.504 10.592 20.5573 10.5227 20.568 10.48L20.536 10.704L21.08 10.384L20.952 10.672C21.1227 10.5547 21.2453 10.496 21.32 10.496C21.3627 10.496 21.3947 10.5227 21.416 10.576C21.4373 10.6187 21.448 10.6613 21.448 10.704C21.448 10.768 21.4213 10.8427 21.368 10.928C21.3147 11.0133 21.2453 11.1147 21.16 11.232C21.096 11.3173 20.9893 11.4453 20.84 11.616C20.7013 11.776 20.488 12.016 20.2 12.336C19.912 12.6453 19.528 13.0773 19.048 13.632C18.92 13.7707 18.7227 14.016 18.456 14.368C18.1893 14.7093 17.8853 15.1093 17.544 15.568C17.2133 16.016 16.8827 16.4693 16.552 16.928C16.2213 17.3867 15.928 17.8027 15.672 18.176C15.416 18.5387 15.2347 18.8107 15.128 18.992L14.136 20.672C13.9227 21.0347 13.7467 21.3333 13.608 21.568C13.4693 21.792 13.3627 21.9467 13.288 22.032C13.128 22.224 12.952 22.3947 12.76 22.544L12.616 22.464L12.488 22.544L12.344 22.704Z"
+                      fill="white"
+                    />
+                  </svg>
+                </div>
+              ) : (
+                <div
+                  className={`text-white  font-[500] flex items-center justify-center h-full w-full ${
+                    tabActiveState === total_states[2]
+                      ? "!bg-[#b85a3e]"
+                      : "bg-[#e6e7eb]"
+                  }  `}
                 >
-                  <path
-                    d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"
-                    fill="#00C950"
-                  />
-                  <path
-                    d="M12.344 22.704C12.344 22.5653 12.3173 22.496 12.264 22.496L11.896 22.672C11.896 22.5973 11.8533 22.544 11.768 22.512L11.64 22.496C11.5547 22.496 11.448 22.5333 11.32 22.608C11.2987 22.5547 11.272 22.5013 11.24 22.448C11.208 22.3947 11.1813 22.3467 11.16 22.304C11.0213 22.0373 10.8827 21.744 10.744 21.424C10.616 21.0933 10.4933 20.7787 10.376 20.48C10.2693 20.1813 10.184 19.9467 10.12 19.776C10.0773 19.6373 10.0293 19.4293 9.976 19.152C9.92267 18.8747 9.86933 18.5227 9.816 18.096C9.93333 18.1707 10.024 18.208 10.088 18.208C10.1627 18.208 10.232 18.096 10.296 17.872C10.328 17.9147 10.3867 17.936 10.472 17.936C10.536 17.936 10.584 17.9147 10.616 17.872L10.872 17.488L11.16 17.584H11.176C11.1973 17.584 11.2187 17.5733 11.24 17.552C11.2613 17.5307 11.2933 17.5093 11.336 17.488C11.4213 17.4347 11.4853 17.408 11.528 17.408L11.576 17.424C11.8427 17.552 12.0133 17.7867 12.088 18.128C12.28 18.9387 12.472 19.344 12.664 19.344C12.856 19.344 13.08 19.1413 13.336 18.736C13.464 18.5333 13.592 18.2987 13.72 18.032C13.8587 17.7653 13.9973 17.4667 14.136 17.136C14.1573 17.264 14.1787 17.328 14.2 17.328C14.2533 17.328 14.344 17.1947 14.472 16.928C14.6107 16.6613 14.8293 16.2933 15.128 15.824C15.2987 15.536 15.512 15.2107 15.768 14.848C16.0347 14.4853 16.3173 14.112 16.616 13.728C16.9147 13.344 17.2027 12.9813 17.48 12.64C17.768 12.2987 18.024 12.0053 18.248 11.76C18.472 11.5147 18.6373 11.3547 18.744 11.28C19.1493 11.0027 19.4693 10.736 19.704 10.48C19.6933 10.5547 19.6773 10.624 19.656 10.688C19.6453 10.7413 19.64 10.7787 19.64 10.8C19.64 10.8427 19.6613 10.864 19.704 10.864L20.152 10.64V10.704C20.152 10.7893 20.1733 10.832 20.216 10.832C20.248 10.832 20.312 10.784 20.408 10.688C20.504 10.592 20.5573 10.5227 20.568 10.48L20.536 10.704L21.08 10.384L20.952 10.672C21.1227 10.5547 21.2453 10.496 21.32 10.496C21.3627 10.496 21.3947 10.5227 21.416 10.576C21.4373 10.6187 21.448 10.6613 21.448 10.704C21.448 10.768 21.4213 10.8427 21.368 10.928C21.3147 11.0133 21.2453 11.1147 21.16 11.232C21.096 11.3173 20.9893 11.4453 20.84 11.616C20.7013 11.776 20.488 12.016 20.2 12.336C19.912 12.6453 19.528 13.0773 19.048 13.632C18.92 13.7707 18.7227 14.016 18.456 14.368C18.1893 14.7093 17.8853 15.1093 17.544 15.568C17.2133 16.016 16.8827 16.4693 16.552 16.928C16.2213 17.3867 15.928 17.8027 15.672 18.176C15.416 18.5387 15.2347 18.8107 15.128 18.992L14.136 20.672C13.9227 21.0347 13.7467 21.3333 13.608 21.568C13.4693 21.792 13.3627 21.9467 13.288 22.032C13.128 22.224 12.952 22.3947 12.76 22.544L12.616 22.464L12.488 22.544L12.344 22.704Z"
-                    fill="white"
-                  />
-                </svg>
-              </div>
+                  3
+                </div>
+              )}
             </div>
 
-            <span className="text-[16px] status-name  text-[#4a5464] ">
+            <span
+              className={`text-[16px] status-name  font-[500] ${
+                currentIndex >= 2 ? "text-[#0a0a0a]" : "text-[#4a5464]"
+              }  `}
+            >
               Exam Preperation
             </span>
 
             <div className="w-8 h-[2px] status-bar flex">
-              <div className="w-1/2 h-full bg-[#e5e7ea]"></div>
-              <div className="w-1/2 h-full bg-[#e5e7ea]"></div>
+              <div
+                className={`w-1/2 h-full ${
+                  currentIndex > 2 && "!bg-[#04c951]"
+                } ${currentIndex === 2 ? "bg-[#b85a3e]" : "bg-[#e5e7ea]"}`}
+              ></div>
+              <div
+                className={`w-1/2 h-full ${
+                  currentIndex > 2 ? "bg-[#04c951]" : "bg-[#e5e7ea]"
+                } `}
+              ></div>
             </div>
 
             <div className="flex status-number items-center justify-center aspect-square rounded-full overflow-hidden w-7 select-none">
-              <div className="text-white  font-[500] flex items-center justify-center h-full w-full bg-[#e5e7eb]">
-                4
-              </div>
-
-              <div className="h-full w-full hidden">
-                <svg
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+              {currentIndex > 3 ? (
+                <div className="h-full w-full ">
+                  <svg
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"
+                      fill="#00C950"
+                    />
+                    <path
+                      d="M12.344 22.704C12.344 22.5653 12.3173 22.496 12.264 22.496L11.896 22.672C11.896 22.5973 11.8533 22.544 11.768 22.512L11.64 22.496C11.5547 22.496 11.448 22.5333 11.32 22.608C11.2987 22.5547 11.272 22.5013 11.24 22.448C11.208 22.3947 11.1813 22.3467 11.16 22.304C11.0213 22.0373 10.8827 21.744 10.744 21.424C10.616 21.0933 10.4933 20.7787 10.376 20.48C10.2693 20.1813 10.184 19.9467 10.12 19.776C10.0773 19.6373 10.0293 19.4293 9.976 19.152C9.92267 18.8747 9.86933 18.5227 9.816 18.096C9.93333 18.1707 10.024 18.208 10.088 18.208C10.1627 18.208 10.232 18.096 10.296 17.872C10.328 17.9147 10.3867 17.936 10.472 17.936C10.536 17.936 10.584 17.9147 10.616 17.872L10.872 17.488L11.16 17.584H11.176C11.1973 17.584 11.2187 17.5733 11.24 17.552C11.2613 17.5307 11.2933 17.5093 11.336 17.488C11.4213 17.4347 11.4853 17.408 11.528 17.408L11.576 17.424C11.8427 17.552 12.0133 17.7867 12.088 18.128C12.28 18.9387 12.472 19.344 12.664 19.344C12.856 19.344 13.08 19.1413 13.336 18.736C13.464 18.5333 13.592 18.2987 13.72 18.032C13.8587 17.7653 13.9973 17.4667 14.136 17.136C14.1573 17.264 14.1787 17.328 14.2 17.328C14.2533 17.328 14.344 17.1947 14.472 16.928C14.6107 16.6613 14.8293 16.2933 15.128 15.824C15.2987 15.536 15.512 15.2107 15.768 14.848C16.0347 14.4853 16.3173 14.112 16.616 13.728C16.9147 13.344 17.2027 12.9813 17.48 12.64C17.768 12.2987 18.024 12.0053 18.248 11.76C18.472 11.5147 18.6373 11.3547 18.744 11.28C19.1493 11.0027 19.4693 10.736 19.704 10.48C19.6933 10.5547 19.6773 10.624 19.656 10.688C19.6453 10.7413 19.64 10.7787 19.64 10.8C19.64 10.8427 19.6613 10.864 19.704 10.864L20.152 10.64V10.704C20.152 10.7893 20.1733 10.832 20.216 10.832C20.248 10.832 20.312 10.784 20.408 10.688C20.504 10.592 20.5573 10.5227 20.568 10.48L20.536 10.704L21.08 10.384L20.952 10.672C21.1227 10.5547 21.2453 10.496 21.32 10.496C21.3627 10.496 21.3947 10.5227 21.416 10.576C21.4373 10.6187 21.448 10.6613 21.448 10.704C21.448 10.768 21.4213 10.8427 21.368 10.928C21.3147 11.0133 21.2453 11.1147 21.16 11.232C21.096 11.3173 20.9893 11.4453 20.84 11.616C20.7013 11.776 20.488 12.016 20.2 12.336C19.912 12.6453 19.528 13.0773 19.048 13.632C18.92 13.7707 18.7227 14.016 18.456 14.368C18.1893 14.7093 17.8853 15.1093 17.544 15.568C17.2133 16.016 16.8827 16.4693 16.552 16.928C16.2213 17.3867 15.928 17.8027 15.672 18.176C15.416 18.5387 15.2347 18.8107 15.128 18.992L14.136 20.672C13.9227 21.0347 13.7467 21.3333 13.608 21.568C13.4693 21.792 13.3627 21.9467 13.288 22.032C13.128 22.224 12.952 22.3947 12.76 22.544L12.616 22.464L12.488 22.544L12.344 22.704Z"
+                      fill="white"
+                    />
+                  </svg>
+                </div>
+              ) : (
+                <div
+                  className={`text-white  font-[500] flex items-center justify-center h-full w-full ${
+                    tabActiveState === total_states[3]
+                      ? "!bg-[#b85a3e]"
+                      : "bg-[#e6e7eb]"
+                  }  `}
                 >
-                  <path
-                    d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"
-                    fill="#00C950"
-                  />
-                  <path
-                    d="M12.344 22.704C12.344 22.5653 12.3173 22.496 12.264 22.496L11.896 22.672C11.896 22.5973 11.8533 22.544 11.768 22.512L11.64 22.496C11.5547 22.496 11.448 22.5333 11.32 22.608C11.2987 22.5547 11.272 22.5013 11.24 22.448C11.208 22.3947 11.1813 22.3467 11.16 22.304C11.0213 22.0373 10.8827 21.744 10.744 21.424C10.616 21.0933 10.4933 20.7787 10.376 20.48C10.2693 20.1813 10.184 19.9467 10.12 19.776C10.0773 19.6373 10.0293 19.4293 9.976 19.152C9.92267 18.8747 9.86933 18.5227 9.816 18.096C9.93333 18.1707 10.024 18.208 10.088 18.208C10.1627 18.208 10.232 18.096 10.296 17.872C10.328 17.9147 10.3867 17.936 10.472 17.936C10.536 17.936 10.584 17.9147 10.616 17.872L10.872 17.488L11.16 17.584H11.176C11.1973 17.584 11.2187 17.5733 11.24 17.552C11.2613 17.5307 11.2933 17.5093 11.336 17.488C11.4213 17.4347 11.4853 17.408 11.528 17.408L11.576 17.424C11.8427 17.552 12.0133 17.7867 12.088 18.128C12.28 18.9387 12.472 19.344 12.664 19.344C12.856 19.344 13.08 19.1413 13.336 18.736C13.464 18.5333 13.592 18.2987 13.72 18.032C13.8587 17.7653 13.9973 17.4667 14.136 17.136C14.1573 17.264 14.1787 17.328 14.2 17.328C14.2533 17.328 14.344 17.1947 14.472 16.928C14.6107 16.6613 14.8293 16.2933 15.128 15.824C15.2987 15.536 15.512 15.2107 15.768 14.848C16.0347 14.4853 16.3173 14.112 16.616 13.728C16.9147 13.344 17.2027 12.9813 17.48 12.64C17.768 12.2987 18.024 12.0053 18.248 11.76C18.472 11.5147 18.6373 11.3547 18.744 11.28C19.1493 11.0027 19.4693 10.736 19.704 10.48C19.6933 10.5547 19.6773 10.624 19.656 10.688C19.6453 10.7413 19.64 10.7787 19.64 10.8C19.64 10.8427 19.6613 10.864 19.704 10.864L20.152 10.64V10.704C20.152 10.7893 20.1733 10.832 20.216 10.832C20.248 10.832 20.312 10.784 20.408 10.688C20.504 10.592 20.5573 10.5227 20.568 10.48L20.536 10.704L21.08 10.384L20.952 10.672C21.1227 10.5547 21.2453 10.496 21.32 10.496C21.3627 10.496 21.3947 10.5227 21.416 10.576C21.4373 10.6187 21.448 10.6613 21.448 10.704C21.448 10.768 21.4213 10.8427 21.368 10.928C21.3147 11.0133 21.2453 11.1147 21.16 11.232C21.096 11.3173 20.9893 11.4453 20.84 11.616C20.7013 11.776 20.488 12.016 20.2 12.336C19.912 12.6453 19.528 13.0773 19.048 13.632C18.92 13.7707 18.7227 14.016 18.456 14.368C18.1893 14.7093 17.8853 15.1093 17.544 15.568C17.2133 16.016 16.8827 16.4693 16.552 16.928C16.2213 17.3867 15.928 17.8027 15.672 18.176C15.416 18.5387 15.2347 18.8107 15.128 18.992L14.136 20.672C13.9227 21.0347 13.7467 21.3333 13.608 21.568C13.4693 21.792 13.3627 21.9467 13.288 22.032C13.128 22.224 12.952 22.3947 12.76 22.544L12.616 22.464L12.488 22.544L12.344 22.704Z"
-                    fill="white"
-                  />
-                </svg>
-              </div>
+                  4
+                </div>
+              )}
             </div>
 
-            <span className="text-[16px] status-name  text-[#4a5464] ">
+            <span
+              className={`text-[16px] status-name  font-[500] ${
+                currentIndex >= 3 ? "text-[#0a0a0a]" : "text-[#4a5464]"
+              }  `}
+            >
               Scholarship Details
             </span>
 
             <div className="w-8 h-[2px] status-bar flex">
-              <div className="w-1/2 h-full bg-[#e5e7ea]"></div>
-              <div className="w-1/2 h-full bg-[#e5e7ea]"></div>
+              <div
+                className={`w-1/2 h-full ${
+                  currentIndex > 3 && "!bg-[#04c951]"
+                } ${currentIndex === 3 ? "bg-[#b85a3e]" : "bg-[#e5e7ea]"}`}
+              ></div>
+              <div
+                className={`w-1/2 h-full ${
+                  currentIndex > 3 ? "bg-[#04c951]" : "bg-[#e5e7ea]"
+                } `}
+              ></div>
             </div>
 
             <div className="flex status-number items-center justify-center aspect-square rounded-full overflow-hidden w-7 select-none">
-              <div className="text-white  font-[500] flex items-center justify-center h-full w-full bg-[#e5e7eb]">
-                5
-              </div>
-
-              <div className="h-full w-full hidden">
-                <svg
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+              {currentIndex > 4 ? (
+                <div className="h-full w-full ">
+                  <svg
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"
+                      fill="#00C950"
+                    />
+                    <path
+                      d="M12.344 22.704C12.344 22.5653 12.3173 22.496 12.264 22.496L11.896 22.672C11.896 22.5973 11.8533 22.544 11.768 22.512L11.64 22.496C11.5547 22.496 11.448 22.5333 11.32 22.608C11.2987 22.5547 11.272 22.5013 11.24 22.448C11.208 22.3947 11.1813 22.3467 11.16 22.304C11.0213 22.0373 10.8827 21.744 10.744 21.424C10.616 21.0933 10.4933 20.7787 10.376 20.48C10.2693 20.1813 10.184 19.9467 10.12 19.776C10.0773 19.6373 10.0293 19.4293 9.976 19.152C9.92267 18.8747 9.86933 18.5227 9.816 18.096C9.93333 18.1707 10.024 18.208 10.088 18.208C10.1627 18.208 10.232 18.096 10.296 17.872C10.328 17.9147 10.3867 17.936 10.472 17.936C10.536 17.936 10.584 17.9147 10.616 17.872L10.872 17.488L11.16 17.584H11.176C11.1973 17.584 11.2187 17.5733 11.24 17.552C11.2613 17.5307 11.2933 17.5093 11.336 17.488C11.4213 17.4347 11.4853 17.408 11.528 17.408L11.576 17.424C11.8427 17.552 12.0133 17.7867 12.088 18.128C12.28 18.9387 12.472 19.344 12.664 19.344C12.856 19.344 13.08 19.1413 13.336 18.736C13.464 18.5333 13.592 18.2987 13.72 18.032C13.8587 17.7653 13.9973 17.4667 14.136 17.136C14.1573 17.264 14.1787 17.328 14.2 17.328C14.2533 17.328 14.344 17.1947 14.472 16.928C14.6107 16.6613 14.8293 16.2933 15.128 15.824C15.2987 15.536 15.512 15.2107 15.768 14.848C16.0347 14.4853 16.3173 14.112 16.616 13.728C16.9147 13.344 17.2027 12.9813 17.48 12.64C17.768 12.2987 18.024 12.0053 18.248 11.76C18.472 11.5147 18.6373 11.3547 18.744 11.28C19.1493 11.0027 19.4693 10.736 19.704 10.48C19.6933 10.5547 19.6773 10.624 19.656 10.688C19.6453 10.7413 19.64 10.7787 19.64 10.8C19.64 10.8427 19.6613 10.864 19.704 10.864L20.152 10.64V10.704C20.152 10.7893 20.1733 10.832 20.216 10.832C20.248 10.832 20.312 10.784 20.408 10.688C20.504 10.592 20.5573 10.5227 20.568 10.48L20.536 10.704L21.08 10.384L20.952 10.672C21.1227 10.5547 21.2453 10.496 21.32 10.496C21.3627 10.496 21.3947 10.5227 21.416 10.576C21.4373 10.6187 21.448 10.6613 21.448 10.704C21.448 10.768 21.4213 10.8427 21.368 10.928C21.3147 11.0133 21.2453 11.1147 21.16 11.232C21.096 11.3173 20.9893 11.4453 20.84 11.616C20.7013 11.776 20.488 12.016 20.2 12.336C19.912 12.6453 19.528 13.0773 19.048 13.632C18.92 13.7707 18.7227 14.016 18.456 14.368C18.1893 14.7093 17.8853 15.1093 17.544 15.568C17.2133 16.016 16.8827 16.4693 16.552 16.928C16.2213 17.3867 15.928 17.8027 15.672 18.176C15.416 18.5387 15.2347 18.8107 15.128 18.992L14.136 20.672C13.9227 21.0347 13.7467 21.3333 13.608 21.568C13.4693 21.792 13.3627 21.9467 13.288 22.032C13.128 22.224 12.952 22.3947 12.76 22.544L12.616 22.464L12.488 22.544L12.344 22.704Z"
+                      fill="white"
+                    />
+                  </svg>
+                </div>
+              ) : (
+                <div
+                  className={`text-white  font-[500] flex items-center justify-center h-full w-full ${
+                    tabActiveState === total_states[4]
+                      ? "!bg-[#b85a3e]"
+                      : "bg-[#e6e7eb]"
+                  }  `}
                 >
-                  <path
-                    d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"
-                    fill="#00C950"
-                  />
-                  <path
-                    d="M12.344 22.704C12.344 22.5653 12.3173 22.496 12.264 22.496L11.896 22.672C11.896 22.5973 11.8533 22.544 11.768 22.512L11.64 22.496C11.5547 22.496 11.448 22.5333 11.32 22.608C11.2987 22.5547 11.272 22.5013 11.24 22.448C11.208 22.3947 11.1813 22.3467 11.16 22.304C11.0213 22.0373 10.8827 21.744 10.744 21.424C10.616 21.0933 10.4933 20.7787 10.376 20.48C10.2693 20.1813 10.184 19.9467 10.12 19.776C10.0773 19.6373 10.0293 19.4293 9.976 19.152C9.92267 18.8747 9.86933 18.5227 9.816 18.096C9.93333 18.1707 10.024 18.208 10.088 18.208C10.1627 18.208 10.232 18.096 10.296 17.872C10.328 17.9147 10.3867 17.936 10.472 17.936C10.536 17.936 10.584 17.9147 10.616 17.872L10.872 17.488L11.16 17.584H11.176C11.1973 17.584 11.2187 17.5733 11.24 17.552C11.2613 17.5307 11.2933 17.5093 11.336 17.488C11.4213 17.4347 11.4853 17.408 11.528 17.408L11.576 17.424C11.8427 17.552 12.0133 17.7867 12.088 18.128C12.28 18.9387 12.472 19.344 12.664 19.344C12.856 19.344 13.08 19.1413 13.336 18.736C13.464 18.5333 13.592 18.2987 13.72 18.032C13.8587 17.7653 13.9973 17.4667 14.136 17.136C14.1573 17.264 14.1787 17.328 14.2 17.328C14.2533 17.328 14.344 17.1947 14.472 16.928C14.6107 16.6613 14.8293 16.2933 15.128 15.824C15.2987 15.536 15.512 15.2107 15.768 14.848C16.0347 14.4853 16.3173 14.112 16.616 13.728C16.9147 13.344 17.2027 12.9813 17.48 12.64C17.768 12.2987 18.024 12.0053 18.248 11.76C18.472 11.5147 18.6373 11.3547 18.744 11.28C19.1493 11.0027 19.4693 10.736 19.704 10.48C19.6933 10.5547 19.6773 10.624 19.656 10.688C19.6453 10.7413 19.64 10.7787 19.64 10.8C19.64 10.8427 19.6613 10.864 19.704 10.864L20.152 10.64V10.704C20.152 10.7893 20.1733 10.832 20.216 10.832C20.248 10.832 20.312 10.784 20.408 10.688C20.504 10.592 20.5573 10.5227 20.568 10.48L20.536 10.704L21.08 10.384L20.952 10.672C21.1227 10.5547 21.2453 10.496 21.32 10.496C21.3627 10.496 21.3947 10.5227 21.416 10.576C21.4373 10.6187 21.448 10.6613 21.448 10.704C21.448 10.768 21.4213 10.8427 21.368 10.928C21.3147 11.0133 21.2453 11.1147 21.16 11.232C21.096 11.3173 20.9893 11.4453 20.84 11.616C20.7013 11.776 20.488 12.016 20.2 12.336C19.912 12.6453 19.528 13.0773 19.048 13.632C18.92 13.7707 18.7227 14.016 18.456 14.368C18.1893 14.7093 17.8853 15.1093 17.544 15.568C17.2133 16.016 16.8827 16.4693 16.552 16.928C16.2213 17.3867 15.928 17.8027 15.672 18.176C15.416 18.5387 15.2347 18.8107 15.128 18.992L14.136 20.672C13.9227 21.0347 13.7467 21.3333 13.608 21.568C13.4693 21.792 13.3627 21.9467 13.288 22.032C13.128 22.224 12.952 22.3947 12.76 22.544L12.616 22.464L12.488 22.544L12.344 22.704Z"
-                    fill="white"
-                  />
-                </svg>
-              </div>
+                  5
+                </div>
+              )}
             </div>
 
-            <span className="text-[16px] status-name  text-[#4a5464] ">
+            <span
+              className={`text-[16px] status-name  font-[500] ${
+                currentIndex >= 4 ? "text-[#0a0a0a]" : "text-[#4a5464]"
+              }  `}
+            >
               Declaration
             </span>
           </div>
@@ -950,59 +1060,62 @@ const ScholarshipForm = () => {
                       प्रमाणपत्र अपलोड करें)
                     </label>
                     <div className="flex gap-3 min-h-30 items-center justify-center text-[17px] rounded-xl border-[2px] border-[#d1d5dd]">
-                     {formData.disabilityCertificateFileName ? (
-                    <div className="h-[90%] select-none w-max max-w-[80px] border relative  rounded-md">
-                      <img
-                        src={formData.disabilityCertificateFileName}
-                        className="h-full w-full object-contain rounded-md"
-                        alt=""
-                      />
-                      <span
-                        onClick={() => {
-                          URL.revokeObjectURL(formData.disabilityCertificateFileName);
-                          setFormData({
-                            ...formData,
-                            disabilityCertificateFileName: "",
-                          });
-                        }}
-                        className="cursor-pointer text-[15px] p-1 absolute top-0 right-0 translate-x-[50%] translate-y-[-50%] bg-red-100 text-red-500 rounded-full flex items-center justify-center w-[10px] h-[22px] shrink-0 aspect-square "
-                      >
-                        <RxCross2 />
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="flex gap-2 items-center">
-                      <label
-                        htmlFor="disability-certificate-image"
-                        className="py-2  rounded-xl border px-3 cursor-pointer border-[#c91e2c] text-[17px] text-[#c91e2c] bg-[#fff7ed]"
-                      >
-                        Upload
-                      </label>
-                      <span className="text-[#4a5565]">
-                        or drag files here.
-                      </span>
-                    </div>
-                  )}
+                      {formData.disabilityCertificateFileName ? (
+                        <div className="h-[90%] select-none w-max max-w-[80px] border relative  rounded-md">
+                          <img
+                            src={formData.disabilityCertificateFileName}
+                            className="h-full w-full object-contain rounded-md"
+                            alt=""
+                          />
+                          <span
+                            onClick={() => {
+                              URL.revokeObjectURL(
+                                formData.disabilityCertificateFileName
+                              );
+                              setFormData({
+                                ...formData,
+                                disabilityCertificateFileName: "",
+                              });
+                            }}
+                            className="cursor-pointer text-[15px] p-1 absolute top-0 right-0 translate-x-[50%] translate-y-[-50%] bg-red-100 text-red-500 rounded-full flex items-center justify-center w-[10px] h-[22px] shrink-0 aspect-square "
+                          >
+                            <RxCross2 />
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="flex gap-2 items-center">
+                          <label
+                            htmlFor="disability-certificate-image"
+                            className="py-2  rounded-xl border px-3 cursor-pointer border-[#c91e2c] text-[17px] text-[#c91e2c] bg-[#fff7ed]"
+                          >
+                            Upload
+                          </label>
+                          <span className="text-[#4a5565]">
+                            or drag files here.
+                          </span>
+                        </div>
+                      )}
 
-                  <input
-                    type="file"
-                    id="disability-certificate-image"
-                    name="profile-image"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files[0];
-                      if (file) {
-                        setFormData({
-                          ...formData,
-                          disabilityCertificateFileName: URL.createObjectURL(file),
-                        });
-                      }
-                    }}
-                    required
-                    className="bg-[#f3f3f5] hidden grow-1 px-3 py-2 text-[16px] text-black outline-none border-none rounded-lg"
-                    placeholder="Select profile image"
-                  />
-                </div>
+                      <input
+                        type="file"
+                        id="disability-certificate-image"
+                        name="profile-image"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            setFormData({
+                              ...formData,
+                              disabilityCertificateFileName:
+                                URL.createObjectURL(file),
+                            });
+                          }
+                        }}
+                        required
+                        className="bg-[#f3f3f5] hidden grow-1 px-3 py-2 text-[16px] text-black outline-none border-none rounded-lg"
+                        placeholder="Select profile image"
+                      />
+                    </div>
 
                     <p className="text-[14px] text-[#6b7281] mt-2">
                       Upload your picture as per SSC Specifications (एसएससी
@@ -1415,13 +1528,10 @@ const ScholarshipForm = () => {
                     <input
                       type="checkbox"
                       value="Self Study"
-                      checked={formData.preparationMethod.includes("Self Study")}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          preparationMethod: e.target.value,
-                        })
-                      }
+                      checked={formData.preparationMethod.includes(
+                        "Self Study"
+                      )}
+                      onChange={formData.handlePreparationChange}
                       required
                       name="self-study"
                     />
@@ -1432,13 +1542,10 @@ const ScholarshipForm = () => {
                       type="checkbox"
                       required
                       value="Coaching Center"
-                      checked={formData.preparationMethod.includes("Coaching Center")}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          preparationMethod: e.target.value,
-                        })
-                      }
+                      checked={formData.preparationMethod.includes(
+                        "Coaching Center"
+                      )}
+                      onChange={formData.handlePreparationChange}
                       name="preparation-source"
                     />
                     <span>Coaching Center / कोचिंग सेंटर</span>
@@ -1448,13 +1555,10 @@ const ScholarshipForm = () => {
                       type="checkbox"
                       required
                       value="Online Paid Course"
-                      checked={formData.preparationMethod.includes("Online Paid Course")}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          preparationMethod: e.target.value,
-                        })
-                      }
+                      checked={formData.preparationMethod.includes(
+                        "Online Paid Course"
+                      )}
+                      onChange={formData.handlePreparationChange}
                       name="preparation-source"
                     />
                     <span>Online Paid Courses / ऑनलाइन भुगतान पाठ्यक्रम</span>
@@ -1464,13 +1568,10 @@ const ScholarshipForm = () => {
                       type="checkbox"
                       required
                       value="Online (Youtube) / Free Course"
-                      checked={formData.preparationMethod.includes("Online (Youtube) / Free Course")}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          preparationMethod: e.target.value,
-                        })
-                      }
+                      checked={formData.preparationMethod.includes(
+                        "Online (Youtube) / Free Course"
+                      )}
+                      onChange={formData.handlePreparationChange}
                       name="preparation-source"
                     />
                     <span>
@@ -1479,18 +1580,30 @@ const ScholarshipForm = () => {
                     </span>
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" required name="preparation-source" />
+                    <input
+                      type="checkbox"
+                      checked={formData.preperationMethodOthers}
+                      onChange={(e) => {
+                        if (!e.target.checked) {
+                          setFormData({
+                            ...formData,
+                            preparationMethodOther: "",
+                          });
+                        }
+                      }}
+                      name="preparation-source"
+                    />
                     <input
                       type="text"
-                      value={formData.preparationMethod}
+                      value={formData.preperationMethodOthers}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          preparationMethod: e.target.value,
+                          preperationMethodOthers: e.target.value,
                         })
                       }
-                      placeholder="other"
-                      className=" bg-[#f3f3f5] px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                      placeholder="Other"
+                      className="bg-[#f3f3f5] px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
                     />
                   </label>
                 </div>
@@ -1581,13 +1694,13 @@ const ScholarshipForm = () => {
                   <label className="flex gap-2 items-center">
                     <input
                       type="radio"
-                      name="mobile-pnone"
-                      value={"yes"}
-                      checked={formData.hasMobilePhone}
+                      name="mobile-phone"
+                      value={"smart-phone"}
+                      checked={formData.hasMobile === "smart-phone"}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          hasMobilePhone: e.target.value,
+                          hasMobile: e.target.value,
                         })
                       }
                       required
@@ -1600,13 +1713,13 @@ const ScholarshipForm = () => {
                   <label className="flex gap-2 items-center">
                     <input
                       type="radio"
-                      name="mobile-pnone"
-                      value={"yes"}
-                      required
+                      name="mobile-phone"
+                      value={"keypad-phone"}
+                      checked={formData.hasMobile === "keypad-phone"}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          hasMobilePhone: e.target.value,
+                          hasMobile: e.target.value,
                         })
                       }
                     />
@@ -1618,12 +1731,13 @@ const ScholarshipForm = () => {
                   <label className="flex gap-2 items-center">
                     <input
                       type="radio"
-                      name="mobile-pnone"
-                      value={"yes"}
+                      name="mobile-phone"
+                      value={"none"}
+                      checked={formData.hasMobile === "none"}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          hasMobilePhone: e.target.value,
+                          hasMobile: e.target.value,
                         })
                       }
                       required
@@ -1643,11 +1757,12 @@ const ScholarshipForm = () => {
                     <input
                       type="radio"
                       name="tablet-device"
-                      value={"Andrid"}
+                      value={"android"}
+                      checked={formData.hasTablet === "android"}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          hasTabletAndroid: e.target.value,
+                          hasTablet: e.target.value,
                         })
                       }
                       required
@@ -1659,11 +1774,12 @@ const ScholarshipForm = () => {
                     <input
                       type="radio"
                       name="tablet-device"
-                      value={"ipd"}
+                      value={"ipad"}
+                      checked={formData.hasTablet === "ipad"}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          hasTabletAndroid: e.target.value,
+                          hasTablet: e.target.value,
                         })
                       }
                       required
@@ -1675,11 +1791,12 @@ const ScholarshipForm = () => {
                     <input
                       type="radio"
                       name="tablet-device"
-                      value={"radio"}
+                      value={"none"}
+                      checked={formData.hasTablet === "none"}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          hasTabletAndroid: e.target.value,
+                          hasTablet: e.target.value,
                         })
                       }
                       required
@@ -1698,9 +1815,14 @@ const ScholarshipForm = () => {
                   <label className="flex gap-2 items-center">
                     <input
                       type="radio"
-                      name="computer-device value='yes"
+                      name="computer-device"
+                      value={"laptop"}
+                      checked={formData.hasComputer === "laptop"}
                       onChange={(e) =>
-                        setFormData({ ...formData, hasLaptop: e.target.valu })
+                        setFormData({
+                          ...formData,
+                          hasComputer: e.target.value,
+                        })
                       }
                       required
                     />
@@ -1710,21 +1832,31 @@ const ScholarshipForm = () => {
                   <label className="flex gap-2 items-center">
                     <input
                       type="radio"
-                      name="computer-device value='yes"
+                      name="computer-device"
+                      value={"desktop"}
+                      checked={formData.hasComputer === "desktop"}
                       onChange={(e) =>
-                        setFormData({ ...formData, hasLaptop: e.target.valu })
+                        setFormData({
+                          ...formData,
+                          hasComputer: e.target.value,
+                        })
                       }
                       required
                     />
-                    <span className="text-[#0a0a0a]">DeskTop / डेस्कटॉप</span>
+                    <span className="text-[#0a0a0a]">Desktop / डेस्कटॉप</span>
                   </label>
 
                   <label className="flex gap-2 items-center">
                     <input
                       type="radio"
-                      name="computer-device value='yes"
+                      name="computer-device"
+                      value={"none"}
+                      checked={formData.hasComputer === "none"}
                       onChange={(e) =>
-                        setFormData({ ...formData, hasLaptop: e.target.valu })
+                        setFormData({
+                          ...formData,
+                          hasComputer: e.target.value,
+                        })
                       }
                       required
                     />
@@ -1753,26 +1885,74 @@ const ScholarshipForm = () => {
                 <select
                   required
                   name="recieved-scholarship-from-1eq"
+                  value={formData.receivedPreviousScholarship}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      receivedPreviousScholarship: e.target.value,
+                    })
+                  }
                   className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
                 >
                   <option value="" disabled>
                     -- Select --
                   </option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
                 </select>
               </div>
 
-              {/* preparing source  */}
+              {/* previous scholarship  details from 1 eq  */}
+              {formData.receivedPreviousScholarship === "yes" && (
+                <div className="w-full flex flex-col form-field gap-1">
+                  <label className="text-[17px] text-[#0a0a0a]">
+                    Which one? (कौन सा?)
+                  </label>
+
+                  <select
+                    required
+                    name="previous-scholarship-name"
+                    value={formData.previousScholarshipDetails}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        previousScholarshipDetails: e.target.value,
+                      })
+                    }
+                    className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                  >
+                    <option value="" disabled>
+                      -- Select --
+                    </option>
+                    <option value="gold">Gold</option>
+                    <option value="silver">Silver</option>
+                    <option value="bronze">Bronze</option>
+                  </select>
+                </div>
+              )}
+
+              {/* which scholarship needed  */}
               <div className="w-full flex flex-col form-field gap-1">
                 <label className="text-[17px] text-[#0a0a0a]">
-                  Are you eligible to appear for CGL 2025? (क्या आप सीजीएल 2025
-                  में शामिल होने के पात्र हैं?)
+                  Which Scholarship do you need? (आपको कौन सी छात्रवृत्ति की
+                  आवश्यकता है?)
                 </label>
 
                 <div className="flex flex-col gap-3">
                   <label className="flex items-center gap-2">
-                    <input type="radio" required name="scholarship-selection" />
+                    <input
+                      type="radio"
+                      value={"gold"}
+                      checked={formData.scholarshipNeeded === "gold"}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          scholarshipNeeded: e.target.value,
+                        })
+                      }
+                      required
+                      name="scholarship-selection"
+                    />
                     <p className="text-[#4a5565] flex flex-col">
                       <span className="text-[#0a0a0a]">Gold</span>
                       <i>
@@ -1781,7 +1961,19 @@ const ScholarshipForm = () => {
                     </p>
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="radio" required name="scholarship-selection" />
+                    <input
+                      type="radio"
+                      value={"silver"}
+                      checked={formData.scholarshipNeeded === "silver"}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          scholarshipNeeded: e.target.value,
+                        })
+                      }
+                      required
+                      name="scholarship-selection"
+                    />
                     <p className="text-[#4a5565] flex flex-col">
                       <span className="text-[#0a0a0a]">Silver</span>
                       <i>
@@ -1790,7 +1982,19 @@ const ScholarshipForm = () => {
                     </p>
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="radio" required name="scholarship-selection" />
+                    <input
+                      type="radio"
+                      value={"bronze"}
+                      checked={formData.scholarshipNeeded === "bronze"}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          scholarshipNeeded: e.target.value,
+                        })
+                      }
+                      required
+                      name="scholarship-selection"
+                    />
                     <p className="text-[#4a5565] flex flex-col">
                       <span className="text-[#0a0a0a]">Bronze</span>
                       <i>Bronze: 1EQ Digital Kit + Study Group</i>
@@ -1799,7 +2003,7 @@ const ScholarshipForm = () => {
                 </div>
               </div>
 
-              {/* scholarship reqson describe */}
+              {/* scholarship reason describe */}
               <div className="w-full flex flex-col form-field gap-1">
                 <label className="text-[17px] text-[#0a0a0a] w-full">
                   VERY IMPORTANT: Please explain why this Scholarship should be
@@ -1813,7 +2017,208 @@ const ScholarshipForm = () => {
                 <textarea
                   name="scholarship-reason"
                   required
+                  value={formData.scholarshipEssay}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      scholarshipEssay: e.target.value,
+                    })
+                  }
                   placeholder="Please make sure that there are no Grammar or Spelling Mistakes (कृपया सुनिश्चित करें कि कोई व्याकरण या वर्तनी की गलतियाँ न हों)"
+                  className="bg-[#f3f3f5] resize-none h-30 grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                ></textarea>
+              </div>
+
+              {/* volunteering role */}
+              <div className="w-full flex flex-col form-field gap-1">
+                <label className="text-[17px] text-[#0a0a0a]">
+                  Would you like to volunteer with 1EQ? (क्या आप 1EQ के साथ
+                  स्वयंसेवक बनना चाहेंगे?)
+                </label>
+
+                <div className="flex flex-col gap-3">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      value={"Telegram Group Admin"}
+                      checked={
+                        formData.volunteerRole === "Telegram Group Admin"
+                      }
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          volunteerRole: e.target.value,
+                        })
+                      }
+                      required
+                      name="volunteer-role"
+                    />
+                    <p className="text-[#4a5565] flex flex-col">
+                      <span className="text-[#0a0a0a]">
+                        Telegram Group Admin /​ टेलीग्राम ग्रुप एडमिन
+                      </span>
+                    </p>
+                  </label>
+
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      value={"Recording Lessons in Indian Sign Language (ISL)"}
+                      checked={
+                        formData.volunteerRole ===
+                        "Recording Lessons in Indian Sign Language (ISL)"
+                      }
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          volunteerRole: e.target.value,
+                        })
+                      }
+                      required
+                      name="volunteer-role"
+                    />
+                    <p className="text-[#4a5565] flex flex-col">
+                      <span className="text-[#0a0a0a]">
+                        Recording Lessons in Indian Sign Language (ISL) /​
+                        भारतीय सांकेतिक भाषा (आईएसएल) में पाठों की रिकॉर्डिंग
+                      </span>
+                    </p>
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      value={"Doubt Solving"}
+                      checked={formData.volunteerRole === "Doubt Solving"}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          volunteerRole: e.target.value,
+                        })
+                      }
+                      required
+                      name="volunteer-role"
+                    />
+                    <p className="text-[#4a5565] flex flex-col">
+                      <span className="text-[#0a0a0a]">
+                        Doubt Solving /​ शंका समाधान
+                      </span>
+                    </p>
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      value={"Proof Reading of Books"}
+                      checked={
+                        formData.volunteerRole === "Proof Reading of Books"
+                      }
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          volunteerRole: e.target.value,
+                        })
+                      }
+                      required
+                      name="volunteer-role"
+                    />
+                    <p className="text-[#4a5565] flex flex-col">
+                      <span className="text-[#0a0a0a]">
+                        Proof Reading of Books /​ पुस्तकों की प्रूफ़ रीडिंग
+                      </span>
+                    </p>
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      value={"I can Write Blogs"}
+                      checked={formData.volunteerRole === "I can Write Blogs"}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          volunteerRole: e.target.value,
+                        })
+                      }
+                      required
+                      name="volunteer-role"
+                    />
+                    <p className="text-[#4a5565] flex flex-col">
+                      <span className="text-[#0a0a0a]">
+                        I can Write Blogs /​ मैं ब्लॉग लिख सकता हूँ
+                      </span>
+                    </p>
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      value={"I don't want to Volunteer"}
+                      checked={
+                        formData.volunteerRole === "I don't want to Volunteer"
+                      }
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          volunteerRole: e.target.value,
+                        })
+                      }
+                      required
+                      name="volunteer-role"
+                    />
+                    <p className="text-[#4a5565] flex flex-col">
+                      <span className="text-[#0a0a0a]">
+                        I don't want to Volunteer /​ मैं स्वयंसेवक नहीं बनना
+                        चाहता
+                      </span>
+                    </p>
+                  </label>
+                </div>
+              </div>
+
+              {/* approach to volunteering */}
+              {(formData.volunteerRole === "Telegram Group Admin" ||
+                formData.volunteerRole ===
+                  "Recording Lessons in Indian Sign Language (ISL)" ||
+                formData.volunteerRole === "Doubt Solving" ||
+                formData.volunteerRole === "Proof Reading of Books" ||
+                formData.volunteerRole === "I can Write Blogs") && (
+                <div className="w-full flex flex-col form-field gap-1">
+                  <label className="text-[17px] text-[#0a0a0a] w-full">
+                    Can you describe your approch to volunteering? (क्या आप
+                    स्वयंसेवा के प्रति अपने दृष्टिकोण का वर्णन कर सकते हैं?)
+                  </label>
+
+                  <textarea
+                    name="volunteering-approach"
+                    required
+                    value={formData.volunteerApproach}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        volunteerApproach: e.target.value,
+                      })
+                    }
+                    placeholder="Write your approach"
+                    className="bg-[#f3f3f5] resize-none h-30 grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                  ></textarea>
+                </div>
+              )}
+
+              {/* message to 1EQ */}
+              <div className="w-full flex flex-col form-field gap-1">
+                <label className="text-[17px] text-[#0a0a0a] w-full">
+                  Do you have a message for 1EQ or its Founder (JT)? क्या आपके
+                  पास 1EQ या इसके संस्थापक (JT) के लिए कोई संदेश है?
+                </label>
+
+                <textarea
+                  name="scholarship-reason"
+                  required
+                  value={formData.messageTo1EQ}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      messageTo1EQ: e.target.value,
+                    })
+                  }
+                  placeholder="Write a message"
                   className="bg-[#f3f3f5] resize-none h-30 grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
                 ></textarea>
               </div>
@@ -1843,13 +2248,11 @@ const ScholarshipForm = () => {
                     <input
                       type="checkbox"
                       required
-                      name="aggrement-1"
-                      checked={formData.declarationInfoTrue === "agreement1"}
-                      value={"agreement-1"}
+                      checked={formData.declarationInfoTrue}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          delclarationInfoTrue: e.target.value,
+                          declarationInfoTrue: e.target.checked,
                         })
                       }
                     />
@@ -1872,13 +2275,11 @@ const ScholarshipForm = () => {
                     <input
                       type="checkbox"
                       required
-                      name="aggrement-2"
-                      checked={formData.declarationInfoTrue === "agreement2"}
-                      value={"agreement-2"}
+                      checked={formData.declarationInfoAccurate}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          delclarationInfoTrue: e.target.value,
+                          declarationInfoAccurate: e.target.checked,
                         })
                       }
                     />
@@ -1901,13 +2302,11 @@ const ScholarshipForm = () => {
                     <input
                       type="checkbox"
                       required
-                      name="aggrement-3"
-                      checked={formData.declarationInfoTrue === "agreement3"}
-                      value={"agreement-3"}
+                      checked={formData.consentToContact}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          delclarationInfoTrue: e.target.value,
+                          consentToContact: e.target.checked,
                         })
                       }
                     />
@@ -1929,13 +2328,11 @@ const ScholarshipForm = () => {
                     <input
                       type="checkbox"
                       required
-                      name="aggrement-3"
-                      checked={formData.declarationInfoTrue === "agreement4"}
-                      value={"agreement-4"}
+                      checked={formData.participateInSurvey}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          delclarationInfoTrue: e.target.value,
+                          participateInSurvey: e.target.checked,
                         })
                       }
                     />
