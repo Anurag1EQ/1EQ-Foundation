@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaArrowLeft } from "react-icons/fa6";
-import { useState } from "react";
+import { ImSpinner9 } from "react-icons/im";
 import axios from "axios";
 
 const ScholarshipForm = () => {
@@ -42,7 +42,7 @@ const ScholarshipForm = () => {
     // part 3
     preparationMethod: [],
     preperationMethodOthers: "",
-    handlePreparationChange: (e) => {
+    handlePreparationChange: function (e) {
       const val = e.target.value;
       setFormData((prev) => {
         const current = prev.preparationMethod || [];
@@ -50,6 +50,14 @@ const ScholarshipForm = () => {
         const updated = exists
           ? current.filter((item) => item !== val)
           : [...current, val];
+        if (updated.length <= 0) {
+          setFormError((prev) => ({
+            ...prev,
+            preparationMethod: "Preperation method is required",
+          }));
+        } else {
+          setFormError((prev) => ({ ...prev, preparationMethod: "" }));
+        }  
         return { ...prev, preparationMethod: updated };
       });
     },
@@ -70,6 +78,62 @@ const ScholarshipForm = () => {
     messageTo1EQ: "",
 
     // part 5
+    declarationInfoTrue: "",
+    declarationInfoAccurate: "",
+    consentToContact: "",
+    participateInSurvey: "",
+    signatureData: "",
+  };
+
+  const formErrorMessages = {
+    firstName: "",
+    lastName: "",
+    passportPhotoFileName: "",
+    gender: "",
+    dateOfBirth: "",
+    mobileNumber: "",
+    email: "",
+    confirmEmail: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    stateUT: "",
+    pincode: "",
+    confirmPincode: "",
+    isBenchmarkDisability: "",
+    disabilityType: "",
+    category: "",
+    disabilityCertificateFileName: "",
+    familyIncome: "",
+    isCurrentlyWorking: "",
+    scholarshipSourceInfo: "",
+    tenthStudyMedium: "",
+    twelfthStudyMedium: "",
+    educationLevel: "",
+    currentlyStudying: "",
+    currentEducationMedium: "",
+
+    eligibleForCGL2025: "",
+    preparingForCGL2025: "",
+    cgl2025Attempt: "",
+    clearedOtherGovtExams: "",
+
+    preparationMethod: "",
+    practiceMethod: "",
+    isPartOfStudyGroup: "",
+    studyGroupName: "",
+    hasComputer: "",
+    hasTablet: "",
+    hasMobile: "",
+
+    receivedPreviousScholarship: "",
+    previousScholarshipDetails: "",
+    scholarshipNeeded: "",
+    scholarshipEssay: "",
+    volunteerRole: "",
+    volunteerApproach: "",
+    messageTo1EQ: "",
+
     declarationInfoTrue: "",
     declarationInfoAccurate: "",
     consentToContact: "",
@@ -146,9 +210,13 @@ const ScholarshipForm = () => {
     "Scholarship-Details",
     "Decleration",
   ];
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [formData, setFormData] = useState(formDataFormat);
+  const [formError, setFormError] = useState(formErrorMessages);
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [tabActiveState, setTabActiveState] = useState(
     total_states[currentIndex]
@@ -164,11 +232,779 @@ const ScholarshipForm = () => {
 
   function handleNextPage(e) {
     e.preventDefault();
+    const isValid = validateForm();
+    if (!isValid) {
+      return;
+    }
     if (currentIndex < total_states.length - 1) {
       setTabActiveState(total_states[currentIndex + 1]);
       setCurrentIndex(currentIndex + 1);
     }
   }
+
+  function validateForm() {
+    let valid = true;
+
+    // first name validation
+    if (firstName.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        firstName: "First Name is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (firstName.trim().length < 4 && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        firstName: "First Name must be at least 4 characters long",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (firstName.trim().length > 20 && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        firstName: "First Name must be smaller than 20 characters",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, firstName: "" }));
+    }
+
+    // last name validation
+    if (lastName.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({ ...prev, lastName: "Last Name is required" }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (lastName.trim().length < 4 && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        lastName: "Last Name must be at least 4 characters long",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (lastName.trim().length > 20 && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        lastName: "Last Name must be smaller than 20 characters",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, lastName: "" }));
+    }
+
+    // passport photo validation
+    if (formData.passportPhotoFileName.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        passportPhotoFileName: "Passport photo is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, passportPhotoFileName: "" }));
+    }
+
+    // gender validation
+    if (formData.gender.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({ ...prev, gender: "Gender is required" }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, gender: "" }));
+    }
+
+    // date of birth validation
+    if (formData.dateOfBirth.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        dateOfBirth: "Date of Birth is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, dateOfBirth: "" }));
+    }
+
+    // mobile number validation
+    if (formData.mobileNumber.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        mobileNumber: "Mobile number is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (
+      !/^\d{10}$/.test(formData.mobileNumber.trim()) &&
+      currentIndex === 0
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        mobileNumber: "Mobile number must be 10 digits",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, mobileNumber: "" }));
+    }
+
+    // email validation
+    if (formData.email.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({ ...prev, email: "Email is required" }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email.trim()) &&
+      currentIndex === 0
+    ) {
+      setFormError((prev) => ({ ...prev, email: "Invalid email address" }));
+    } else {
+      setFormError((prev) => ({ ...prev, email: "" }));
+    }
+
+    // confirm email validation
+    if (formData.confirmEmail.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        confirmEmail: "Confirm email is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (
+      formData.confirmEmail.trim() !== formData.email.trim() &&
+      currentIndex === 0
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        confirmEmail: "Email and Confirm Email do not match",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, confirmEmail: "" }));
+    }
+
+    // address line 1 validation
+    if (formData.addressLine1.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        addressLine1: "Address line 1 is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (formData.addressLine1.trim().length < 10 && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        addressLine1: "Enter a valid address",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (
+      formData.addressLine1.trim().length > 100 &&
+      currentIndex === 0
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        addressLine1: "Address is too long",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, addressLine1: "" }));
+    }
+
+    // address line 2 validation
+    if (formData.addressLine2.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        addressLine2: "Address line 2 is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (formData.addressLine2.trim().length < 10 && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        addressLine2: "Enter a valid address",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (
+      formData.addressLine2.trim().length > 100 &&
+      currentIndex === 0
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        addressLine2: "Address is too long",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, addressLine2: "" }));
+    }
+
+    // city validation
+    if (formData.city.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({ ...prev, city: "City is required" }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, city: "" }));
+    }
+
+    // pincode validation
+    if (formData.pincode.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({ ...prev, pincode: "Pincode is required" }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (
+      (formData.pincode.trim() <= 0 ||
+        formData.pincode.trim().length > 7 ||
+        formData.pincode.trim().length < 4) &&
+      currentIndex === 0
+    ) {
+      setFormError((prev) => ({ ...prev, pincode: "Enter a valid pincode" }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, pincode: "" }));
+    }
+
+    // state ut validation
+    if (formData.stateUT.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({ ...prev, stateUT: "State UT is required" }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, stateUT: "" }));
+    }
+
+    // confirm pincode ut validation
+    if (formData.confirmPincode.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        confirmPincode: "State UT is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (
+      formData.confirmPincode.trim() !== formData.pincode.trim() &&
+      currentIndex === 0
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        confirmPincode: "Pincode and Confirm Pincode do not match",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, confirmPincode: "" }));
+    }
+
+    // is benchmark with disability validation
+    if (formData.isBenchmarkDisability.trim() === "" && currentIndex === 0) {
+      setFormError((prev) => ({
+        ...prev,
+        isBenchmarkDisability: "Benchmark with Disability is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, isBenchmarkDisability: "" }));
+    }
+
+    // disability type validation
+    if (
+      formData.disabilityType.trim() === "" &&
+      currentIndex === 0 &&
+      formData.isBenchmarkDisability === "yes"
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        disabilityType: "Disability type is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, disabilityType: "" }));
+    }
+
+    // category  validation
+    if (
+      formData.category.trim() === "" &&
+      currentIndex === 0 &&
+      formData.isBenchmarkDisability === "yes"
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        category: "Category is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, category: "" }));
+    }
+
+    //  disability certificate validation
+    if (
+      formData.disabilityCertificateFileName.trim() === "" &&
+      currentIndex === 0 &&
+      formData.isBenchmarkDisability === "yes"
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        disabilityCertificateFileName: "Disability certificate is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({
+        ...prev,
+        disabilityCertificateFileName: "",
+      }));
+    }
+
+    //  family income validation
+    if (
+      formData.familyIncome.trim() === "" &&
+      currentIndex === 0 &&
+      formData.isBenchmarkDisability === "yes"
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        familyIncome: "Family income is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, familyIncome: "" }));
+    }
+
+    //  currently working validation
+    if (
+      formData.isCurrentlyWorking.trim() === "" &&
+      currentIndex === 0 &&
+      formData.isBenchmarkDisability === "yes"
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        isCurrentlyWorking: "Currently working is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, isCurrentlyWorking: "" }));
+    }
+
+    //  scholarship refferal validation
+    if (
+      formData.scholarshipSourceInfo.trim() === "" &&
+      currentIndex === 0 &&
+      formData.isBenchmarkDisability === "yes"
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        scholarshipSourceInfo: "Scholarship refferal is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, scholarshipSourceInfo: "" }));
+    }
+
+    //  tenth class medium validation
+    if (
+      formData.tenthStudyMedium.trim() === "" &&
+      currentIndex === 0 &&
+      formData.isBenchmarkDisability === "yes"
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        tenthStudyMedium: "10th study medium is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, tenthStudyMedium: "" }));
+    }
+
+    //  twelth class medium validation
+    if (
+      formData.twelfthStudyMedium.trim() === "" &&
+      currentIndex === 0 &&
+      formData.isBenchmarkDisability === "yes"
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        twelfthStudyMedium: "12th study medium is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, twelfthStudyMedium: "" }));
+    }
+
+    //  education qualification validation
+    if (
+      formData.educationLevel.trim() === "" &&
+      currentIndex === 0 &&
+      formData.isBenchmarkDisability === "yes"
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        educationLevel: "Education qualification is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, educationLevel: "" }));
+    }
+
+    //  currently studying validation
+    if (
+      formData.currentlyStudying.trim() === "" &&
+      currentIndex === 0 &&
+      formData.isBenchmarkDisability === "yes"
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        currentlyStudying: "Currently studying is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, currentlyStudying: "" }));
+    }
+
+    //  current education medium validation
+    if (
+      formData.currentEducationMedium.trim() === "" &&
+      currentIndex === 0 &&
+      formData.isBenchmarkDisability === "yes"
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        currentEducationMedium: "Current education medium is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, currentEducationMedium: "" }));
+    }
+
+    //  eligible for CGL 2025 validation
+    if (formData.eligibleForCGL2025.trim() === "" && currentIndex === 1) {
+      setFormError((prev) => ({
+        ...prev,
+        eligibleForCGL2025: "Eligible for CGL 2025 is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, eligibleForCGL2025: "" }));
+    }
+
+    //  preparing for cgl 2025 validation
+    if (formData.preparingForCGL2025.trim() === "" && currentIndex === 1) {
+      setFormError((prev) => ({
+        ...prev,
+        preparingForCGL2025: "Preparing for CGL 2025 is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, preparingForCGL2025: "" }));
+    }
+
+    //  attempt cgl 2025 validation
+    if (formData.cgl2025Attempt.trim() === "" && currentIndex === 1) {
+      setFormError((prev) => ({
+        ...prev,
+        cgl2025Attempt: "Attempt for CGL 2025 is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, cgl2025Attempt: "" }));
+    }
+
+    //  cleared government exams validation
+    if (formData.clearedOtherGovtExams.trim() === "" && currentIndex === 1) {
+      setFormError((prev) => ({
+        ...prev,
+        clearedOtherGovtExams: "Cleared government exams is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, clearedOtherGovtExams: "" }));
+    }
+    
+    //  preperation method validation
+    if (formData.preparationMethod.length <= 0 && formData.preperationMethodOthers === "" && currentIndex === 2) {
+      setFormError((prev) => ({
+        ...prev,
+        preparationMethod: "Preperation method is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, preparationMethod: "" }));
+    }
+
+    //  preparation method validation
+    if (formData.practiceMethod.trim() === "" && currentIndex === 2) {
+      setFormError((prev) => ({
+        ...prev,
+        practiceMethod: "Practice method is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, practiceMethod: "" }));
+    }
+
+    //  part of study group validation
+    if (formData.isPartOfStudyGroup.trim() === "" && currentIndex === 2) {
+      setFormError((prev) => ({
+        ...prev,
+        isPartOfStudyGroup: "Study gorup is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, isPartOfStudyGroup: "" }));
+    }
+
+    //  mobile device validation
+    if (formData.hasMobile.trim() === "" && currentIndex === 2) {
+      setFormError((prev) => ({
+        ...prev,
+        hasMobile: "Select any device",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, hasMobile: "" }));
+    }
+
+    //  tablet device validation
+    if (formData.hasTablet.trim() === "" && currentIndex === 2) {
+      setFormError((prev) => ({
+        ...prev,
+        hasTablet: "Select any device",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, hasTablet: "" }));
+    }
+
+    //  computer device validation
+    if (formData.hasComputer.trim() === "" && currentIndex === 2) {
+      setFormError((prev) => ({
+        ...prev,
+        hasComputer: "Select any device",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, hasComputer: "" }));
+    }
+
+    //  recieved scholarship from 1eq validation
+    if (
+      formData.receivedPreviousScholarship.trim() === "" &&
+      currentIndex === 3
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        receivedPreviousScholarship: "Select this field",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, receivedPreviousScholarship: "" }));
+    }
+
+    //  previous scholarship details validation
+    if (
+      formData.previousScholarshipDetails.trim() === "" &&
+      formData.receivedPreviousScholarship === "yes" &&
+      currentIndex === 3
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        previousScholarshipDetails: "Choose which scholarship you received",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, previousScholarshipDetails: "" }));
+    }
+
+    //  which scholarship needed validation
+    if (formData.scholarshipNeeded.trim() === "" && currentIndex === 3) {
+      setFormError((prev) => ({
+        ...prev,
+        scholarshipNeeded: "Choose which scholarship you needed",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, scholarshipNeeded: "" }));
+    }
+
+    //  scholarship reason describe validation
+    if (formData.scholarshipEssay.trim() === "" && currentIndex === 3) {
+      setFormError((prev) => ({
+        ...prev,
+        scholarshipEssay: "Describe why you needed",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (
+      formData.scholarshipEssay.trim().split(/\s+/).length < 100 &&
+      currentIndex === 3
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        scholarshipEssay: "At least 100 words required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, scholarshipEssay: "" }));
+    }
+
+    //  volunteering role validation
+    if (formData.volunteerRole.trim() === "" && currentIndex === 3) {
+      setFormError((prev) => ({
+        ...prev,
+        volunteerRole: "Volunteering role is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, volunteerRole: "" }));
+    }
+
+    // approach for volunteering role validation
+    if (
+      formData.volunteerApproach.trim() === "" &&
+      (formData.volunteerRole === "Telegram Group Admin" ||
+        formData.volunteerRole ===
+          "Recording Lessons in Indian Sign Language (ISL)" ||
+        formData.volunteerRole === "Doubt Solving" ||
+        formData.volunteerRole === "Proof Reading of Books" ||
+        formData.volunteerRole === "I can Write Blogs") &&
+      currentIndex === 3
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        volunteerApproach: "Volunteering approach is required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    }
+    else if(
+      formData.volunteerApproach.trim() === "" &&
+      (formData.volunteerRole === "Telegram Group Admin" ||
+        formData.volunteerRole ===
+          "Recording Lessons in Indian Sign Language (ISL)" ||
+        formData.volunteerRole === "Doubt Solving" ||
+        formData.volunteerRole === "Proof Reading of Books" ||
+        formData.volunteerRole === "I can Write Blogs") && formData.volunteerApproach.trim().split(/\s+/).length < 10 &&
+      currentIndex === 3
+    ){
+      setFormError((prev) => ({
+        ...prev,
+        volunteerApproach: "Atleast 10 words required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    }
+    else {
+      setFormError((prev) => ({ ...prev, volunteerApproach: "" }));
+    }
+
+    // message to 1eq or jt validation
+    if (formData.messageTo1EQ.trim() === "" && currentIndex === 3) {
+      setFormError((prev) => ({
+        ...prev,
+        messageTo1EQ: "Write your message",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else if (
+      formData.messageTo1EQ.trim().split(/\s+/).length < 10 &&
+      currentIndex === 3
+    ) {
+      setFormError((prev) => ({
+        ...prev,
+        messageTo1EQ: "At least 10 words required",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, messageTo1EQ: "" }));
+    }
+
+    //  declaration 1 validation
+    if (!formData.declarationInfoTrue && currentIndex === 4) {
+      setFormError((prev) => ({
+        ...prev,
+        declarationInfoTrue: "Please check this field",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, declarationInfoTrue: "" }));
+    }
+
+    //  declaration 2 validation
+    if (!formData.declarationInfoAccurate && currentIndex === 4) {
+      setFormError((prev) => ({
+        ...prev,
+        declarationInfoAccurate: "Please check this field",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, declarationInfoAccurate: "" }));
+    }
+
+    //  declaration 3 validation
+    if (!formData.consentToContact && currentIndex === 4) {
+      setFormError((prev) => ({
+        ...prev,
+        consentToContact: "Please check this field",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, consentToContact: "" }));
+    }
+
+    //  declaration 4 validation
+    if (!formData.participateInSurvey && currentIndex === 4) {
+      setFormError((prev) => ({
+        ...prev,
+        participateInSurvey: "Please check this field",
+      }));
+      setError("Please fill all the required fields before proceeding.");
+      valid = false;
+    } else {
+      setFormError((prev) => ({ ...prev, participateInSurvey: "" }));
+    }
+
+    if (valid) {
+      setError("");
+    }
+    return valid;
+  }
+
+
 
   const dataObject = {
     // part 1
@@ -279,11 +1115,19 @@ const ScholarshipForm = () => {
 
   async function sendData(e) {
     e.preventDefault();
+    const isValid = validateForm();
+    if (!isValid) {
+      return;
+    }
     const url = "https://store.1ayq.com/scholarship";
     try {
+      setIsSubmitting(true);
       console.log(dataObject);
-      const response = await axios.post(url, dataObject);
+      await axios.post(url, dataObject);
+      setIsSubmitting(false);
     } catch (error) {
+      setIsSubmitting(false);
+      setError('Faild to submit the form. Please try again later.');
       console.log(error);
     }
   }
@@ -612,25 +1456,57 @@ const ScholarshipForm = () => {
                 <label className="text-[17px] text-[#0a0a0a]">
                   Applicant's Full Name (आवेदक का पूरा नाम)
                 </label>
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    name="first-name"
-                    onChange={(elem) => setFirstName(elem.target.value)}
-                    value={firstName}
-                    required
-                    className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[16px] text-black outline-none border-none rounded-lg"
-                    placeholder="First"
-                  />
-                  <input
-                    type="text"
-                    name="last-name"
-                    onChange={(elem) => setLastName(elem.target.value)}
-                    value={lastName}
-                    required
-                    className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[16px] text-black outline-none border-none rounded-lg"
-                    placeholder="Last"
-                  />
+                <div className="flex gap-3 items-start">
+                  <div className="flex flex-col w-1/2 gap-1">
+                    <input
+                      type="text"
+                      name="first-name"
+                      required
+                      value={firstName}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFirstName(value);
+                        setFormError((prev) => ({ ...prev, firstName: value.trim() !== "" ? "" : "First name is required" }));
+                      }}
+                      className={`grow-1 px-3 py-2 text-[16px] rounded-lg outline-none ${
+                        formError.firstName
+                          ? "border-red-500 bg-red-50 border"
+                          : "border border-transparent bg-[#f3f3f5]"
+                      }`}
+                      placeholder="First"
+                    />
+
+                    {formError.firstName && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.firstName}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex flex-col w-1/2 gap-1">
+                    <input
+                      type="text"
+                      name="last-name"
+                      value={lastName}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setLastName(value);
+                        setFormError((prev) => ({ ...prev, lastName: value.trim() !== "" ? "" : "Last name is required" }));
+
+                      }}
+                      required
+                      className={`grow-1 px-3 py-2 text-[16px] rounded-lg outline-none  ${
+                        formError.lastName
+                          ? "border-red-500 bg-red-50 border"
+                          : "border border-transparent bg-[#f3f3f5]"
+                      }`}
+                      placeholder="Last"
+                    />
+                    {formError.lastName && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.lastName}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -643,7 +1519,13 @@ const ScholarshipForm = () => {
                   Upload Your Passport Size Photograph (अपना पासपोर्ट साइज़ फोटो
                   अपलोड करें)
                 </label>
-                <div className="flex gap-3 min-h-30 items-center justify-center text-[17px] rounded-xl border-[2px] border-[#d1d5dd]">
+                <div
+                  className={`flex gap-3 min-h-30 items-center justify-center text-[17px] rounded-xl border  ${
+                    formError.passportPhotoFileName
+                      ? "border-red-500 bg-red-50"
+                      : "border-[#d1d5dd] bg-[#f3f3f5]"
+                  }`}
+                >
                   {formData.passportPhotoFileName ? (
                     <div className="h-[90%] select-none w-max max-w-[80px] border relative  rounded-md">
                       <img
@@ -658,6 +1540,8 @@ const ScholarshipForm = () => {
                             ...formData,
                             passportPhotoFileName: "",
                           });
+                          setFormError((prev) => ({ ...prev, passportPhotoFileName: "Passport photo is required" }));
+
                         }}
                         className="cursor-pointer text-[15px] p-1 absolute top-0 right-0 translate-x-[50%] translate-y-[-50%] bg-red-100 text-red-500 rounded-full flex items-center justify-center w-[10px] h-[22px] shrink-0 aspect-square "
                       >
@@ -691,6 +1575,8 @@ const ScholarshipForm = () => {
                           passportPhotoFileName: URL.createObjectURL(file),
                         });
                       }
+                      setFormError((prev) => ({ ...prev, passportPhotoFileName: file !== "" ? "" : "Passport photo is required" }));
+
                     }}
                     required
                     className="bg-[#f3f3f5] hidden grow-1 px-3 py-2 text-[16px] text-black outline-none border-none rounded-lg"
@@ -698,6 +1584,11 @@ const ScholarshipForm = () => {
                   />
                 </div>
 
+                {formError.passportPhotoFileName && (
+                  <p className="text-[15px] text-red-500 ">
+                    {formError.passportPhotoFileName}
+                  </p>
+                )}
                 <p className="text-[14px] text-[#6b7281] mt-2">
                   Upload your picture as per SSC Specifications (एसएससी
                   विनिर्देशों के अनुसार अपनी तस्वीर अपलोड करें)
@@ -715,10 +1606,14 @@ const ScholarshipForm = () => {
                         name="gender"
                         value="male"
                         checked={formData.gender === "male"}
-                        onChange={() =>
-                          setFormData({ ...formData, gender: "male" })
-                        }
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          setFormData({ ...formData, gender: value })
+                          setFormError((prev) => ({ ...prev, gender: value.trim() !== "" ? "" : "Gender is required" }));
+
+                        }}
                         required
+                        className="outline-red-500"
                       />
                       <span className="text-[#0a0a0a]">Male</span>
                     </label>
@@ -729,9 +1624,12 @@ const ScholarshipForm = () => {
                         name="gender"
                         value="female"
                         checked={formData.gender === "female"}
-                        onChange={() =>
+                        onChange={(e) => {
+                          const value = e.target.value;
                           setFormData({ ...formData, gender: "female" })
-                        }
+                          setFormError((prev) => ({ ...prev, gender: value.trim() !== "" ? "" : "Gender is required" }));
+
+                        }}
                         required
                       />
                       <span className="text-[#0a0a0a]">Female</span>
@@ -743,14 +1641,22 @@ const ScholarshipForm = () => {
                         name="gender"
                         value="transgender"
                         checked={formData.gender === "transgender"}
-                        onChange={() =>
+                        onChange={(e) =>{
+                          const value = e.target.value;
                           setFormData({ ...formData, gender: "transgender" })
-                        }
+                          setFormError((prev) => ({ ...prev, gender: value.trim() !== "" ? "" : "Gender is required" }));
+
+                        }}
                         required
                       />
                       <span className="text-[#0a0a0a]">Transgender</span>
                     </label>
                   </div>
+                  {formError.gender && (
+                    <p className="text-[15px] text-red-500 ">
+                      {formError.gender}
+                    </p>
+                  )}
                 </div>
 
                 <div className="w-full flex flex-col form-field gap-1 text-[17px]">
@@ -761,17 +1667,29 @@ const ScholarshipForm = () => {
                     <input
                       type="date"
                       value={formData.dateOfBirth}
-                      onChange={(e) =>
+                      onChange={(e) =>{
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          dateOfBirth: e.target.value,
+                          dateOfBirth: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, dateOfBirth: value.trim() !== "" ? "" : "Date of birth is required" }));
+
+                      }}
                       required
                       name="date-of-birth"
-                      className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[16px] text-black outline-none border-none rounded-lg"
+                      className={`grow-1 px-3 py-2 text-[16px] rounded-lg outline-none  ${
+                        formError.dateOfBirth
+                          ? "border-red-500 bg-red-50 border"
+                          : "border border-transparent bg-[#f3f3f5]"
+                      }`}
                     />
                   </div>
+                  {formError.dateOfBirth && (
+                    <p className="text-[15px] text-red-500 ">
+                      {formError.dateOfBirth}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -785,14 +1703,26 @@ const ScholarshipForm = () => {
                     type="number"
                     required
                     value={formData.mobileNumber}
-                    onChange={(e) =>
-                      setFormData({ ...formData, mobileNumber: e.target.value })
-                    }
+                    onChange={(e) =>{
+                      const value = e.target.value;
+                      setFormData({ ...formData, mobileNumber: value })
+                       setFormError((prev) => ({ ...prev, mobileNumber: value.trim() !== "" ? "" : "Mobile number is required" }));
+
+                    }}
                     name="number"
                     placeholder="Enter mobile number"
-                    className="bg-[#f3f3f5] ps-[50px] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    className={`grow-1 px-3 ps-11 py-2 text-[16px] rounded-lg outline-none  ${
+                      formError.mobileNumber
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                    }`}
                   />
                 </div>
+                {formError.mobileNumber && (
+                  <p className="text-[15px] text-red-500 ">
+                    {formError.mobileNumber}
+                  </p>
+                )}
               </div>
 
               {/* email */}
@@ -805,14 +1735,24 @@ const ScholarshipForm = () => {
                     type="email"
                     required
                     value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData({ ...formData, email: value })
+                      setFormError((prev) => ({ ...prev, email: value.trim() !== "" ? "" : "Email is required" }));
+
+                    }}
                     name="email"
                     placeholder="Enter eamil address"
-                    className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    className={`grow-1 px-3 py-2 text-[16px] rounded-lg outline-none  ${
+                      formError.email
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                    }`}
                   />
                 </div>
+                {formError.email && (
+                  <p className="text-[15px] text-red-500 ">{formError.email}</p>
+                )}
               </div>
 
               {/* confirm email */}
@@ -827,14 +1767,26 @@ const ScholarshipForm = () => {
                     type="email"
                     required
                     value={formData.confirmEmail}
-                    onChange={(e) =>
-                      setFormData({ ...formData, confirmEmail: e.target.value })
-                    }
+                    onChange={(e) =>{
+                      const value = e.target.value;
+                      setFormData({ ...formData, confirmEmail: value })
+                      setFormError((prev) => ({ ...prev, confirmEmail: value.trim() !== "" ? "" : "Confirm Email is required" }));
+
+                    }}
                     name="confirm-email"
                     placeholder="Re-enter eamil address"
-                    className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    className={`grow-1 px-3 py-2 text-[16px] rounded-lg outline-none  ${
+                      formError.confirmEmail
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                    }`}
                   />
                 </div>
+                {formError.confirmEmail && (
+                  <p className="text-[15px] text-red-500 ">
+                    {formError.confirmEmail}
+                  </p>
+                )}
                 <p className="text-[14px] text-[#6b7281] mt-2">
                   All Communication will be via EMail, So please take extra care
                   when you are entering information (सभी संचार ईमेल के माध्यम से
@@ -852,53 +1804,105 @@ const ScholarshipForm = () => {
                     type="text"
                     required
                     value={formData.addressLine1}
-                    onChange={(e) =>
-                      setFormData({ ...formData, addressLine1: e.target.value })
-                    }
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData({ ...formData, addressLine1: value })
+                      setFormError((prev) => ({ ...prev, addressLine1: value.trim() !== "" ? "" : "Address line 1 is required" }));
+
+                    }}
                     name="address-1"
                     placeholder="Address Line 1"
-                    className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    className={`grow-1 px-3 py-2 text-[16px] rounded-lg outline-none  ${
+                      formError.addressLine1
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                    }`}
                   />
+                  {formError.addressLine1 && (
+                    <p className="text-[15px] text-red-500 -mt-2">
+                      {formError.addressLine1}
+                    </p>
+                  )}
                   <input
                     type="text"
                     required
                     name="address-2"
                     value={formData.addressLine2}
-                    onChange={(e) =>
-                      setFormData({ ...formData, addressLine2: e.target.value })
-                    }
+                    onChange={(e) =>{
+                      const value = e.target.value;
+                      setFormData({ ...formData, addressLine2: value })
+                      setFormError((prev) => ({ ...prev, addressLine2: value.trim() !== "" ? "" : "Address line 2 is required" }));
+
+                    }}
                     placeholder="Address Line 2"
-                    className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    className={`grow-1 px-3 py-2 text-[16px] rounded-lg outline-none  ${
+                      formError.addressLine2
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                    }`}
                   />
-                  <div className="flex gap-3">
-                    <input
-                      type="text"
-                      required
-                      name="city"
-                      value={formData.city}
-                      onChange={(e) =>
-                        setFormData({ ...formData, city: e.target.value })
-                      }
-                      placeholder="City"
-                      className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                    />
-                    <input
-                      type="text"
-                      required
-                      name="zip-code"
-                      value={formData.pincode}
-                      onChange={(e) =>
-                        setFormData({ ...formData, pincode: e.target.value })
-                      }
-                      placeholder="Postal / Zip Code"
-                      className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                    />
+                  {formError.addressLine2 && (
+                    <p className="text-[15px] text-red-500 -mt-2">
+                      {formError.addressLine2}
+                    </p>
+                  )}
+                  <div className="flex gap-3 items-start">
+                    <div className="flex flex-col w-full gap-1">
+                      <input
+                        type="text"
+                        required
+                        name="city"
+                        value={formData.city}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          setFormData({ ...formData, city: value })
+                          setFormError((prev) => ({ ...prev, city: value.trim() !== "" ? "" : "City is required" }));
+
+                        }}
+                        placeholder="City"
+                        className={`grow-1 px-3 py-2 text-[16px] rounded-lg outline-none  ${
+                          formError.city
+                            ? "border-red-500 bg-red-50 border"
+                            : "border border-transparent bg-[#f3f3f5]"
+                        }`}
+                      />
+                      {formError.city && (
+                        <p className="text-[15px] text-red-500 ">
+                          {formError.city}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-col w-full gap-1">
+                      <input
+                        type="number"
+                        required
+                        name="zip-code"
+                        value={formData.pincode}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          setFormData({ ...formData, pincode: value })
+                          setFormError((prev) => ({ ...prev, pincode: value.trim() !== "" ? "" : "Pincode is required" }));
+
+                        }}
+                        placeholder="Postal / Zip Code"
+                        className={`grow-1 px-3 py-2 text-[16px] rounded-lg outline-none  ${
+                          formError.pincode
+                            ? "border-red-500 bg-red-50 border"
+                            : "border border-transparent bg-[#f3f3f5]"
+                        }`}
+                      />
+                      {formError.pincode && (
+                        <p className="text-[15px] text-red-500 ">
+                          {formError.pincode}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* state & confirm postal code */}
-              <div className="flex gap-3 justify-between pb-8 border-b border-[#e8e8e8]">
+              <div className="flex gap-3 justify-between items-start pb-8 border-b border-[#e8e8e8]">
                 <div className="w-full flex flex-col form-field gap-1 text-[17px]">
                   <label className="text-[17px] leading-[19px] text-[#0a0a0a]">
                     State / UT (राज्य/केंद्र शासित प्रदेश)
@@ -908,10 +1912,16 @@ const ScholarshipForm = () => {
                     required
                     name="state"
                     value={formData.stateUT}
-                    onChange={(e) =>
-                      setFormData({ ...formData, stateUT: e.target.value })
-                    }
-                    className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData({ ...formData, stateUT: value })
+                      setFormError((prev) => ({ ...prev, stateUT: value.trim() !== "" ? "" : "State UT is required" }));
+                    }}
+                    className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                      formError.stateUT
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                    }`}
                   >
                     <option value="" disabled>
                       -- Select --
@@ -924,6 +1934,11 @@ const ScholarshipForm = () => {
                       );
                     })}
                   </select>
+                  {formError.stateUT && (
+                    <p className="text-[15px] text-red-500 ">
+                      {formError.stateUT}
+                    </p>
+                  )}
                 </div>
 
                 <div className="w-full flex flex-col form-field gap-1 text-[17px]">
@@ -935,15 +1950,26 @@ const ScholarshipForm = () => {
                     required
                     name="zip-code"
                     value={formData.confirmPincode}
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      const value = e.target.value;
                       setFormData({
                         ...formData,
                         confirmPincode: e.target.value,
                       })
-                    }
+                      setFormError((prev) => ({ ...prev, confirmPincode: value.trim() !== "" ? "" : "Confirm Pincode is required" }));
+                    }}
                     placeholder="Re-enter Postal / Zip Code"
-                    className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    className={`grow-1 px-3 py-2 text-[16px] rounded-lg outline-none  ${
+                      formError.confirmPincode
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                    }`}
                   />
+                  {formError.confirmPincode && (
+                    <p className="text-[15px] text-red-500 ">
+                      {formError.confirmPincode}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -960,12 +1986,14 @@ const ScholarshipForm = () => {
                       name="disability"
                       value="yes"
                       checked={formData.isBenchmarkDisability === "yes"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          isBenchmarkDisability: e.target.value,
+                          isBenchmarkDisability: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, isBenchmarkDisability: value.trim() !== "" ? "" : "Benchmark with Disability is required" }));
+                      }}
                       required
                     />
                     <span className="text-[#0a0a0a]">Yes</span>
@@ -973,12 +2001,14 @@ const ScholarshipForm = () => {
                   <label className="flex gap-2 items-center">
                     <input
                       checked={formData.isBenchmarkDisability === "no"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          isBenchmarkDisability: e.target.value,
+                          isBenchmarkDisability: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, isBenchmarkDisability: value.trim() !== "" ? "" : "Benchmark with Disability is required" }));
+                      }}
                       type="radio"
                       name="disability"
                       value="no"
@@ -987,6 +2017,11 @@ const ScholarshipForm = () => {
                     <span className="text-[#0a0a0a]">No</span>
                   </label>
                 </div>
+                {formError.isBenchmarkDisability && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.isBenchmarkDisability}
+                      </p>
+                    )}
               </div>
 
               {/* show when disability type is yes */}
@@ -1003,14 +2038,19 @@ const ScholarshipForm = () => {
                       required
                       name="disability-type"
                       value={formData.disabilityType}
-                      onChange={(e) =>
+                      onChange={(e) =>{
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          disabilityType: e.target.value,
+                          disabilityType: value,
                         })
-                      }
-                      className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                    >
+                        setFormError((prev) => ({ ...prev, disabilityType: value.trim() !== "" ? "" : "Disability type is required" }));
+                      }}   
+                    className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                      formError.disabilityType
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                    }`}  >
                       <option value="" disabled>
                         -- Select --
                       </option>
@@ -1020,6 +2060,11 @@ const ScholarshipForm = () => {
                         </option>
                       ))}
                     </select>
+                    {formError.disabilityType && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.disabilityType}
+                      </p>
+                    )}
                   </div>
 
                   {/* category */}
@@ -1032,11 +2077,17 @@ const ScholarshipForm = () => {
                       required
                       name="disability-type"
                       value={formData.category}
-                      onChange={(e) =>
-                        setFormData({ ...formData, category: e.target.value })
+                      onChange={(e) => {
+                      const value = e.target.value;
+                        setFormData({ ...formData, category: value })
+                        setFormError((prev) => ({ ...prev, category: value.trim() !== "" ? "" : "Category is required" }));
                       }
-                      className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                    >
+                      }
+                      className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                      formError.category
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                    }`}  >
                       <option value="" disabled>
                         Select Your Category (अपनी श्रेणी का चयन करें)
                       </option>
@@ -1048,6 +2099,11 @@ const ScholarshipForm = () => {
                         );
                       })}
                     </select>
+                       {formError.category && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.category}
+                      </p>
+                    )}
                   </div>
 
                   {/* disability certificate  */}
@@ -1059,7 +2115,12 @@ const ScholarshipForm = () => {
                       Upload Your Disability Certificate (अपना विकलांगता
                       प्रमाणपत्र अपलोड करें)
                     </label>
-                    <div className="flex gap-3 min-h-30 items-center justify-center text-[17px] rounded-xl border-[2px] border-[#d1d5dd]">
+                    <div
+                    className={`flex gap-3 min-h-30 items-center justify-center text-[17px] rounded-xl border  ${
+                    formError.disabilityCertificateFileName
+                      ? "border-red-500 bg-red-50"
+                      : "border-[#d1d5dd] bg-[#f3f3f5]"
+                     }`}                     >
                       {formData.disabilityCertificateFileName ? (
                         <div className="h-[90%] select-none w-max max-w-[80px] border relative  rounded-md">
                           <img
@@ -1076,6 +2137,8 @@ const ScholarshipForm = () => {
                                 ...formData,
                                 disabilityCertificateFileName: "",
                               });
+                               setFormError((prev) => ({ ...prev, disabilityCertificateFileName: "Disability certificate is required" }));
+
                             }}
                             className="cursor-pointer text-[15px] p-1 absolute top-0 right-0 translate-x-[50%] translate-y-[-50%] bg-red-100 text-red-500 rounded-full flex items-center justify-center w-[10px] h-[22px] shrink-0 aspect-square "
                           >
@@ -1110,13 +2173,19 @@ const ScholarshipForm = () => {
                                 URL.createObjectURL(file),
                             });
                           }
+                          setFormError((prev) => ({ ...prev, disabilityCertificateFileName: file !== "" ? "" : "Passport photo is required" }));
+
                         }}
                         required
                         className="bg-[#f3f3f5] hidden grow-1 px-3 py-2 text-[16px] text-black outline-none border-none rounded-lg"
                         placeholder="Select profile image"
                       />
                     </div>
-
+                       {formError.disabilityCertificateFileName && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.disabilityCertificateFileName}
+                      </p>
+                    )}
                     <p className="text-[14px] text-[#6b7281] mt-2">
                       Upload your picture as per SSC Specifications (एसएससी
                       विनिर्देशों के अनुसार अपनी तस्वीर अपलोड करें)
@@ -1128,19 +2197,24 @@ const ScholarshipForm = () => {
                     <label className="text-[17px] text-[#0a0a0a]">
                       Your Family Income (आपकी पारिवारिक आय)
                     </label>
-                    <div className="flex gap-3">
+
                       <select
                         required
                         value={formData.familyIncome}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                          const value = e.target.value;
                           setFormData({
                             ...formData,
-                            familyIncome: e.target.value,
+                            familyIncome: value,
                           })
-                        }
+                          setFormError((prev) => ({ ...prev, familyIncome: value.trim() !== "" ? "" : "Family income is required" }));
+                        }}
                         name="family income"
-                        className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                      >
+                       className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                        formError.familyIncome
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                        }`}                       >
                         <option value="" disabled>
                           Select Income
                         </option>
@@ -1150,7 +2224,11 @@ const ScholarshipForm = () => {
                         </option>
                         <option value="Above 5 Lacks">Above 5 Lacks</option>
                       </select>
-                    </div>
+                      {formError.familyIncome && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.familyIncome}
+                      </p>
+                    )}
                   </div>
 
                   {/* currently working  */}
@@ -1159,19 +2237,23 @@ const ScholarshipForm = () => {
                       Are you Presently Working? (क्या आप वर्तमान में कार्यरत
                       हैं?)
                     </label>
-                    <div className="flex gap-3">
                       <select
                         required
                         value={formData.isCurrentlyWorking}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                          const value = e.target.value;
                           setFormData({
                             ...formData,
-                            isCurrentlyWorking: e.target.value,
+                            isCurrentlyWorking: value,
                           })
-                        }
+                          setFormError((prev) => ({ ...prev, isCurrentlyWorking: value.trim() !== "" ? "" : "Currently working is required" }));
+                        }}
                         name="currently working"
-                        className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                      >
+                       className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                        formError.isCurrentlyWorking
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                        }`}      >
                         <option value="" disabled>
                           Presently Working
                         </option>
@@ -1187,7 +2269,11 @@ const ScholarshipForm = () => {
                         <option value="Unemployed">Unemployed</option>
                         <option value="Still-Studying">Still-Studying</option>
                       </select>
-                    </div>
+                       {formError.isCurrentlyWorking && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.isCurrentlyWorking}
+                      </p>
+                      )}
                   </div>
 
                   {/* scholarship program referral */}
@@ -1196,19 +2282,24 @@ const ScholarshipForm = () => {
                       How did you learn about this Scholarship Program? (आपको इस
                       छात्रवृत्ति कार्यक्रम के बारे में कैसे पता चला?)
                     </label>
-                    <div className="flex gap-3">
+
                       <select
                         required
                         value={formData.scholarshipSourceInfo}
-                        onChange={(e) =>
+                        onChange={(e) =>{
+                          const value = e.target.value;
                           setFormData({
                             ...formData,
-                            scholarshipSourceInfo: e.target.value,
+                            scholarshipSourceInfo: value,
                           })
-                        }
+                          setFormError((prev) => ({ ...prev, scholarshipSourceInfo: value.trim() !== "" ? "" : "Scholarship source is required" }));
+                        }}
                         name="scholarship program referral"
-                        className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                      >
+                        className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                        formError.scholarshipSourceInfo
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                        }`}    >
                         <option value="" disabled>
                           Select where you learn about this Scholarship Program
                         </option>
@@ -1223,7 +2314,11 @@ const ScholarshipForm = () => {
                           From Social Media
                         </option>
                       </select>
-                    </div>
+                      {formError.scholarshipSourceInfo && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.scholarshipSourceInfo}
+                      </p>
+                      )}
                   </div>
 
                   <p className="font-[500] text-[19px] text-[#0a0a0a]">
@@ -1240,15 +2335,20 @@ const ScholarshipForm = () => {
                       <select
                         required
                         value={formData.tenthStudyMedium}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                          const value = e.target.value;
                           setFormData({
                             ...formData,
-                            tenthStudyMedium: e.target.value,
+                            tenthStudyMedium: value,
                           })
-                        }
+                          setFormError((prev) => ({ ...prev, tenthStudyMedium: value.trim() !== "" ? "" : "10th study medium is required" }));
+                        }}
                         name="10th study medium"
-                        className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                      >
+                        className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                        formError.tenthStudyMedium
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                        }`}                      >
                         <option value="" disabled>
                           Select Medium
                         </option>
@@ -1260,6 +2360,11 @@ const ScholarshipForm = () => {
                           );
                         })}
                       </select>
+                      {formError.tenthStudyMedium && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.tenthStudyMedium}
+                      </p>
+                      )}
                     </div>
 
                     <div className="w-full flex flex-col form-field gap-1 text-[17px]">
@@ -1269,15 +2374,20 @@ const ScholarshipForm = () => {
                       <select
                         required
                         value={formData.twelfthStudyMedium}
-                        onChange={(e) =>
+                        onChange={(e) =>{
+                          const value = e.target.value;
                           setFormData({
                             ...formData,
-                            twelfthStudyMedium: e.target.value,
+                            twelfthStudyMedium: value,
                           })
-                        }
+                          setFormError((prev) => ({ ...prev, twelfthStudyMedium: value.trim() !== "" ? "" : "12th study medium is required" }));
+                        }}
                         name="12th study medium"
-                        className="bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                      >
+                        className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                        formError.twelfthStudyMedium
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                        }`}                       >
                         <option value="" disabled>
                           Select Medium
                         </option>
@@ -1289,10 +2399,15 @@ const ScholarshipForm = () => {
                           );
                         })}
                       </select>
+                      {formError.twelfthStudyMedium && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.twelfthStudyMedium}
+                      </p>
+                      )}
                     </div>
                   </div>
 
-                  {/* education 1ualification level  */}
+                  {/* education qualification level  */}
                   <div className="w-full flex flex-col form-field gap-1">
                     <label className="text-[17px] text-[#0a0a0a]">
                       Level of Education Qualification (शिक्षा योग्यता का स्तर)
@@ -1300,16 +2415,21 @@ const ScholarshipForm = () => {
 
                     <select
                       required
-                      name="disability-type"
+                      name="education-level"
                       value={formData.educationLevel}
-                      onChange={(e) =>
+                      onChange={(e) =>{
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          educationLevel: e.target.value,
+                          educationLevel: value,
                         })
-                      }
-                      className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                    >
+                        setFormError((prev) => ({ ...prev, educationLevel: value.trim() !== "" ? "" : "Education qualification is required" }));
+                      }}
+                      className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                        formError.educationLevel
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                        }`}                     >
                       <option value="" disabled>
                         -- Select --
                       </option>
@@ -1319,6 +2439,11 @@ const ScholarshipForm = () => {
                       <option value="post graduation">Post Graduation</option>
                       <option value="phd">PHD</option>
                     </select>
+                     {formError.educationLevel && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.educationLevel}
+                      </p>
+                      )}
                   </div>
 
                   {/* currently studiying  */}
@@ -1331,20 +2456,30 @@ const ScholarshipForm = () => {
                       required
                       name="currently-studiying"
                       value={formData.currentlyStudying}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          currentlyStudying: e.target.value,
+                          currentlyStudying: value,
                         })
-                      }
-                      className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                    >
+                        setFormError((prev) => ({ ...prev, currentlyStudying: value.trim() !== "" ? "" : "Currently studying is required" }));
+                      }}
+                       className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                        formError.currentlyStudying
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                        }`}    >
                       <option value="" disabled>
                         -- Select --
                       </option>
                       <option value="yes">Yes</option>
                       <option value="no">No</option>
                     </select>
+                     {formError.currentlyStudying && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.currentlyStudying}
+                      </p>
+                      )}
                   </div>
 
                   {/* currently education medium  */}
@@ -1356,15 +2491,20 @@ const ScholarshipForm = () => {
                     <select
                       required
                       value={formData.currentEducationMedium}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          currentEducationMedium: e.target.value,
+                          currentEducationMedium: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, currentEducationMedium: value.trim() !== "" ? "" : "Current education medium is required" }));
+                      }}
                       name="current-education-medium"
-                      className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                    >
+                       className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                        formError.currentEducationMedium
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                        }`}                     >
                       <option value="" disabled>
                         -- Select --
                       </option>
@@ -1376,6 +2516,11 @@ const ScholarshipForm = () => {
                         );
                       })}
                     </select>
+                    {formError.currentEducationMedium && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.currentEducationMedium}
+                      </p>
+                      )}
                   </div>
                 </>
               ) : null}
@@ -1411,20 +2556,30 @@ const ScholarshipForm = () => {
                   required
                   name="eligible-to-appear"
                   value={formData.eligibleForCGL2025}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const value = e.target.value;
                     setFormData({
                       ...formData,
-                      eligibleForCGL2025: e.target.value,
+                      eligibleForCGL2025: value,
                     })
-                  }
-                  className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                >
+                    setFormError((prev) => ({ ...prev, eligibleForCGL2025: value.trim() !== "" ? "" : "Eligible for CGL 2025 is required" }));
+                  }}
+                className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                formError.eligibleForCGL2025
+                ? "border-red-500 bg-red-50 border"
+                  : "border border-transparent bg-[#f3f3f5]"
+                  }`}                  >
                   <option value="" disabled>
                     -- Select --
                   </option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                 </select>
+                {formError.eligibleForCGL2025&& (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.eligibleForCGL2025}
+                      </p>
+                )}
               </div>
 
               {/* preparing for cgl  */}
@@ -1438,13 +2593,20 @@ const ScholarshipForm = () => {
                   required
                   name="preparing-for-cgl"
                   value={formData.preparingForCGL2025}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const value = e.target.value;
                     setFormData({
                       ...formData,
-                      preparingForCGL2025: e.target.value,
+                      preparingForCGL2025: value,
                     })
-                  }
-                  className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    setFormError((prev) => ({ ...prev, preparingForCGL2025: value.trim() !== "" ? "" : "Preparing for CGL 2025 is required" }));
+
+                  }}
+                  className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                formError.preparingForCGL2025
+                ? "border-red-500 bg-red-50 border"
+                  : "border border-transparent bg-[#f3f3f5]"
+                  }`} 
                 >
                   <option value="" disabled>
                     -- Select --
@@ -1452,6 +2614,11 @@ const ScholarshipForm = () => {
                   <option value="yes">Yes</option>
                   <option value="no">No, Preparing for other exam</option>
                 </select>
+                 {formError.preparingForCGL2025 && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.preparingForCGL2025}
+                      </p>
+                )}
               </div>
 
               {/* which attempt  */}
@@ -1463,12 +2630,18 @@ const ScholarshipForm = () => {
                 <select
                   required
                   value={formData.cgl2025Attempt}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const value = e.target.value;
                     setFormData({ ...formData, cgl2025Attempt: e.target.value })
-                  }
+                    setFormError((prev) => ({ ...prev, cgl2025Attempt: value.trim() !== "" ? "" : "Attempt for CGL 2025 is required" }));
+
+                  }}
                   name="cgl-attempt-no"
-                  className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                >
+                className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                formError.cgl2025Attempt
+                ? "border-red-500 bg-red-50 border"
+                  : "border border-transparent bg-[#f3f3f5]"
+                  }`}  >
                   <option value="" disabled>
                     -- Which attempt? --
                   </option>
@@ -1482,6 +2655,11 @@ const ScholarshipForm = () => {
                   <option value="8">8th Attempt</option>
                   <option value="last">Last Attempt</option>
                 </select>
+                {formError.cgl2025Attempt && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.cgl2025Attempt}
+                </p>
+                )}
               </div>
 
               {/* cleared any govt exam  */}
@@ -1495,15 +2673,27 @@ const ScholarshipForm = () => {
                   name="cleared-any-exam"
                   required
                   value={formData.clearedOtherGovtExams}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const value = e.target.value;
                     setFormData({
                       ...formData,
-                      clearedOtherGovtExams: e.target.value,
+                      clearedOtherGovtExams: value,
                     })
-                  }
+                    setFormError((prev) => ({ ...prev, clearedOtherGovtExams: value.trim() !== "" ? "" : "Cleared other exams is required" }));
+                  }}
                   placeholder="Cleared any government exam?"
-                  className="bg-[#f3f3f5] resize-none h-30 grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                ></textarea>
+                className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                formError.clearedOtherGovtExams
+                ? "border-red-500 bg-red-50 border"
+                  : "border border-transparent bg-[#f3f3f5]"
+                  }`}  >
+                    
+                  </textarea>
+                 {formError.clearedOtherGovtExams && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.clearedOtherGovtExams}
+                </p>
+                )}
               </div>
             </div>
           )}
@@ -1583,8 +2773,9 @@ const ScholarshipForm = () => {
                     <input
                       type="checkbox"
                       checked={formData.preperationMethodOthers}
-                      onChange={(e) => {
-                        if (!e.target.checked) {
+                      onChange={(e) => { 
+                        const value = e.target.checked
+                        if (!value) {
                           setFormData({
                             ...formData,
                             preparationMethodOther: "",
@@ -1596,16 +2787,24 @@ const ScholarshipForm = () => {
                     <input
                       type="text"
                       value={formData.preperationMethodOthers}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          preperationMethodOthers: e.target.value,
+                          preperationMethodOthers: value,
                         })
-                      }
+                       setFormError((prev) => ({ ...prev, preparationMethod: value !== "" ? "" : "Preperation method is required" }));
+
+                      }}
                       placeholder="Other"
                       className="bg-[#f3f3f5] px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
                     />
                   </label>
+                   {formError.preparationMethod && (
+                      <p className="text-[15px] text-red-500 -mt-2">
+                        {formError.preparationMethod}
+                     </p>
+                   )}
                 </div>
               </div>
 
@@ -1619,22 +2818,31 @@ const ScholarshipForm = () => {
                   required
                   name="how-practicing"
                   value={formData.practiceMethod}
-                  onChange={(e) =>
-                    setFormData({ ...formData, practiceMethod: e.target.value })
-                  }
-                  className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                >
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setFormData({ ...formData, practiceMethod: value })
+                    setFormError((prev) => ({ ...prev, practiceMethod: value.trim() !== "" ? "" : "Practice method is required" }));
+
+                  }}
+                    className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                      formError.practiceMethod
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                    }`}   >
                   <option value="" disabled>
                     -- Select --
                   </option>
-                  <option value="online">Online</option>
-                  <option value="offline">Offline</option>
-                  <option value="mock">Mock</option>
-                  <option value="quiz">Quiz</option>
+                  <option value="free mock">Free Mock</option>
+                  <option value="paid mock">Paid Mock</option>
                 </select>
+                {formError.practiceMethod && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.practiceMethod}
+                </p>
+                )}
               </div>
 
-              {/* which attempt  */}
+              {/* part of study group  */}
               <div className="w-full flex flex-col form-field gap-1">
                 <label className="text-[17px] text-[#0a0a0a]">
                   Are you Part of a Study Group? (क्या आप किसी अध्ययन समूह का
@@ -1645,20 +2853,35 @@ const ScholarshipForm = () => {
                   required
                   name="cgl-attempt-no"
                   value={formData.isPartOfStudyGroup}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const value = e.target.value;
                     setFormData({
                       ...formData,
-                      isPartOfStudyGroup: e.target.value,
+                      isPartOfStudyGroup: value,
                     })
-                  }
-                  className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
+                    setFormError((prev) => ({ ...prev, isPartOfStudyGroup: value.trim() !== "" ? "" : "Study Group is required" }));
+
+                  }}
+                  className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                      formError.isPartOfStudyGroup
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                  }`}
                 >
                   <option value="" disabled>
-                    -- Which attempt? --
+                    -- Select Group --
                   </option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                  <option value="telegram group (paid)">Telegram Group (Paid)</option>
+                  <option value="telegram group (free)">Telegram Group (Free)</option>
+                  <option value="whatsapp group">WhatsApp Group</option>
+                  <option value="library group">Library Group</option>
+                  <option value="friends group">Friends Group</option>
                 </select>
+                 {formError.isPartOfStudyGroup && (
+                      <p className="text-[15px] text-red-500 ">
+                        {formError.isPartOfStudyGroup}
+                </p>
+                )}
               </div>
 
               {/* study group name */}
@@ -1678,6 +2901,7 @@ const ScholarshipForm = () => {
                   placeholder="Any Study Group?"
                   className="bg-[#f3f3f5]  grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
                 />
+                
               </div>
 
               <p className="text-[20px] font-[500] text-[#0a0a0a]">
@@ -1697,12 +2921,14 @@ const ScholarshipForm = () => {
                       name="mobile-phone"
                       value={"smart-phone"}
                       checked={formData.hasMobile === "smart-phone"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          hasMobile: e.target.value,
+                          hasMobile: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, hasMobile: value.trim() !== "" ? "" : "Select any device" }));
+                      }}
                       required
                     />
                     <span className="text-[#0a0a0a]">
@@ -1716,12 +2942,14 @@ const ScholarshipForm = () => {
                       name="mobile-phone"
                       value={"keypad-phone"}
                       checked={formData.hasMobile === "keypad-phone"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          hasMobile: e.target.value,
+                          hasMobile: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, hasMobile: value.trim() !== "" ? "" : "Select any device" }));
+                      }}
                     />
                     <span className="text-[#0a0a0a]">
                       Keypad Mobile / कीपैड मोबाइल
@@ -1734,17 +2962,24 @@ const ScholarshipForm = () => {
                       name="mobile-phone"
                       value={"none"}
                       checked={formData.hasMobile === "none"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          hasMobile: e.target.value,
+                          hasMobile: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, hasMobile: value.trim() !== "" ? "" : "Select any device" }));
+                      }}
                       required
                     />
                     <span className="text-[#0a0a0a]">None / कोई नहीं</span>
                   </label>
                 </div>
+                 {formError.hasMobile && (
+                      <p className="text-[15px] text-red-500 -mt-1">
+                        {formError.hasMobile}
+                </p>
+                )}
               </div>
 
               {/* tablet  */}
@@ -1759,12 +2994,14 @@ const ScholarshipForm = () => {
                       name="tablet-device"
                       value={"android"}
                       checked={formData.hasTablet === "android"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          hasTablet: e.target.value,
+                          hasTablet: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, hasTablet: value.trim() !== "" ? "" : "Select any device" }));
+                      }}
                       required
                     />
                     <span className="text-[#0a0a0a]">Android / एंड्रॉइड</span>
@@ -1776,12 +3013,14 @@ const ScholarshipForm = () => {
                       name="tablet-device"
                       value={"ipad"}
                       checked={formData.hasTablet === "ipad"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          hasTablet: e.target.value,
+                          hasTablet: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, hasTablet: value.trim() !== "" ? "" : "Select any device" }));
+                      }}
                       required
                     />
                     <span className="text-[#0a0a0a]">iPad</span>
@@ -1793,17 +3032,24 @@ const ScholarshipForm = () => {
                       name="tablet-device"
                       value={"none"}
                       checked={formData.hasTablet === "none"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          hasTablet: e.target.value,
+                          hasTablet: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, hasTablet: value.trim() !== "" ? "" : "Select any device" }));
+                      }}
                       required
                     />
                     <span className="text-[#0a0a0a]">None / कोई नहीं</span>
                   </label>
                 </div>
+                {formError.hasTablet && (
+                      <p className="text-[15px] text-red-500 -mt-1">
+                        {formError.hasTablet}
+                </p>
+                )}
               </div>
 
               {/* computer  */}
@@ -1818,12 +3064,14 @@ const ScholarshipForm = () => {
                       name="computer-device"
                       value={"laptop"}
                       checked={formData.hasComputer === "laptop"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          hasComputer: e.target.value,
+                          hasComputer: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, hasComputer: value.trim() !== "" ? "" : "Select any device" }));
+                      }}
                       required
                     />
                     <span className="text-[#0a0a0a]">Laptop / लैपटॉप</span>
@@ -1835,12 +3083,14 @@ const ScholarshipForm = () => {
                       name="computer-device"
                       value={"desktop"}
                       checked={formData.hasComputer === "desktop"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          hasComputer: e.target.value,
+                          hasComputer: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, hasComputer: value.trim() !== "" ? "" : "Select any device" }));
+                      }}
                       required
                     />
                     <span className="text-[#0a0a0a]">Desktop / डेस्कटॉप</span>
@@ -1852,17 +3102,24 @@ const ScholarshipForm = () => {
                       name="computer-device"
                       value={"none"}
                       checked={formData.hasComputer === "none"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          hasComputer: e.target.value,
+                          hasComputer: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, hasComputer: value.trim() !== "" ? "" : "Select any device" }));
+                      }}
                       required
                     />
                     <span className="text-[#0a0a0a]">None / कोई नहीं</span>
                   </label>
                 </div>
+                {formError.hasComputer && (
+                      <p className="text-[15px] text-red-500 -mt-1">
+                        {formError.hasComputer}
+                </p>
+                )}
               </div>
             </div>
           )}
@@ -1886,20 +3143,31 @@ const ScholarshipForm = () => {
                   required
                   name="recieved-scholarship-from-1eq"
                   value={formData.receivedPreviousScholarship}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const value = e.target.value;
                     setFormData({
                       ...formData,
-                      receivedPreviousScholarship: e.target.value,
+                      receivedPreviousScholarship: value,
                     })
-                  }
-                  className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                >
+                    setFormError((prev) => ({ ...prev, receivedPreviousScholarship: value.trim() !== "" ? "" : "Previous scholarship is required" }));
+
+                  }}
+                    className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                      formError.receivedPreviousScholarship
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                    }`}                >
                   <option value="" disabled>
                     -- Select --
                   </option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                 </select>
+                {formError.receivedPreviousScholarship && (
+                      <p className="text-[15px] text-red-500 -mt-1">
+                        {formError.receivedPreviousScholarship}
+                </p>
+                )}
               </div>
 
               {/* previous scholarship  details from 1 eq  */}
@@ -1913,14 +3181,19 @@ const ScholarshipForm = () => {
                     required
                     name="previous-scholarship-name"
                     value={formData.previousScholarshipDetails}
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      const value = e.target.value
                       setFormData({
                         ...formData,
-                        previousScholarshipDetails: e.target.value,
+                        previousScholarshipDetails: value,
                       })
-                    }
-                    className="custom-dropdown bg-[#f3f3f5] grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                  >
+                    setFormError((prev) => ({ ...prev, previousScholarshipDetails: value.trim() !== "" ? "" : "Which scholarship is required" }));
+                    }}
+                      className={`custom-dropdown text-black grow-1 px-3 py-2 text-[17px] rounded-lg outline-none  ${
+                      formError.previousScholarshipDetails
+                        ? "border-red-500 bg-red-50 border"
+                        : "border border-transparent bg-[#f3f3f5]"
+                    }`}                  >
                     <option value="" disabled>
                       -- Select --
                     </option>
@@ -1928,6 +3201,11 @@ const ScholarshipForm = () => {
                     <option value="silver">Silver</option>
                     <option value="bronze">Bronze</option>
                   </select>
+                  {formError.previousScholarshipDetails && (
+                      <p className="text-[15px] text-red-500 -mt-1">
+                        {formError.previousScholarshipDetails}
+                </p>
+                )}
                 </div>
               )}
 
@@ -1944,12 +3222,14 @@ const ScholarshipForm = () => {
                       type="radio"
                       value={"gold"}
                       checked={formData.scholarshipNeeded === "gold"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          scholarshipNeeded: e.target.value,
+                          scholarshipNeeded:value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, scholarshipNeeded: value.trim() !== "" ? "" : "Select which scholarship is needed" }));
+                      }}
                       required
                       name="scholarship-selection"
                     />
@@ -1965,12 +3245,15 @@ const ScholarshipForm = () => {
                       type="radio"
                       value={"silver"}
                       checked={formData.scholarshipNeeded === "silver"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value
                         setFormData({
                           ...formData,
-                          scholarshipNeeded: e.target.value,
+                          scholarshipNeeded: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, scholarshipNeeded: value.trim() !== "" ? "" : "Select which scholarship is needed" }));
+
+                      }}
                       required
                       name="scholarship-selection"
                     />
@@ -1986,12 +3269,14 @@ const ScholarshipForm = () => {
                       type="radio"
                       value={"bronze"}
                       checked={formData.scholarshipNeeded === "bronze"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value
                         setFormData({
                           ...formData,
-                          scholarshipNeeded: e.target.value,
+                          scholarshipNeeded: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, scholarshipNeeded: value.trim() !== "" ? "" : "Select which scholarship is needed" }));
+                      }}
                       required
                       name="scholarship-selection"
                     />
@@ -2001,6 +3286,11 @@ const ScholarshipForm = () => {
                     </p>
                   </label>
                 </div>
+                {formError.scholarshipNeeded && (
+                      <p className="text-[15px] text-red-500 -mt-1">
+                        {formError.scholarshipNeeded}
+                </p>
+                )}
               </div>
 
               {/* scholarship reason describe */}
@@ -2018,15 +3308,26 @@ const ScholarshipForm = () => {
                   name="scholarship-reason"
                   required
                   value={formData.scholarshipEssay}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const value = e.target.value;
                     setFormData({
                       ...formData,
-                      scholarshipEssay: e.target.value,
+                      scholarshipEssay: value,
                     })
-                  }
+                    setFormError((prev) => ({ ...prev, scholarshipEssay: value.trim() !== "" ? "" : "Please describe why you needed" }));
+
+                  }}
                   placeholder="Please make sure that there are no Grammar or Spelling Mistakes (कृपया सुनिश्चित करें कि कोई व्याकरण या वर्तनी की गलतियाँ न हों)"
-                  className="bg-[#f3f3f5] resize-none h-30 grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                ></textarea>
+                  className={` text-black grow-1 h-[120px] px-3 py-2 text-[17px] rounded-lg resize-none outline-none  ${
+                  formError.scholarshipEssay
+                  ? "border-red-500 bg-red-50 border"
+                  : "border border-transparent bg-[#f3f3f5]"
+                  }`}                 ></textarea>
+                {formError.scholarshipEssay && (
+                      <p className="text-[15px] text-red-500 -mt-1">
+                        {formError.scholarshipEssay}
+                </p>
+                )}
               </div>
 
               {/* volunteering role */}
@@ -2044,12 +3345,15 @@ const ScholarshipForm = () => {
                       checked={
                         formData.volunteerRole === "Telegram Group Admin"
                       }
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value
                         setFormData({
                           ...formData,
-                          volunteerRole: e.target.value,
+                          volunteerRole: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, volunteerRole: value.trim() !== "" ? "" : "Select volunteer role" }));
+
+                      }}
                       required
                       name="volunteer-role"
                     />
@@ -2068,12 +3372,15 @@ const ScholarshipForm = () => {
                         formData.volunteerRole ===
                         "Recording Lessons in Indian Sign Language (ISL)"
                       }
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value
                         setFormData({
                           ...formData,
-                          volunteerRole: e.target.value,
+                          volunteerRole: value,
                         })
-                      }
+                       setFormError((prev) => ({ ...prev, volunteerRole: value.trim() !== "" ? "" : "Select volunteer role" }));
+
+                      }}
                       required
                       name="volunteer-role"
                     />
@@ -2089,12 +3396,14 @@ const ScholarshipForm = () => {
                       type="radio"
                       value={"Doubt Solving"}
                       checked={formData.volunteerRole === "Doubt Solving"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value
                         setFormData({
                           ...formData,
-                          volunteerRole: e.target.value,
+                          volunteerRole:value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, volunteerRole: value.trim() !== "" ? "" : "Select volunteer role" }));
+                      }}
                       required
                       name="volunteer-role"
                     />
@@ -2111,12 +3420,15 @@ const ScholarshipForm = () => {
                       checked={
                         formData.volunteerRole === "Proof Reading of Books"
                       }
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value
                         setFormData({
                           ...formData,
-                          volunteerRole: e.target.value,
+                          volunteerRole: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, volunteerRole: value.trim() !== "" ? "" : "Select volunteer role" }));
+
+                      }}
                       required
                       name="volunteer-role"
                     />
@@ -2131,12 +3443,15 @@ const ScholarshipForm = () => {
                       type="radio"
                       value={"I can Write Blogs"}
                       checked={formData.volunteerRole === "I can Write Blogs"}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          volunteerRole: e.target.value,
+                          volunteerRole: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, volunteerRole: value.trim() !== "" ? "" : "Select volunteer role" }));
+
+                      }}
                       required
                       name="volunteer-role"
                     />
@@ -2153,12 +3468,15 @@ const ScholarshipForm = () => {
                       checked={
                         formData.volunteerRole === "I don't want to Volunteer"
                       }
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.value;
                         setFormData({
                           ...formData,
-                          volunteerRole: e.target.value,
+                          volunteerRole: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, volunteerRole: value.trim() !== "" ? "" : "Select volunteer role" }));
+
+                      }}
                       required
                       name="volunteer-role"
                     />
@@ -2170,6 +3488,11 @@ const ScholarshipForm = () => {
                     </p>
                   </label>
                 </div>
+                {formError.volunteerRole && (
+                      <p className="text-[15px] text-red-500 -mt-1">
+                        {formError.volunteerRole}
+                </p>
+                )}
               </div>
 
               {/* approach to volunteering */}
@@ -2189,15 +3512,26 @@ const ScholarshipForm = () => {
                     name="volunteering-approach"
                     required
                     value={formData.volunteerApproach}
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      const value = e.target.value;
                       setFormData({
                         ...formData,
-                        volunteerApproach: e.target.value,
+                        volunteerApproach:value,
                       })
-                    }
+                       setFormError((prev) => ({ ...prev, volunteerApproach: value.trim() !== "" ? "" : "Write your volunteer approach" }));
+
+                    }}
                     placeholder="Write your approach"
-                    className="bg-[#f3f3f5] resize-none h-30 grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                  ></textarea>
+                className={` text-black grow-1 h-[120px] px-3 py-2 text-[17px] rounded-lg resize-none outline-none  ${
+                formError.volunteerApproach
+                ? "border-red-500 bg-red-50 border"
+                  : "border border-transparent bg-[#f3f3f5]"
+                  }`}                   ></textarea>
+                  {formError.volunteerApproach && (
+                      <p className="text-[15px] text-red-500 -mt-1">
+                        {formError.volunteerApproach}
+                </p>
+                )}
                 </div>
               )}
 
@@ -2212,15 +3546,26 @@ const ScholarshipForm = () => {
                   name="scholarship-reason"
                   required
                   value={formData.messageTo1EQ}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const value = e.target.value
                     setFormData({
                       ...formData,
-                      messageTo1EQ: e.target.value,
+                      messageTo1EQ: value,
                     })
-                  }
+                    setFormError((prev) => ({ ...prev, messageTo1EQ: value.trim() !== "" ? "" : "This field is required" }));
+
+                  }}
                   placeholder="Write a message"
-                  className="bg-[#f3f3f5] resize-none h-30 grow-1 px-3 py-2 text-[17px] text-black outline-none border-none rounded-lg"
-                ></textarea>
+                  className={` text-black grow-1 h-[120px] px-3 py-2 text-[17px] rounded-lg resize-none outline-none  ${
+                formError.messageTo1EQ
+                ? "border-red-500 bg-red-50 border"
+                  : "border border-transparent bg-[#f3f3f5]"
+                  }`}                ></textarea>
+                {formError.messageTo1EQ && (
+                      <p className="text-[15px] text-red-500 -mt-1">
+                        {formError.messageTo1EQ}
+                </p>
+                )}
               </div>
             </div>
           )}
@@ -2249,15 +3594,23 @@ const ScholarshipForm = () => {
                       type="checkbox"
                       required
                       checked={formData.declarationInfoTrue}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.checked;
                         setFormData({
                           ...formData,
-                          declarationInfoTrue: e.target.checked,
+                          declarationInfoTrue: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, declarationInfoTrue: !value && "PLease check this field" }));
+
+                      }}
                     />
                     <span>I Agree (मैं सहमत हूं)</span>
                   </label>
+                  {formError.declarationInfoTrue && (
+                      <p className="text-[15px] text-red-500 -mt-2">
+                        {formError.declarationInfoTrue}
+                     </p>
+                    )}
                 </div>
               </div>
 
@@ -2276,15 +3629,22 @@ const ScholarshipForm = () => {
                       type="checkbox"
                       required
                       checked={formData.declarationInfoAccurate}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.checked;
                         setFormData({
                           ...formData,
-                          declarationInfoAccurate: e.target.checked,
+                          declarationInfoAccurate: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, declarationInfoAccurate: !value && "PLease check this field" }));
+                      }}
                     />
                     <span>I Agree (मैं सहमत हूं)</span>
                   </label>
+                {formError.declarationInfoAccurate && (
+                      <p className="text-[15px] text-red-500 -mt-2">
+                        {formError.declarationInfoAccurate}
+                </p>
+                )}
                 </div>
               </div>
 
@@ -2303,15 +3663,22 @@ const ScholarshipForm = () => {
                       type="checkbox"
                       required
                       checked={formData.consentToContact}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.checked;
                         setFormData({
                           ...formData,
-                          consentToContact: e.target.checked,
+                          consentToContact:value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, consentToContact: !value && "PLease check this field" }));
+                      }}
                     />
                     <span>I Agree (मैं सहमत हूं)</span>
                   </label>
+                {formError.consentToContact && (
+                      <p className="text-[15px] text-red-500 -mt-2">
+                        {formError.consentToContact}
+                </p>
+                )}
                 </div>
               </div>
 
@@ -2329,15 +3696,22 @@ const ScholarshipForm = () => {
                       type="checkbox"
                       required
                       checked={formData.participateInSurvey}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const value = e.target.checked;
                         setFormData({
                           ...formData,
-                          participateInSurvey: e.target.checked,
+                          participateInSurvey: value,
                         })
-                      }
+                        setFormError((prev) => ({ ...prev, participateInSurvey: !value && "PLease check this field" }));
+                      }}
                     />
                     <span>I Agree (मैं सहमत हूं)</span>
                   </label>
+                  {formError.participateInSurvey && (
+                      <p className="text-[15px] text-red-500 -mt-2">
+                        {formError.participateInSurvey}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -2359,21 +3733,29 @@ const ScholarshipForm = () => {
               <button
                 type="submit"
                 onClick={sendData}
-                className="outline-none w-28 border-none bg-[#00254e] text-white font-[500] flex items-center justify-center gap-2 py-2 px-4 cursor-pointer rounded-md"
+                className={` outline-none w-28 border-none bg-[#00254e] text-white font-[500] flex items-center justify-center gap-2 py-2 px-4 cursor-pointer rounded-md`}
               >
-                Submit
-                <FaArrowRight />
+                {
+                  isSubmitting ? <ImSpinner9 className="text-white text-[16px] animate-spin" /> : (
+                    <>
+                   Submit
+                  <FaArrowRight />
+                    </>
+                  )
+                }
+
               </button>
             ) : (
               <button
                 type="button"
                 onClick={handleNextPage}
-                className="outline-none w-28 border-none bg-[#00254e] text-white font-[500] flex items-center justify-center gap-2 py-2 px-4 cursor-pointer rounded-md"
+                className={` outline-none w-28 border-none bg-[#00254e] text-white font-[500] flex items-center justify-center gap-2 py-2 px-4 cursor-pointer rounded-md`}
               >
                 Next
                 <FaArrowRight />
               </button>
             )}
+            {error && <p className="text-red-500 flex items-center">{error}</p>}
           </div>
         </form>
       </div>
